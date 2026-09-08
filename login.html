@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>스탭 로그인 — 안산상록교회</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='0,0 58,0 46,50 58,100 0,100' fill='%2329b6f6'/%3E%3Cpolygon points='100,0 58,0 46,50 58,100 100,100' fill='%238bc34a'/%3E%3Crect x='43' y='12' width='14' height='76' fill='white'/%3E%3Crect x='22' y='43' width='56' height='14' fill='white'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  body{ min-height:100vh; display:flex; align-items:center; justify-content:center; background:var(--paper-soft); }
+  .login-card{ width:100%; max-width:360px; margin:24px; }
+  .login-card h1{ font-size:1.3rem; text-align:center; margin-bottom:6px; }
+  .login-card p.sub{ text-align:center; margin-bottom:24px; font-size:.88rem; }
+  .field{ margin-bottom:14px; }
+  .field label{ display:block; font-size:.85rem; font-weight:700; margin-bottom:6px; color:var(--ink); }
+  .field input{
+    width:100%; padding:12px 14px; border-radius:10px; border:1px solid var(--border);
+    font-size:.95rem; font-family:inherit;
+  }
+  .field input:focus{ outline:2px solid var(--accent); outline-offset:1px; }
+  .login-card .btn{ width:100%; justify-content:center; margin-top:6px; }
+  .msg{ font-size:.85rem; text-align:center; margin-top:14px; }
+  .msg.error{ color:#b3261e; }
+  .msg.info{ color:var(--muted); }
+  .back-link{ display:block; text-align:center; margin-top:18px; font-size:.85rem; color:var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="card login-card">
+  <h1>스탭 로그인</h1>
+  <p class="sub">교적 관리 등 비공개 기능은 로그인 후 이용하실 수 있습니다.</p>
+
+  <form id="loginForm">
+    <div class="field">
+      <label for="email">이메일</label>
+      <input type="email" id="email" autocomplete="username" required>
+    </div>
+    <div class="field">
+      <label for="password">비밀번호</label>
+      <input type="password" id="password" autocomplete="current-password" required>
+    </div>
+    <button type="submit" class="btn btn-primary" id="submitBtn">로그인</button>
+  </form>
+  <div class="msg" id="msg"></div>
+  <a href="index.html" class="back-link">← 홈으로</a>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="js/config.js"></script>
+<script src="js/auth.js"></script>
+<script>
+  var msg = document.getElementById("msg");
+  if (!window.SB_READY) {
+    msg.textContent = "Supabase 연결이 설정되지 않았습니다. js/config.js 의 SUPABASE_URL / SUPABASE_ANON_KEY 를 채워주세요.";
+    msg.className = "msg error";
+  }
+
+  document.getElementById("loginForm").addEventListener("submit", async function (e) {
+    e.preventDefault();
+    if (!window.SB_READY) return;
+    var btn = document.getElementById("submitBtn");
+    btn.disabled = true;
+    msg.textContent = "로그인 중…";
+    msg.className = "msg info";
+    try {
+      await sbLogin(document.getElementById("email").value.trim(), document.getElementById("password").value);
+      location.href = "gyojeok.html";
+    } catch (err) {
+      msg.textContent = "로그인 실패: " + (err.message || "이메일 또는 비밀번호를 확인해주세요.");
+      msg.className = "msg error";
+      btn.disabled = false;
+    }
+  });
+</script>
+</body>
+</html>

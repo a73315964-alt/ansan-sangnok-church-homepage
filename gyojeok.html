@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>교적 관리 — 안산상록교회</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='0,0 58,0 46,50 58,100 0,100' fill='%2329b6f6'/%3E%3Cpolygon points='100,0 58,0 46,50 58,100 100,100' fill='%238bc34a'/%3E%3Crect x='43' y='12' width='14' height='76' fill='white'/%3E%3Crect x='22' y='43' width='56' height='14' fill='white'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  body{ background:var(--paper-soft); }
+  .admin-bar{
+    background:#fff; border-bottom:1px solid var(--border); padding:16px 0;
+  }
+  .admin-bar .wrap{ display:flex; align-items:center; justify-content:space-between; }
+  .admin-bar h1{ font-size:1.1rem; margin:0; }
+  .admin-bar .who{ font-size:.82rem; color:var(--muted); margin-top:2px; }
+  .admin-wrap{ max-width:1120px; margin:0 auto; padding:28px 24px 60px; }
+  .toolbar{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:space-between; margin-bottom:18px; }
+  .toolbar input[type="search"]{
+    padding:11px 14px; border-radius:10px; border:1px solid var(--border); font-size:.9rem; min-width:240px; font-family:inherit;
+  }
+  table.grid{ width:100%; border-collapse:collapse; background:#fff; border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; font-size:.86rem; }
+  table.grid th, table.grid td{ padding:10px 12px; border-bottom:1px solid var(--border); text-align:left; white-space:nowrap; }
+  table.grid th{ background:var(--paper-soft); font-weight:700; color:var(--ink-soft); }
+  table.grid tbody tr:hover{ background:var(--accent-light); }
+  table.grid td.actions{ display:flex; gap:6px; }
+  .mini-btn{ padding:5px 10px; border-radius:8px; border:1px solid var(--border); background:#fff; font-size:.78rem; cursor:pointer; font-weight:600; }
+  .mini-btn.danger{ color:#b3261e; border-color:#f2c9c5; }
+  .table-scroll{ overflow-x:auto; border-radius:var(--radius); }
+  .count-badge{ font-size:.82rem; color:var(--muted); }
+
+  .modal-overlay{
+    position:fixed; inset:0; background:rgba(20,24,22,.45); display:none;
+    align-items:center; justify-content:center; padding:20px; z-index:200;
+  }
+  .modal-overlay.open{ display:flex; }
+  .modal{ background:#fff; border-radius:16px; padding:26px; width:100%; max-width:420px; max-height:88vh; overflow:auto; }
+  .modal h2{ font-size:1.05rem; margin-bottom:16px; }
+  .modal .field{ margin-bottom:12px; }
+  .modal .field label{ display:block; font-size:.82rem; font-weight:700; margin-bottom:5px; color:var(--ink); }
+  .modal .field input{ width:100%; padding:10px 12px; border-radius:9px; border:1px solid var(--border); font-family:inherit; font-size:.9rem; }
+  .modal-actions{ display:flex; gap:10px; margin-top:18px; }
+  .modal-actions .btn{ flex:1; justify-content:center; }
+
+  .setup-note{ background:#fff4d6; border:1px solid #e8b923; color:#8a6d1f; border-radius:12px; padding:16px 18px; font-size:.9rem; }
+</style>
+</head>
+<body>
+
+<div class="admin-bar">
+  <div class="wrap">
+    <div>
+      <h1>교적 관리</h1>
+      <div class="who" id="whoLine">확인 중…</div>
+    </div>
+    <div style="display:flex; gap:10px;">
+      <a href="index.html" class="btn btn-outline" style="padding:8px 16px;font-size:.85rem;">홈으로</a>
+      <button class="btn btn-outline" id="logoutBtn" style="padding:8px 16px;font-size:.85rem;">로그아웃</button>
+    </div>
+  </div>
+</div>
+
+<div class="admin-wrap">
+  <div id="setupNote" class="setup-note" style="display:none; margin-bottom:20px;">
+    Supabase 연결이 아직 설정되지 않았습니다. <code>js/config.js</code> 의
+    <code>SUPABASE_URL</code> / <code>SUPABASE_ANON_KEY</code> 를 채우고,
+    <code>SQL실행하기/01_members_schema.sql</code> 을 Supabase SQL Editor 에서 실행해 주세요.
+  </div>
+
+  <div class="toolbar">
+    <input type="search" id="searchBox" placeholder="이름・전화번호로 검색">
+    <div style="display:flex; align-items:center; gap:14px;">
+      <span class="count-badge" id="countBadge"></span>
+      <button class="btn btn-primary" id="addBtn" style="padding:10px 18px;font-size:.86rem;">+ 새 성도 추가</button>
+    </div>
+  </div>
+
+  <div class="table-scroll">
+    <table class="grid">
+      <thead>
+        <tr>
+          <th>이름</th><th>직분</th><th>자택</th><th>휴대폰</th><th>가족</th><th>생년월일</th><th>그룹</th><th>기타</th><th></th>
+        </tr>
+      </thead>
+      <tbody id="rows"><tr><td colspan="9" style="text-align:center;color:var(--muted);padding:30px;">불러오는 중…</td></tr></tbody>
+    </table>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <h2 id="modalTitle">새 성도 추가</h2>
+    <form id="memberForm">
+      <input type="hidden" id="f_id">
+      <div class="field"><label>이름 *</label><input id="f_name" required></div>
+      <div class="field"><label>직분</label><input id="f_position" placeholder="예: 집사, 권사, 장로"></div>
+      <div class="field"><label>자택 전화</label><input id="f_home_phone"></div>
+      <div class="field"><label>휴대폰</label><input id="f_mobile_phone"></div>
+      <div class="field"><label>가족</label><input id="f_family" placeholder="자녀 이름 등"></div>
+      <div class="field"><label>생년월일</label><input id="f_birth" placeholder="예: 68.10.08"></div>
+      <div class="field"><label>그룹</label><input id="f_group_label" placeholder="예: 장년부, 청년부"></div>
+      <div class="field"><label>기타</label><input id="f_note"></div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-outline" id="cancelBtn">취소</button>
+        <button type="submit" class="btn btn-primary" id="saveBtn">저장</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="js/config.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/gyojeok.js"></script>
+</body>
+</html>
