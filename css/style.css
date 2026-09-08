@@ -92,6 +92,15 @@ section{ padding: 88px 0; }
   transition: background .15s ease, color .15s ease;
 }
 .nav-desktop a:hover, .nav-desktop a.active{ background: var(--accent-light); color: var(--accent-dark); }
+
+/* 유튜브 채널 메뉴 */
+.nav-desktop a.nav-youtube, .nav-mobile a.nav-youtube{
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.nav-desktop a.nav-youtube .yt-icon, .nav-mobile a.nav-youtube .yt-icon{ color: #ff0000; flex: none; }
+.nav-desktop a.nav-youtube:hover{ background: rgba(255,0,0,.08); color: #c4302b; }
+.site-footer a.nav-youtube{ display: inline-flex; align-items: center; gap: 6px; }
+.site-footer a.nav-youtube .yt-icon{ width: 15px; height: 15px; color: #ff0000; flex: none; }
 .header-cta{ display: flex; align-items: center; gap: 10px; }
 .header-cta .btn{ padding: 10px 20px; font-size: .88rem; }
 

@@ -30,8 +30,10 @@ window.CHURCH = {
     { name: "새벽 기도회", time: "오전 5:00", desc: "" },
   ],
 
+  // SNS 주소 — youtube 에 교회 유튜브 채널 주소를 넣으면 상단 메뉴 "유튜브"가 그 채널로 연결됩니다.
+  // 예: "https://www.youtube.com/@안산상록교회"  (비워두면 유튜브 검색 결과로 연결됩니다)
   sns: {
-    youtube: "",
+    youtube: "https://www.youtube.com/@an-sangrok-church",
     instagram: "",
     kakao: "",
   },
@@ -41,5 +43,5 @@ window.CHURCH = {
    두 값을 채우면 켜집니다. anon key 는 "공개돼도 되는" 키입니다 — 실제 보안은
    Supabase 쪽 RLS(SQL실행하기/01_members_schema.sql)가 담당합니다.
    로그인 계정은 Supabase 대시보드 → Authentication → Users 에서 직접 만드세요. */
-window.SUPABASE_URL = "";
-window.SUPABASE_ANON_KEY = "";
+window.SUPABASE_URL = "https://mhdcsjdmcswxldjjatgk.supabase.co";
+window.SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1oZGNzamRtY3N3eGxkamphdGdrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg4MTgyNDMsImV4cCI6MjEwNDM5NDI0M30.pnJ0oOcIMdlwT9gpRVXzewBfx_JpbMvWb0VUBGs3lKk";
