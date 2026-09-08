@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# 비공개 페이지 — 검색 결과에 나오지 않도록 제외
+Disallow: /gyojeok.html
+Disallow: /login.html
+
+Sitemap: https://ansansangrok.or.kr/sitemap.xml

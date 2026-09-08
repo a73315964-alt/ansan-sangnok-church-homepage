@@ -22,6 +22,14 @@ window.CHURCH = {
 
   accent: "#2a4a75",
 
+  /* 자료실(Cloudflare R2) 주소 — 사진·문서를 올리면 이 주소 뒤에 파일 경로가 붙습니다.
+     예) filesBase + "/photos/2026추수감사절.jpg"
+     바탕화면 "교회자료업로드" 폴더에 넣고 업로드.bat 을 실행하면 자동으로 올라갑니다. */
+  filesBase: "https://files.ansansangrok.or.kr",
+
+  /* 홈페이지 대표 주소 */
+  siteUrl: "https://ansansangrok.or.kr",
+
   worship: [
     { name: "주일 오전 예배", time: "오전 11:00", desc: "" },
     { name: "주일 오후 예배", time: "오후 1:30", desc: "" },
