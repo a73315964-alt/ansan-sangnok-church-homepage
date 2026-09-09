@@ -25,12 +25,22 @@
 .vision-content p { margin: 0; color: var(--ink-soft); line-height: 1.6; }
 </style>
 <style>
-.pastor-profile { margin: 20px 0; padding: 16px; background: var(--bg); border-radius: var(--radius); }
-.profile-section { margin-bottom: 16px; }
-.profile-section:last-child { margin-bottom: 0; }
-.profile-section h3 { margin: 0 0 8px; font-size: 1rem; color: var(--accent-dark); font-weight: 600; }
-.profile-list { margin: 0; padding-left: 20px; list-style: disc; color: var(--ink-soft); line-height: 1.8; }
-.profile-list li { margin-bottom: 4px; }
+.pastor-profile { margin: 24px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.profile-section { padding: 16px; background: linear-gradient(135deg, var(--bg) 0%, rgba(41, 182, 246, 0.05) 100%); border-radius: var(--radius); border-left: 3px solid var(--accent); }
+.profile-section:first-child { border-left-color: #29b6f6; }
+.profile-section:last-child { border-left-color: #8bc34a; }
+.profile-section h3 { margin: 0 0 12px; font-size: 0.95rem; color: var(--accent-dark); font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
+.profile-list { margin: 0; padding-left: 0; list-style: none; color: var(--ink-soft); line-height: 1.9; font-size: 0.95rem; }
+.profile-list li { margin-bottom: 6px; padding-left: 20px; position: relative; }
+.profile-list li:before { content: "•"; position: absolute; left: 8px; color: var(--accent); font-weight: bold; }
+.quote-block { margin: 28px 0; padding: 20px 24px; background: linear-gradient(135deg, rgba(41, 182, 246, 0.08) 0%, rgba(139, 195, 74, 0.05) 100%); border-left: 4px solid var(--accent); border-radius: var(--radius); font-size: 1.05rem; line-height: 1.8; color: var(--ink); font-style: italic; }
+.pastor-greeting { margin-top: 32px; padding: 24px; background: rgba(255, 255, 255, 0.4); border-radius: var(--radius); }
+.pastor-greeting h3 { margin: 0 0 16px; font-size: 1rem; color: var(--accent-dark); font-weight: 600; }
+.pastor-greeting p { margin: 0 0 12px; line-height: 1.8; color: var(--ink-soft); font-size: 0.95rem; }
+.pastor-greeting p:last-child { margin: 0; font-weight: 700; color: var(--ink); margin-top: 16px; }
+@media (max-width: 768px) {
+  .pastor-profile { grid-template-columns: 1fr; gap: 16px; }
+}
 </style>
 </head>
 <body data-page="about">
@@ -82,10 +92,12 @@
 
         <div class="quote-block">"여호와는 나의 목자시니 내게 부족함이 없으리로다." (시편 23:1)</div>
 
-        <h3 style="margin-top:24px; margin-bottom:12px;">담임목사 인사말</h3>
-        <p>사랑하는 성도 여러분, 그리고 홈페이지를 통해 안산상록교회를 처음 알게 되신 모든 분들을 환영합니다. 저희 교회는 하나님의 말씀을 삶의 기준으로 삼고, 예배와 기도, 성도의 교제를 통해 그리스도의 사랑을 이 땅에 나타내고자 하는 신앙 공동체입니다.</p>
-        <p>세상이 흔들려도 변하지 않는 참된 소망은 오직 예수 그리스도께 있습니다. 안산상록교회는 다음세대로부터 어르신에 이르기까지 모든 세대가 함께 예배하고, 서로를 돌아보며, 이웃과 지역사회를 섬기는 건강한 교회가 되기를 소망합니다.</p>
-        <p style="font-weight:700;color:var(--ink);">담임목사 이재용 드림</p>
+        <div class="pastor-greeting">
+          <h3>담임목사 인사말</h3>
+          <p>사랑하는 성도 여러분, 그리고 홈페이지를 통해 안산상록교회를 처음 알게 되신 모든 분들을 환영합니다. 저희 교회는 하나님의 말씀을 삶의 기준으로 삼고, 예배와 기도, 성도의 교제를 통해 그리스도의 사랑을 이 땅에 나타내고자 하는 신앙 공동체입니다.</p>
+          <p>세상이 흔들려도 변하지 않는 참된 소망은 오직 예수 그리스도께 있습니다. 안산상록교회는 다음세대로부터 어르신에 이르기까지 모든 세대가 함께 예배하고, 서로를 돌아보며, 이웃과 지역사회를 섬기는 건강한 교회가 되기를 소망합니다.</p>
+          <p>담임목사 이재용 드림</p>
+        </div>
       </div>
     </div>
   <div class="wrap">
