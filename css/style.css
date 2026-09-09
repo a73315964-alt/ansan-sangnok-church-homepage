@@ -339,6 +339,24 @@ body.nav-open .nav-mobile{ display: flex; }
 
 .divider{ height: 1px; background: var(--border); margin: 48px 0; }
 
+/* ---------- 생명의 말씀 (sermon.html) ---------- */
+.yt-section{ display: grid; grid-template-columns: 1.3fr 1fr; gap: 32px; align-items: center; }
+.yt-section .yt-side h3{ font-size: 1.2rem; margin-bottom: 10px; }
+.yt-section .yt-side p{ font-size: .93rem; }
+@media (max-width: 820px){ .yt-section{ grid-template-columns: 1fr; } }
+
+.sermon-archive-item{ margin-bottom: 18px; }
+.sermon-archive-item .meta{ font-size: .82rem; color: var(--muted); margin-bottom: 6px; }
+.sermon-archive-item h3{ font-size: 1.1rem; margin-bottom: 6px; }
+.sermon-archive-item .scripture{ color: var(--accent-dark); font-weight: 700; font-size: .9rem; margin-bottom: 4px; }
+
+/* 도서관 (library.html) */
+.library-item{ display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center; }
+.library-item .cat{ font-size: .72rem; font-weight: 700; color: var(--accent-dark); background: var(--accent-light); padding: 3px 10px; border-radius: 999px; display: inline-block; margin-bottom: 8px; }
+.library-item h4{ margin: 0 0 4px; font-size: 1rem; }
+.library-item p{ margin: 0; font-size: .88rem; }
+@media (max-width: 560px){ .library-item{ grid-template-columns: 1fr; } .library-item .btn{ justify-self: start; } }
+
 /* ---------- 성경속으로 (word.html) ---------- */
 .word-hero{
   position: relative; min-height: 64vh; display: flex; align-items: flex-end;
@@ -366,14 +384,17 @@ body.nav-open .nav-mobile{ display: flex; }
 .word-hero-content p{ color: rgba(255,255,255,.86); font-size: 1.05rem; margin: 0; }
 @media (max-width: 720px){ .word-hero{ min-height: 48vh; } }
 
-/* 이번 주 설교 */
-.sermon-feature{ padding: 0; overflow: hidden; }
-.sermon-feature .video-frame{
+/* 이번 주 설교 / 유튜브 영상 (여러 페이지에서 재사용) */
+.video-frame{
   position: relative; width: 100%; aspect-ratio: 16/9; background: var(--ink);
   display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.6);
+  border-radius: var(--radius); overflow: hidden;
 }
-.sermon-feature .video-frame iframe{ position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-.sermon-feature .video-empty{ text-align: center; padding: 24px; font-size: .9rem; }
+.video-frame iframe{ position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.video-empty{ text-align: center; padding: 24px; font-size: .9rem; }
+
+.sermon-feature{ padding: 0; overflow: hidden; }
+.sermon-feature .video-frame{ border-radius: 0; }
 .sermon-feature .body{ padding: 32px 34px; }
 .sermon-feature .meta{ font-size: .85rem; color: var(--muted); margin-bottom: 8px; }
 .sermon-feature h3{ font-size: 1.4rem; margin-bottom: 6px; }

@@ -26,11 +26,14 @@
     { href: "worship.html", label: "예배안내", key: "worship" },
     { href: "location.html", label: "오시는길", key: "location" },
     { href: "bulletin.html", label: "주보", key: "bulletin" },
-    { href: "sermon.html", label: "설교", key: "sermon" },
+    { href: "sermon.html", label: "생명의 말씀", key: "sermon" },
     { href: "word.html", label: "성경속으로", key: "word" },
-    { href: YOUTUBE_URL, label: "유튜브", key: "youtube", external: true, icon: youtubeIcon },
+    { href: "library.html", label: "도서관", key: "library" },
     { href: "news.html", label: "공지사항", key: "news" },
   ];
+  // 유튜브는 상단 메뉴 대신 "생명의 말씀"(sermon.html) 페이지 안에 임베드되어 있습니다.
+  // 다시 상단 메뉴에 노출하려면 아래 줄의 주석을 해제하세요.
+  // NAV_LINKS.splice(6, 0, { href: YOUTUBE_URL, label: "유튜브", key: "youtube", external: true, icon: youtubeIcon });
 
   function navLinkHtml(l, extraClass) {
     var cls = [];
