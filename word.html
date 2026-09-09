@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>성경속으로 — 안산상록교회</title>
+<meta name="description" content="안산상록교회 성경속으로 — 매일 성경읽기, 주일 설교 영상·설교문, 새벽기도 묵상, 지난 말씀 아카이브.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='0,0 58,0 46,50 58,100 0,100' fill='%2329b6f6'/%3E%3Cpolygon points='100,0 58,0 46,50 58,100 100,100' fill='%238bc34a'/%3E%3Crect x='43' y='12' width='14' height='76' fill='white'/%3E%3Crect x='22' y='43' width='56' height='14' fill='white'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+<link rel="canonical" href="https://ansansangrok.or.kr/word.html">
+</head>
+<body data-page="word">
+
+<header class="site-header" id="site-header"></header>
+
+<section class="word-hero">
+  <div class="word-hero-bg" id="wordHeroBg" style="background-image:url('https://files.ansansangrok.or.kr/photos/church/church-exterior-main.jpg')"></div>
+  <div class="word-hero-overlay"></div>
+  <div class="wrap word-hero-content" id="wordHeroContent">
+    <span class="eyebrow">THE WORD</span>
+    <h1>성경속으로</h1>
+    <p>신앙의 뿌리, 말씀. 매일의 묵상과 주일의 설교가 차곡차곡 쌓이는 안산상록교회의 말씀 공간입니다.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Sermon</span>
+      <h2>이번 주 설교</h2>
+      <p>영상으로 다시 보고, 설교문으로 다시 읽으세요.</p>
+    </div>
+    <div class="card sermon-feature" id="sermonFeature"></div>
+    <div class="sermon-nav">
+      <button type="button" id="sermonPrev">← 지난 주 설교</button>
+      <span class="count" id="sermonCount"></span>
+      <button type="button" id="sermonNext">최근 주 설교 →</button>
+    </div>
+  </div>
+</section>
+
+<section class="bg-soft">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Daily & Dawn</span>
+      <h2>매일 성경읽기 · 새벽기도 묵상</h2>
+      <p>온 교회가 함께 걷는 매일의 말씀입니다.</p>
+    </div>
+    <div class="grid grid-2">
+      <div class="card devotion-card" id="dailyReadingWrap">
+        <h3 style="margin-bottom:2px;font-size:1rem;color:var(--muted);font-weight:700;">DAILY QT · 매일 성경읽기</h3>
+        <div id="dailyReadingCard"></div>
+        <button type="button" class="history-toggle" data-history-toggle="dailyReadingHistory">지난 묵상 보기</button>
+        <div class="devotion-history" id="dailyReadingHistory"></div>
+      </div>
+      <div class="card devotion-card" id="dawnPrayerWrap">
+        <h3 style="margin-bottom:2px;font-size:1rem;color:var(--muted);font-weight:700;">DAWN PRAYER · 새벽기도 묵상</h3>
+        <div id="dawnPrayerCard"></div>
+        <button type="button" class="history-toggle" data-history-toggle="dawnPrayerHistory">지난 묵상 보기</button>
+        <div class="devotion-history" id="dawnPrayerHistory"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="archive">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Archive</span>
+      <h2>지난 말씀 아카이브</h2>
+      <p>지난 주일 설교를 날짜순으로 모았습니다.</p>
+    </div>
+    <div class="card archive-list" id="archiveList" style="padding:10px 26px;"></div>
+    <div style="text-align:center;margin-top:26px;">
+      <a href="bulletin.html" class="btn btn-outline">주보 전체 보기</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer" id="site-footer"></footer>
+
+<script src="js/config.js"></script>
+<script src="js/layout.js"></script>
+<script src="js/sermons.js"></script>
+<script src="js/daily-reading.js"></script>
+<script src="js/dawn-prayer.js"></script>
+<script src="js/main.js"></script>
+<script src="js/word.js"></script>
+</body>
+</html>

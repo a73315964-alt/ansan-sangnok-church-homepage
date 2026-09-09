@@ -19,7 +19,9 @@
 ## 콘텐츠 채우기
 
 - `js/bulletins.js` — 주보. 새 주보는 배열 맨 앞에 추가하세요.
-- `js/sermons.js` — 설교. 유튜브 영상이 있으면 `youtube` 에 영상 ID(주소의 `v=` 뒤 값)를 넣으세요.
+- `js/sermons.js` — 설교. 유튜브 영상이 있으면 `youtube` 에 영상 ID(주소의 `v=` 뒤 값), 설교문은 `manuscript` 에 넣으세요.
+- `js/daily-reading.js` — 매일 성경읽기. 오늘 것을 배열 맨 앞에 추가하세요 (성경 본문 전체가 아니라 본문 범위 + 짧은 묵상 한 줄만 담습니다 — 성경 본문은 저작권이 있어 싣지 않습니다).
+- `js/dawn-prayer.js` — 새벽기도 묵상. 형식은 위와 같습니다.
 - `js/news.js` — 공지사항.
 - `about.html` — 교회 연혁(`<div class="timeline">` 부분)과 비전 소개 문구를 실제 내용으로 바꿔 주세요.
 
@@ -42,7 +44,8 @@
 - `worship.html` — 예배안내
 - `location.html` — 오시는 길 (지도는 Google 지도 임베드, API 키 불필요)
 - `bulletin.html` — 주보
-- `sermon.html` — 설교
+- `sermon.html` — 설교 (전체 목록)
+- `word.html` — 성경속으로 (교회 전경 인트로 → 이번 주 설교 영상·설교문 → 매일 성경읽기 → 새벽기도 묵상 → 지난 말씀 아카이브(`#archive`))
 - `news.html` — 공지사항
 
 메뉴 구성을 바꾸려면 `js/layout.js` 맨 위 `NAV_LINKS` 배열을 수정하세요.

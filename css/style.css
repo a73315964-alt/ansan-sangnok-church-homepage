@@ -338,3 +338,91 @@ body.nav-open .nav-mobile{ display: flex; }
 .tab-btn.active{ background: var(--accent); border-color: var(--accent); color: #fff; }
 
 .divider{ height: 1px; background: var(--border); margin: 48px 0; }
+
+/* ---------- 성경속으로 (word.html) ---------- */
+.word-hero{
+  position: relative; min-height: 64vh; display: flex; align-items: flex-end;
+  overflow: hidden; color: #fff;
+  background: var(--ink);
+}
+.word-hero-bg{
+  position: absolute; inset: 0; background-size: cover; background-position: center;
+  opacity: 0; transform: scale(1.08);
+  transition: opacity 1.4s ease, transform 1.8s ease;
+}
+.word-hero-bg.is-visible{ opacity: 1; transform: scale(1); }
+.word-hero-overlay{
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(10,14,12,.1) 0%, rgba(10,14,12,.35) 55%, rgba(10,14,12,.85) 100%);
+}
+.word-hero-content{
+  position: relative; padding-top: 48px; padding-bottom: 60px; max-width: 640px;
+  opacity: 0; transform: translateY(16px);
+  transition: opacity 1s ease .45s, transform 1s ease .45s;
+}
+.word-hero-content.is-visible{ opacity: 1; transform: translateY(0); }
+.word-hero-content .eyebrow{ color: #d9ecda; }
+.word-hero-content h1{ font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 14px; }
+.word-hero-content p{ color: rgba(255,255,255,.86); font-size: 1.05rem; margin: 0; }
+@media (max-width: 720px){ .word-hero{ min-height: 48vh; } }
+
+/* 이번 주 설교 */
+.sermon-feature{ padding: 0; overflow: hidden; }
+.sermon-feature .video-frame{
+  position: relative; width: 100%; aspect-ratio: 16/9; background: var(--ink);
+  display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.6);
+}
+.sermon-feature .video-frame iframe{ position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.sermon-feature .video-empty{ text-align: center; padding: 24px; font-size: .9rem; }
+.sermon-feature .body{ padding: 32px 34px; }
+.sermon-feature .meta{ font-size: .85rem; color: var(--muted); margin-bottom: 8px; }
+.sermon-feature h3{ font-size: 1.4rem; margin-bottom: 6px; }
+.sermon-feature .scripture{ color: var(--accent-dark); font-weight: 700; font-size: .95rem; margin-bottom: 14px; }
+.sermon-feature .quote-block{ margin: 18px 0; }
+
+.manuscript-toggle{
+  display: inline-flex; align-items: center; gap: 6px; margin-top: 6px;
+  background: none; border: none; color: var(--accent); font-weight: 700; font-size: .92rem; cursor: pointer; padding: 0;
+}
+.manuscript-toggle .arrow{ transition: transform .2s ease; display: inline-block; }
+.manuscript-toggle.open .arrow{ transform: rotate(180deg); }
+.manuscript{
+  max-height: 0; overflow: hidden; transition: max-height .35s ease;
+}
+.manuscript.open{ max-height: 4000px; }
+.manuscript-inner{
+  margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--border);
+  white-space: pre-line; font-size: .95rem; color: var(--ink-soft); line-height: 1.9;
+}
+
+.sermon-nav{ display: flex; justify-content: space-between; align-items: center; margin-top: 18px; gap: 12px; }
+.sermon-nav button{
+  background: #fff; border: 1px solid var(--border); border-radius: 999px; padding: 10px 20px;
+  font-weight: 700; font-size: .88rem; color: var(--ink-soft); cursor: pointer;
+}
+.sermon-nav button:hover:not(:disabled){ background: var(--accent-light); color: var(--accent-dark); }
+.sermon-nav button:disabled{ opacity: .4; cursor: default; }
+.sermon-nav .count{ font-size: .82rem; color: var(--muted); }
+
+/* 매일 성경읽기 / 새벽기도 묵상 */
+.devotion-card{ position: relative; }
+.devotion-card .date-badge{
+  display: inline-block; font-size: .78rem; font-weight: 700; color: var(--accent-dark);
+  background: var(--accent-light); padding: 4px 12px; border-radius: 999px; margin-bottom: 14px;
+}
+.devotion-card .range{ font-weight: 700; color: var(--accent-dark); font-size: .95rem; margin-bottom: 4px; }
+.devotion-card h3{ font-size: 1.15rem; margin-bottom: 12px; }
+.devotion-card .reflection{ font-size: .93rem; color: var(--ink-soft); margin-bottom: 0; }
+.devotion-history{ max-height: 0; overflow: hidden; transition: max-height .35s ease; }
+.devotion-history.open{ max-height: 2000px; margin-top: 14px; }
+.devotion-history .list-item{ grid-template-columns: 80px 1fr; padding: 14px 4px; }
+.devotion-history .list-item .date{ padding: 8px 4px; }
+.devotion-history .list-item .date .d{ font-size: 1.05rem; }
+.history-toggle{
+  display: inline-flex; align-items: center; gap: 6px; margin-top: 14px;
+  background: none; border: none; color: var(--accent); font-weight: 700; font-size: .88rem; cursor: pointer; padding: 0;
+}
+
+/* 아카이브 */
+.archive-list .list-item h4{ font-weight: 700; }
+

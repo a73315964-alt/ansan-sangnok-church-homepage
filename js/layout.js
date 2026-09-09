@@ -27,6 +27,7 @@
     { href: "location.html", label: "오시는길", key: "location" },
     { href: "bulletin.html", label: "주보", key: "bulletin" },
     { href: "sermon.html", label: "설교", key: "sermon" },
+    { href: "word.html", label: "성경속으로", key: "word" },
     { href: YOUTUBE_URL, label: "유튜브", key: "youtube", external: true, icon: youtubeIcon },
     { href: "news.html", label: "공지사항", key: "news" },
   ];
