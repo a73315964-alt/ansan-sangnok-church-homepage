@@ -22,7 +22,15 @@
 .vision-item { display: grid; grid-template-columns: 60px 1fr; gap: 20px; padding: 20px; background: var(--bg); border-radius: var(--radius); border-left: 4px solid var(--accent); }
 .vision-number { font-size: 1.8rem; font-weight: 800; color: var(--accent); text-align: center; }
 .vision-content h3 { margin: 0 0 8px; color: var(--ink); }
-.vision-content p { margin: 0; color: var(--ink-soft); line-height: 1.6; }
+.vision-content p { margin: 0 0 16px; color: var(--ink-soft); line-height: 1.6; }
+.vision-content p:last-child { margin: 0; }
+.mission-sub-items { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+.mission-sub-item { padding: 12px; background: rgba(41, 182, 246, 0.08); border-radius: 6px; border-left: 3px solid var(--accent); }
+.mission-sub-item strong { display: block; font-size: 0.9rem; color: var(--accent-dark); margin-bottom: 4px; }
+.mission-sub-item p { margin: 0; font-size: 0.85rem; color: var(--ink-soft); line-height: 1.6; }
+@media (max-width: 640px) {
+  .mission-sub-items { grid-template-columns: 1fr; }
+}
 </style>
 <style>
 .pastor-profile { margin: 24px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
@@ -186,6 +194,16 @@
         <div class="vision-content">
           <h3>세계선교의 교회</h3>
           <p>세계선교에 쓰임 받는 교회</p>
+          <div class="mission-sub-items">
+            <div class="mission-sub-item">
+              <strong>🌍 해외 선교</strong>
+              <p>복음을 품고 세계 선교에 헌신하는 교회</p>
+            </div>
+            <div class="mission-sub-item">
+              <strong>🏘️ 국내 선교</strong>
+              <p>지역사회를 섬기며 선교 정신을 실천하는 교회</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
