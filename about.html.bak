@@ -14,16 +14,6 @@
 <meta property="og:url" content="https://ansansangrok.or.kr/about.html">
 <meta property="og:site_name" content="안산상록교회">
 <meta property="og:locale" content="ko_KR">
-<style>
-.mission-card { text-align: center; }
-.mission-icon { font-size: 2.5rem; margin-bottom: 12px; }
-.mission-card h3 { margin: 12px 0 8px; color: var(--accent-dark); }
-.vision-list { display: flex; flex-direction: column; gap: 16px; }
-.vision-item { display: grid; grid-template-columns: 60px 1fr; gap: 20px; padding: 20px; background: var(--bg); border-radius: var(--radius); border-left: 4px solid var(--accent); }
-.vision-number { font-size: 1.8rem; font-weight: 800; color: var(--accent); text-align: center; }
-.vision-content h3 { margin: 0 0 8px; color: var(--ink); }
-.vision-content p { margin: 0; color: var(--ink-soft); line-height: 1.6; }
-</style>
 </head>
 <body data-page="about">
 
@@ -59,33 +49,29 @@
     </div>
   </div>
 </section>
+
 <section class="bg-soft">
   <div class="wrap">
     <div class="section-head">
-      <span class="eyebrow">Our Mission</span>
-      <h2>안산상록교회의 사명</h2>
-      <p>영혼 구원, 세계 선교, 세대 양육, 이단 회복의 네 가지 사명</p>
+      <span class="eyebrow">Our Vision</span>
+      <h2>교회 비전</h2>
+      <p>안산상록교회가 지향하는 세 가지 방향입니다.</p>
     </div>
-    <div class="grid grid-4">
-      <div class="card mission-card">
-        <div class="mission-icon">✝️</div>
-        <h3>영혼구원</h3>
-        <p>구원의 확신을 갖게 하여 복음의 능력을 들어내는 교회</p>
+    <div class="grid grid-3">
+      <div class="card">
+        <div class="icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 19V5a2 2 0 012-2h9l5 5v11a2 2 0 01-2 2H6a2 2 0 01-2-2z" stroke="currentColor" stroke-width="1.6"/><path d="M8 9h5M8 13h8M8 17h8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></div>
+        <h3>말씀 중심</h3>
+        <p>성경을 삶의 기준으로 삼고, 말씀을 배우고 나누는 교회가 되겠습니다.</p>
       </div>
-      <div class="card mission-card">
-        <div class="mission-icon">🌍</div>
-        <h3>세계선교</h3>
-        <p>복음을 온 세계에 전파하는 사명을 다하는 교회</p>
+      <div class="card">
+        <div class="icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 21s-7-4.35-9.5-8.5C.7 8.7 2.6 5 6.2 5c2 0 3.4 1 4.8 2.7C12.4 6 13.8 5 15.8 5c3.6 0 5.5 3.7 3.7 7.5C19 16.65 12 21 12 21z" fill="currentColor"/></svg></div>
+        <h3>기도하는 공동체</h3>
+        <p>새벽과 저녁, 함께 무릎 꿇어 기도하며 하나님의 인도하심을 구합니다.</p>
       </div>
-      <div class="card mission-card">
-        <div class="mission-icon">📚</div>
-        <h3>세대 양육</h3>
-        <p>다음 세대에게 기독교 세계관을 교육하는 교회</p>
-      </div>
-      <div class="card mission-card">
-        <div class="mission-icon">🛡️</div>
-        <h3>이단 회복</h3>
-        <p>이단에 빠진 영혼을 복음으로 회복하는 교회</p>
+      <div class="card">
+        <div class="icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6M12 12a4.5 4.5 0 100-9 4.5 4.5 0 000 9z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></div>
+        <h3>섬기는 교회</h3>
+        <p>다음세대와 이웃, 지역사회를 향한 사랑을 실천하는 교회가 되겠습니다.</p>
       </div>
     </div>
   </div>
@@ -94,63 +80,9 @@
 <section>
   <div class="wrap">
     <div class="section-head">
-      <span class="eyebrow">Our Vision</span>
-      <h2>안산상록교회의 7대 비전</h2>
-      <p>말씀 위에 굳게 서서 하나님 나라를 확장하는 비전</p>
-    </div>
-    <div class="vision-list">
-      <div class="vision-item">
-        <div class="vision-number">1</div>
-        <div class="vision-content">
-          <h3>복음 증거의 교회</h3>
-          <p>복음을 확실하게 증거하여 구원의 확신을 얻게 하는 교회</p>
-        </div>
-      </div>
-      <div class="vision-item">
-        <div class="vision-number">2</div>
-        <div class="vision-content">
-          <h3>일꾼 훈련의 교회</h3>
-          <p>성도들을 성숙한 그리스도의 일꾼으로 훈련하는 교회</p>
-        </div>
-      </div>
-      <div class="vision-item">
-        <div class="vision-number">3</div>
-        <div class="vision-content">
-          <h3>생명 예배의 교회</h3>
-          <p>살아있는 예배로 하나님께 영광돌리는 교회</p>
-        </div>
-      </div>
-      <div class="vision-item">
-        <div class="vision-number">4</div>
-        <div class="vision-content">
-          <h3>가정같은 교회</h3>
-          <p>가정같은 교회, 교회같은 가정을 이루어가는 교회</p>
-        </div>
-      </div>
-      <div class="vision-item">
-        <div class="vision-number">5</div>
-        <div class="vision-content">
-          <h3>다음세대 양성의 교회</h3>
-          <p>미래를 이끌어갈 일꾼들을 길러내는 교회</p>
-        </div>
-      </div>
-      <div class="vision-item">
-        <div class="vision-number">6</div>
-        <div class="vision-content">
-          <h3>이단 구원의 교회</h3>
-          <p>이단에 미혹된 사람들을 구원해 내는 교회</p>
-        </div>
-      </div>
-      <div class="vision-item">
-        <div class="vision-number">7</div>
-        <div class="vision-content">
-          <h3>세계선교의 교회</h3>
-          <p>세계선교에 쓰임 받는 교회</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+      <span class="eyebrow">History</span>
+      <h2>교회 연혁</h2>
+      <p>안산상록교회가 걸어온 발자취입니다. (아래 내용을 실제 연혁으로 채워 주세요)</p>
     </div>
     <div class="timeline" style="max-width:640px;margin:0 auto;">
       <div class="item">
