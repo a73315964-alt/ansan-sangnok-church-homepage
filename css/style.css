@@ -247,7 +247,18 @@ body.nav-open .nav-mobile{ display: flex; }
 .hero-info div{ background: rgba(12,28,22,.28); padding: 18px 20px; }
 .hero-info .k{ font-size: .78rem; opacity: .8; margin-bottom: 4px; }
 .hero-info .v{ font-weight: 700; font-size: 1.02rem; }
-@media (max-width: 720px){ .hero-info{ grid-template-columns: 1fr; } }
+/* 휴대폰에서는 환영 화면을 짧게 줄여, 바로 아래 둥근 바로가기가 보이게 합니다 */
+@media (max-width: 720px){
+  .hero{ padding: 40px 0 30px; }
+  .hero-tag{ margin-bottom: 13px; padding: 6px 13px; font-size: .76rem; }
+  .hero h1{ font-size: 1.82rem; margin-bottom: 12px; }
+  .hero p.lead{ font-size: .96rem; margin-bottom: 18px; }
+  .hero-actions{ margin-bottom: 20px; }
+  .hero-info{ grid-template-columns: repeat(3, 1fr); }
+  .hero-info div{ padding: 12px 9px; }
+  .hero-info .k{ font-size: .67rem; margin-bottom: 2px; }
+  .hero-info .v{ font-size: .83rem; }
+}
 
 /* ---------- Notice bar ---------- */
 .notice-bar{
@@ -530,6 +541,43 @@ body.nav-open .nav-mobile{ display: flex; }
 
 /* 아카이브 */
 .archive-list .list-item h4{ font-weight: 700; }
+
+/* ---------- 둥근 바로가기 (홈 화면) ---------- */
+.quick-round{ padding: 40px 0 12px; }
+.round-grid{
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: 22px 26px;
+}
+.round-item{ display: block; text-align: center; }
+.round-circle{
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 7px;
+  width: 132px; height: 132px; border-radius: 50%;
+  color: #fff; text-align: center;
+  box-shadow: 0 8px 20px rgba(31,39,36,.16);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.round-item:hover .round-circle{ transform: translateY(-4px); box-shadow: 0 14px 26px rgba(31,39,36,.24); }
+.round-item:active .round-circle{ transform: translateY(-1px); }
+.round-label{ font-weight: 700; font-size: .92rem; line-height: 1.28; letter-spacing: -.01em; }
+
+/* 항목마다 뜻에 맞는 색 */
+[data-q="sermon"]    .round-circle{ background: linear-gradient(150deg, #35597f, #1c3555); }
+[data-q="bulletin"]  .round-circle{ background: linear-gradient(150deg, #d0ac66, #a2803b); }
+[data-q="bible"]     .round-circle{ background: linear-gradient(150deg, #4d8b66, #2c5a41); }
+[data-q="newfamily"] .round-circle{ background: linear-gradient(150deg, #c9757a, #9c4a52); }
+[data-q="worship"]   .round-circle{ background: linear-gradient(150deg, #46899a, #2a5f6b); }
+
+@media (max-width: 720px){
+  .quick-round{ padding: 22px 0 4px; }
+  .round-grid{ gap: 16px 14px; }
+  .round-circle{ width: 104px; height: 104px; gap: 5px; }
+  .round-circle svg{ width: 22px; height: 22px; }
+  .round-label{ font-size: .82rem; }
+}
+@media (max-width: 380px){
+  .round-circle{ width: 94px; height: 94px; }
+  .round-label{ font-size: .78rem; }
+}
 
 /* ---------- 목회자 방 ---------- */
 .pr-tabs{ display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 32px; }
