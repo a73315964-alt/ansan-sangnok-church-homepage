@@ -1,6 +1,9 @@
 # Cloudflare wrangler 작업 캐시 — 저장소에 올릴 필요 없음
 .wrangler/
 
+# 로컬 미리보기 서버 설정 — 내 컴퓨터에서만 쓰는 파일
+.claude/
+
 # 윈도우/맥 탐색기가 만드는 파일
 Thumbs.db
 desktop.ini
