@@ -72,10 +72,10 @@
           { label: "01-05년 설교", href: "bulletin.html" },
           { label: "06-10년 설교", href: "bulletin.html" }
         ] },
-        { label: "목회자 방", href: "sermon.html#pastor-room", items: [
-          { label: "설교 방 · 구약", href: "sermon.html#pastor-room" },
-          { label: "설교 방 · 신약", href: "sermon.html#pastor-room" },
-          { label: "블로그에 있는 자료", href: "sermon.html#pastor-room" }
+        { label: "목회자 방", href: "pastor-room.html", items: [
+          { label: "설교 방 · 구약", href: "pastor-room.html#ot" },
+          { label: "설교 방 · 신약", href: "pastor-room.html#nt" },
+          { label: "그 외 자료", href: "pastor-room.html#etc" }
         ] }
       ]
     },
