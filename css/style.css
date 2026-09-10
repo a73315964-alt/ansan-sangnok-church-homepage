@@ -632,29 +632,43 @@ body.lb-open{ overflow: hidden; }
 .lightbox{
   position: fixed; inset: 0; z-index: 1000;
   display: flex; align-items: center; justify-content: center; gap: 8px;
-  padding: 24px; background: rgba(15, 20, 18, .92);
+  padding: 88px 24px 24px; background: rgba(12, 16, 15, .985);
 }
+
+/* 사진 위 상단 막대 — 홈으로 / 닫기 */
+.lb-bar{
+  position: absolute; top: 0; left: 0; right: 0; z-index: 2;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 13px 16px; background: rgba(0,0,0,.55);
+}
+.lb-home, .lb-close{
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 11px 20px; border-radius: 999px;
+  background: rgba(255,255,255,.18); border: 0; color: #fff; cursor: pointer;
+  font: inherit; font-weight: 700; font-size: .92rem; line-height: 1;
+  transition: background .15s ease;
+}
+.lb-home:hover, .lb-close:hover{ background: rgba(255,255,255,.34); }
+
 .lb-figure{ margin: 0; max-width: min(1100px, 100%); max-height: 100%; text-align: center; }
 .lb-figure img{
-  max-width: 100%; max-height: calc(100vh - 130px);
+  max-width: 100%; max-height: calc(100vh - 200px);
   margin: 0 auto; border-radius: 8px; object-fit: contain;
 }
 .lb-figure figcaption{
   margin-top: 14px; color: rgba(255,255,255,.85); font-size: .9rem; font-weight: 600;
 }
-.lb-close, .lb-nav{
-  flex: none; background: rgba(255,255,255,.12); border: 0; color: #fff; cursor: pointer;
+.lb-nav{
+  flex: none; width: 48px; height: 48px; font-size: 2rem;
+  background: rgba(255,255,255,.12); border: 0; color: #fff; cursor: pointer;
   border-radius: 999px; line-height: 1; transition: background .15s ease;
 }
-.lb-close:hover, .lb-nav:hover{ background: rgba(255,255,255,.26); }
-.lb-nav{ width: 48px; height: 48px; font-size: 2rem; }
-.lb-close{
-  position: absolute; top: 16px; right: 18px;
-  width: 44px; height: 44px; font-size: 1.8rem;
-}
+.lb-nav:hover{ background: rgba(255,255,255,.26); }
 @media (max-width: 600px){
-  .lightbox{ padding: 14px; gap: 4px; }
-  .lb-nav{ width: 38px; height: 38px; font-size: 1.5rem; }
-  .lb-figure img{ max-height: calc(100vh - 150px); }
+  .lightbox{ padding: 76px 10px 18px; gap: 2px; }
+  .lb-bar{ padding: 10px; }
+  .lb-home, .lb-close{ padding: 10px 15px; font-size: .86rem; }
+  .lb-nav{ width: 36px; height: 36px; font-size: 1.4rem; }
+  .lb-figure img{ max-height: calc(100vh - 210px); }
 }
 

@@ -46,7 +46,16 @@
   box.className = "lightbox";
   box.setAttribute("hidden", "");
   box.innerHTML =
-    '<button type="button" class="lb-close" aria-label="닫기">&times;</button>' +
+    '<div class="lb-bar">' +
+    '<a class="lb-home" href="index.html">' +
+    '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">' +
+    '<path fill="currentColor" d="M12 3l9 8h-3v9h-5v-6H11v6H6v-9H3l9-8z"/></svg>' +
+    "홈으로</a>" +
+    '<button type="button" class="lb-close">' +
+    '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">' +
+    '<path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>' +
+    "닫기</button>" +
+    "</div>" +
     '<button type="button" class="lb-nav lb-prev" aria-label="이전 사진">&#8249;</button>' +
     '<figure class="lb-figure"><img alt=""><figcaption></figcaption></figure>' +
     '<button type="button" class="lb-nav lb-next" aria-label="다음 사진">&#8250;</button>';
