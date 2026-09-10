@@ -565,33 +565,26 @@ body.nav-open .nav-mobile{ display: flex; }
 .round-item:active .round-circle{ transform: translateY(-1px); }
 .round-label{ font-weight: 700; font-size: .92rem; line-height: 1.28; letter-spacing: -.01em; }
 
-/* 항목마다 어울리는 사진 + 뜻에 맞는 색을 겹쳐 글씨가 잘 보이게 합니다 */
-[data-q="sermon"] .round-circle{
-  background-image: linear-gradient(158deg, rgba(28,52,84,.50), rgba(14,30,50,.84)),
-    url("https://files.ansansangrok.or.kr/photos/quick/sermon.jpg");
+/* 항목마다 뜻에 맞게 그린 그림 */
+.round-art{ width: 44px; height: 44px; flex: none; }
+.round-art .ln{
+  fill: none; stroke: #fff; stroke-width: 2.2;
+  stroke-linecap: round; stroke-linejoin: round;
 }
-[data-q="bulletin"] .round-circle{
-  background-image: linear-gradient(158deg, rgba(116,88,36,.52), rgba(72,52,16,.86)),
-    url("https://files.ansansangrok.or.kr/photos/quick/bulletin.jpg");
-}
-[data-q="bible"] .round-circle{
-  background-image: linear-gradient(158deg, rgba(34,74,52,.52), rgba(18,46,30,.86)),
-    url("https://files.ansansangrok.or.kr/photos/quick/bible.jpg");
-}
-[data-q="newfamily"] .round-circle{
-  background-image: linear-gradient(158deg, rgba(114,44,50,.52), rgba(74,24,30,.86)),
-    url("https://files.ansansangrok.or.kr/photos/quick/newfamily.jpg");
-}
-[data-q="worship"] .round-circle{
-  background-image: linear-gradient(158deg, rgba(30,74,86,.52), rgba(16,48,58,.86)),
-    url("https://files.ansansangrok.or.kr/photos/quick/worship.jpg");
-}
+.round-art .soft{ fill: rgba(255,255,255,.45); }
+
+/* 항목마다 뜻에 맞는 색 */
+[data-q="sermon"]    .round-circle{ background-image: linear-gradient(155deg, #3b6087, #16304f); }
+[data-q="bulletin"]  .round-circle{ background-image: linear-gradient(155deg, #cfa963, #8d6c2c); }
+[data-q="bible"]     .round-circle{ background-image: linear-gradient(155deg, #4f8f68, #235139); }
+[data-q="newfamily"] .round-circle{ background-image: linear-gradient(155deg, #c4767c, #8b3f47); }
+[data-q="worship"]   .round-circle{ background-image: linear-gradient(155deg, #4a8d9e, #23545f); }
 
 @media (max-width: 720px){
   .quick-round{ padding: 22px 0 4px; }
   .round-grid{ gap: 16px 14px; }
-  .round-circle{ width: 104px; height: 104px; gap: 5px; }
-  .round-circle svg{ width: 22px; height: 22px; }
+  .round-circle{ width: 104px; height: 104px; gap: 4px; }
+  .round-art{ width: 35px; height: 35px; }
   .round-label{ font-size: .82rem; }
 }
 @media (max-width: 380px){
