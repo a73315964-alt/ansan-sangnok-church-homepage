@@ -543,7 +543,9 @@ body.nav-open .nav-mobile{ display: flex; }
 .archive-list .list-item h4{ font-weight: 700; }
 
 /* ---------- 둥근 바로가기 (홈 화면) ---------- */
-.quick-round{ padding: 40px 0 12px; }
+.quick-round{ padding: 48px 0 12px; }
+.quick-round .section-head{ margin-bottom: 30px; }
+.quick-round .section-head h2{ font-size: clamp(1.35rem, 2.6vw, 1.8rem); }
 .round-grid{
   display: flex; flex-wrap: wrap; justify-content: center;
   gap: 22px 26px;
@@ -581,7 +583,9 @@ body.nav-open .nav-mobile{ display: flex; }
 [data-q="worship"]   .round-circle{ background-image: linear-gradient(155deg, #4a8d9e, #23545f); }
 
 @media (max-width: 720px){
-  .quick-round{ padding: 22px 0 4px; }
+  .quick-round{ padding: 30px 0 4px; }
+  .quick-round .section-head{ margin-bottom: 20px; }
+  .quick-round .section-head p{ font-size: .92rem; }
   .round-grid{ gap: 16px 14px; }
   .round-circle{ width: 104px; height: 104px; gap: 4px; }
   .round-art{ width: 35px; height: 35px; }
