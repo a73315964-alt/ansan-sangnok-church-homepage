@@ -531,3 +531,55 @@ body.nav-open .nav-mobile{ display: flex; }
 /* 아카이브 */
 .archive-list .list-item h4{ font-weight: 700; }
 
+/* ---------- 갤러리 ---------- */
+.gallery-grid{
+  display: grid; gap: 18px;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+}
+.gallery-item{
+  display: block; width: 100%; padding: 0; cursor: pointer; text-align: left;
+  background: var(--paper); border: 1px solid var(--border); border-radius: var(--radius);
+  overflow: hidden; font: inherit; color: inherit;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.gallery-item:hover{ transform: translateY(-3px); box-shadow: var(--shadow); }
+.gallery-item img{
+  width: 100%; aspect-ratio: 4 / 3; object-fit: cover;
+  background: var(--paper-soft);
+}
+.gallery-caption{
+  display: block; padding: 12px 14px;
+  font-size: .87rem; font-weight: 600; color: var(--ink-soft);
+}
+
+/* 사진 크게 보기 */
+body.lb-open{ overflow: hidden; }
+.lightbox{
+  position: fixed; inset: 0; z-index: 1000;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 24px; background: rgba(15, 20, 18, .92);
+}
+.lb-figure{ margin: 0; max-width: min(1100px, 100%); max-height: 100%; text-align: center; }
+.lb-figure img{
+  max-width: 100%; max-height: calc(100vh - 130px);
+  margin: 0 auto; border-radius: 8px; object-fit: contain;
+}
+.lb-figure figcaption{
+  margin-top: 14px; color: rgba(255,255,255,.85); font-size: .9rem; font-weight: 600;
+}
+.lb-close, .lb-nav{
+  flex: none; background: rgba(255,255,255,.12); border: 0; color: #fff; cursor: pointer;
+  border-radius: 999px; line-height: 1; transition: background .15s ease;
+}
+.lb-close:hover, .lb-nav:hover{ background: rgba(255,255,255,.26); }
+.lb-nav{ width: 48px; height: 48px; font-size: 2rem; }
+.lb-close{
+  position: absolute; top: 16px; right: 18px;
+  width: 44px; height: 44px; font-size: 1.8rem;
+}
+@media (max-width: 600px){
+  .lightbox{ padding: 14px; gap: 4px; }
+  .lb-nav{ width: 38px; height: 38px; font-size: 1.5rem; }
+  .lb-figure img{ max-height: calc(100vh - 150px); }
+}
+
