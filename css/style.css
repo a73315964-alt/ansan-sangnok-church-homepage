@@ -547,25 +547,45 @@ body.nav-open .nav-mobile{ display: flex; }
 .round-grid{
   display: flex; flex-wrap: wrap; justify-content: center;
   gap: 22px 26px;
+  max-width: 480px; margin: 0 auto;
 }
+/* 윗줄 3개 · 아랫줄 2개로 고정해 좌우 균형을 맞춥니다 */
+.round-break{ flex-basis: 100%; height: 0; }
 .round-item{ display: block; text-align: center; }
 .round-circle{
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 7px;
   width: 132px; height: 132px; border-radius: 50%;
   color: #fff; text-align: center;
-  box-shadow: 0 8px 20px rgba(31,39,36,.16);
+  background-size: cover; background-position: center;
+  text-shadow: 0 1px 3px rgba(0,0,0,.5);
+  box-shadow: 0 8px 20px rgba(31,39,36,.18);
   transition: transform .18s ease, box-shadow .18s ease;
 }
-.round-item:hover .round-circle{ transform: translateY(-4px); box-shadow: 0 14px 26px rgba(31,39,36,.24); }
+.round-item:hover .round-circle{ transform: translateY(-4px); box-shadow: 0 14px 26px rgba(31,39,36,.28); }
 .round-item:active .round-circle{ transform: translateY(-1px); }
 .round-label{ font-weight: 700; font-size: .92rem; line-height: 1.28; letter-spacing: -.01em; }
 
-/* 항목마다 뜻에 맞는 색 */
-[data-q="sermon"]    .round-circle{ background: linear-gradient(150deg, #35597f, #1c3555); }
-[data-q="bulletin"]  .round-circle{ background: linear-gradient(150deg, #d0ac66, #a2803b); }
-[data-q="bible"]     .round-circle{ background: linear-gradient(150deg, #4d8b66, #2c5a41); }
-[data-q="newfamily"] .round-circle{ background: linear-gradient(150deg, #c9757a, #9c4a52); }
-[data-q="worship"]   .round-circle{ background: linear-gradient(150deg, #46899a, #2a5f6b); }
+/* 항목마다 어울리는 사진 + 뜻에 맞는 색을 겹쳐 글씨가 잘 보이게 합니다 */
+[data-q="sermon"] .round-circle{
+  background-image: linear-gradient(158deg, rgba(28,52,84,.50), rgba(14,30,50,.84)),
+    url("https://files.ansansangrok.or.kr/photos/quick/sermon.jpg");
+}
+[data-q="bulletin"] .round-circle{
+  background-image: linear-gradient(158deg, rgba(116,88,36,.52), rgba(72,52,16,.86)),
+    url("https://files.ansansangrok.or.kr/photos/quick/bulletin.jpg");
+}
+[data-q="bible"] .round-circle{
+  background-image: linear-gradient(158deg, rgba(34,74,52,.52), rgba(18,46,30,.86)),
+    url("https://files.ansansangrok.or.kr/photos/quick/bible.jpg");
+}
+[data-q="newfamily"] .round-circle{
+  background-image: linear-gradient(158deg, rgba(114,44,50,.52), rgba(74,24,30,.86)),
+    url("https://files.ansansangrok.or.kr/photos/quick/newfamily.jpg");
+}
+[data-q="worship"] .round-circle{
+  background-image: linear-gradient(158deg, rgba(30,74,86,.52), rgba(16,48,58,.86)),
+    url("https://files.ansansangrok.or.kr/photos/quick/worship.jpg");
+}
 
 @media (max-width: 720px){
   .quick-round{ padding: 22px 0 4px; }
