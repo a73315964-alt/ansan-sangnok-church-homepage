@@ -91,9 +91,7 @@
           { label: "이달의 책", href: "library.html" },
           { label: "디지털 도서", href: "library.html" }
         ] },
-        { label: "바른 신앙을 위하여", href: "education.html#faith", items: [
-          { label: "시리즈 내용", href: "education.html#faith" }
-        ] },
+        { label: "바른 신앙을 위하여", href: "faith.html" },
         { label: "궁금해요", href: "education.html#qna", items: [
           { label: "성경에 대한 궁금증", href: "education.html#qna" }
         ] }
