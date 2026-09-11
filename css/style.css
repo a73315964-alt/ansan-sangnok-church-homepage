@@ -695,8 +695,11 @@ body.nav-open .nav-mobile{ display: flex; }
 .faith-list a:hover .faith-go{ color: var(--accent); }
 .faith-note{ margin-top: 20px; text-align: center; color: var(--muted); font-size: .85rem; }
 
-/* 본문은 양쪽 줄 맞추기 — 한글은 낱말 중간에서 끊기지 않게 합니다 */
-.faith-intro p, .faith-sec p, .faith-closing p{
+/* 긴 글은 양쪽 줄 맞추기 — 한글은 낱말 중간에서 끊기지 않게 합니다
+   (바른 신앙의 길잡이 · 신천지 강의안 · 목회자 방 설교문) */
+.faith-intro p, .faith-sec p, .faith-closing p,
+.lec-goal p,
+.pr-article p:not(.pr-kicker):not(.pr-date){
   text-align: justify;
   word-break: keep-all;
   overflow-wrap: break-word;
