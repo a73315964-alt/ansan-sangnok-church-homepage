@@ -105,7 +105,7 @@
         { label: "경계해야 할 이단", href: "cult.html#watch", items: [
           { label: "각종 이단에 대한 자료", href: "cult.html#watch" },
           { label: "구원파", href: "cult.html#watch" },
-          { label: "신천지", href: "cult.html#watch" },
+          { label: "신천지", href: "sincheonji.html" },
           { label: "여호와의 증인", href: "cult.html#watch" },
           { label: "안식교", href: "cult.html#watch" },
           { label: "하나님의 교회", href: "cult.html#watch" },
