@@ -695,6 +695,12 @@ body.nav-open .nav-mobile{ display: flex; }
 .faith-list a:hover .faith-go{ color: var(--accent); }
 .faith-note{ margin-top: 20px; text-align: center; color: var(--muted); font-size: .85rem; }
 
+/* 본문은 양쪽 줄 맞추기 — 한글은 낱말 중간에서 끊기지 않게 합니다 */
+.faith-intro p, .faith-sec p, .faith-closing p{
+  text-align: justify;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
 .faith-intro p{ font-size: 1.02rem; line-height: 1.95; color: var(--ink-soft); }
 .faith-sec{ margin-top: 34px; }
 .faith-sec h3{
