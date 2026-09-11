@@ -68,9 +68,8 @@
           { label: "특강 및 세미나", href: "sermon.html#seminar" },
           { label: "사도신경을 왜 고백하는가", href: "sermon.html#seminar" }
         ] },
-        { label: "주보에 실린 말씀의 창", href: "bulletin.html", items: [
-          { label: "01-05년 설교", href: "bulletin.html" },
-          { label: "06-10년 설교", href: "bulletin.html" }
+        { label: "주보에 실린 말씀의 창", href: "word-window.html", items: [
+          { label: "2020년 설교 요약", href: "word-window.html?y=2020" }
         ] },
         { label: "목회자 방", href: "pastor-room.html", items: [
           { label: "설교 방 · 구약", href: "pastor-room.html#ot" },

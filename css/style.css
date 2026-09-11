@@ -695,6 +695,15 @@ body.nav-open .nav-mobile{ display: flex; }
 .faith-list a:hover .faith-go{ color: var(--accent); }
 .faith-note{ margin-top: 20px; text-align: center; color: var(--muted); font-size: .85rem; }
 
+/* 주보에 실린 말씀의 창 — 연도별 묶음 */
+.ww-year + .ww-year{ margin-top: 44px; }
+.ww-year h2{
+  font-size: 1.2rem; margin-bottom: 16px; padding-bottom: 10px;
+  border-bottom: 2px solid var(--accent);
+}
+.ww-year h2 span{ color: var(--muted); font-size: .85rem; font-weight: 600; }
+.ww-year .faith-no{ background: var(--accent-dark); font-size: .74rem; }
+
 /* 긴 글은 양쪽 줄 맞추기 (바른 신앙의 길잡이 · 신천지 강의안 · 목회자 방 설교문)
    한글은 인쇄물처럼 글자 단위로 줄을 넘겨야 단어 사이가 벌어지지 않습니다 */
 .faith-intro p, .faith-sec p, .faith-closing p,
