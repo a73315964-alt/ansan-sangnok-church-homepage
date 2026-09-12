@@ -22,9 +22,7 @@
         { label: "주일 설교", href: "sermon.html" },
         { label: "주보", href: "bulletin.html" },
         { label: "성경 속으로", href: "word.html", items: [
-          { label: "생명의 삶", href: "word.html#dailyReadingWrap" },
-          { label: "성경 읽어주기", href: "word.html#dailyReadingWrap" },
-          { label: "묵상의 글", href: "word.html#dawnPrayerWrap" },
+          { label: "생명의 삶(QT)", href: "word.html#dailyReadingWrap" },
           { label: "성경 읽기", href: "word.html#archive" },
           { label: "성경 전권 읽기 안내표", href: "word.html#archive" }
         ] },
