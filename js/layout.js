@@ -27,7 +27,9 @@
           { label: "성경 전권 읽기 안내표", href: "word.html#archive" }
         ] },
         { label: "새가족 등록", href: "worship.html#newcomer" },
-        { label: "예배시간 안내", href: "worship.html" }
+        { label: "예배시간 안내", href: "worship.html", items: [
+          { label: "금주의 말씀", href: "word.html#thisweek" }
+        ] }
       ]
     },
     {
