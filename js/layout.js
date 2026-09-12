@@ -121,7 +121,7 @@
       key: "community", label: "우리들의 이야기", href: "community.html",
       groups: [
         { label: "금주의 소식", href: "news.html", items: [
-          { label: "공지사항", href: "news.html" },
+          { label: "교회 소식 및 게시판", href: "news.html" },
           { label: "중보 기도 제목", href: "news.html" }
         ] },
         { label: "남 전도회", href: "community.html#men", items: [

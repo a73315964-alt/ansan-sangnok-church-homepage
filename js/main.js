@@ -100,7 +100,7 @@
     if (!host) return;
     var items = (window.NEWS || []).slice(0, limit || undefined);
     if (!items.length) {
-      host.innerHTML = '<div class="empty-state">등록된 공지사항이 없습니다.</div>';
+      host.innerHTML = '<div class="empty-state">등록된 소식이 없습니다.</div>';
       return;
     }
     host.innerHTML = items.map(function (n) {
