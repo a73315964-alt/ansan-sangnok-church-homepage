@@ -695,6 +695,14 @@ body.nav-open .nav-mobile{ display: flex; }
 .faith-list a:hover .faith-go{ color: var(--accent); }
 .faith-note{ margin-top: 20px; text-align: center; color: var(--muted); font-size: .85rem; }
 
+/* 금주의 말씀 — 설교문 안의 소제목 */
+.tw-head{
+  margin: 28px 0 12px; padding-bottom: 8px;
+  font-size: 1.05rem; color: var(--accent-dark);
+  border-bottom: 1px solid var(--border);
+}
+.tw-head:first-child{ margin-top: 0; }
+
 /* 주보에 실린 말씀의 창 — 연도별 묶음 */
 .ww-year + .ww-year{ margin-top: 44px; }
 .ww-year h2{

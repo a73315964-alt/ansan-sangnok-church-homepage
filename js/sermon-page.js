@@ -10,6 +10,43 @@
     });
   }
 
+  /* 금주의 말씀 — 맨 앞(최신) 설교를 제목·본문과 함께 전문으로 보여줍니다 */
+  function renderThisWeek() {
+    var host = document.getElementById("thisWeekBox");
+    if (!host) return;
+    var s = (window.SERMONS || [])[0];
+    if (!s) {
+      host.innerHTML = '<div class="empty-state">등록된 설교가 없습니다.</div>';
+      return;
+    }
+
+    var body = "";
+    if (s.manuscript) {
+      body = s.manuscript.split("\n").map(function (line) {
+        var t = line.trim();
+        if (!t) return "";
+        // 서론 / 결론 / "1." 로 시작하는 줄은 소제목으로 봅니다
+        if (/^(서\s*론|결\s*론)$/.test(t) || /^\d+\.\s/.test(t)) {
+          return '<h3 class="tw-head">' + esc(t) + "</h3>";
+        }
+        return "<p>" + esc(t) + "</p>";
+      }).join("");
+    } else {
+      body = "<p>설교문은 준비 중입니다.</p>";
+    }
+
+    host.innerHTML =
+      '<article class="lec">' +
+      '<header class="lec-head">' +
+      '<p class="lec-kicker">' + esc(s.dateLabel) + " · " + esc(s.series || "주일예배") + "</p>" +
+      "<h2>" + esc(s.title) + "</h2>" +
+      '<p class="lec-meta">본문 ' + esc(s.scripture) + " &nbsp;·&nbsp; " + esc(s.preacher) + "</p>" +
+      "</header>" +
+      (s.summary ? '<div class="lec-goal"><p>' + esc(s.summary) + "</p></div>" : "") +
+      '<div class="faith-intro">' + body + "</div>" +
+      "</article>";
+  }
+
   function renderYoutube() {
     var host = document.getElementById("ytFeature");
     if (!host) return;
@@ -102,6 +139,7 @@
   }
 
   document.addEventListener("DOMContentLoaded", function () {
+    renderThisWeek();
     renderYoutube();
     renderTabs();
     renderArchive();
