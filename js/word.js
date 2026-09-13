@@ -85,11 +85,15 @@
       return;
     }
     var today = list[0];
+    var scriptureHtml = today.scripture
+      ? '<div class="scripture-text"><pre>' + esc(today.scripture) + '</pre></div>'
+      : '';
     host.innerHTML =
       '<span class="date-badge">' + esc(today.dateLabel) + "</span>" +
       (opts.series ? '<div class="range">' + esc(today.series) + "</div>" : "") +
       '<div class="range">' + esc(today.range) + "</div>" +
       "<h3>" + esc(today.title || "") + "</h3>" +
+      scriptureHtml +
       '<p class="reflection">' + esc(today.reflection) + "</p>";
   }
 

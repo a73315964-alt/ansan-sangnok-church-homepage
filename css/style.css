@@ -528,6 +528,8 @@ body.nav-open .nav-mobile{ display: flex; }
 }
 .devotion-card .range{ font-weight: 700; color: var(--accent-dark); font-size: .95rem; margin-bottom: 4px; }
 .devotion-card h3{ font-size: 1.15rem; margin-bottom: 12px; }
+.devotion-card .scripture-text{ background: var(--bg-soft); padding: 14px; border-radius: 8px; margin-bottom: 14px; border-left: 3px solid var(--accent); }
+.devotion-card .scripture-text pre{ font-family: inherit; white-space: pre-wrap; word-wrap: break-word; margin: 0; font-size: .92rem; line-height: 1.6; color: var(--ink); }
 .devotion-card .reflection{ font-size: .93rem; color: var(--ink-soft); margin-bottom: 0; }
 .devotion-history{ max-height: 0; overflow: hidden; transition: max-height .35s ease; }
 .devotion-history.open{ max-height: 2000px; margin-top: 14px; }
