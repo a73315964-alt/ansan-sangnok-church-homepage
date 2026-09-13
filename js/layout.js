@@ -74,7 +74,8 @@
         { label: "목회자 방", href: "pastor-room.html", items: [
           { label: "설교 방 · 구약", href: "pastor-room.html#ot" },
           { label: "설교 방 · 신약", href: "pastor-room.html#nt" },
-          { label: "그 외 자료", href: "pastor-room.html#etc" }
+          { label: "그 외 자료", href: "pastor-room.html#etc" },
+          { label: "목회 도서관", href: "pastoral-library.html" }
         ] }
       ]
     },
