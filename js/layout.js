@@ -43,8 +43,8 @@
           { label: "안수집사", href: "about.html#people" }
         ] },
         { label: "교회와 역사", href: "about.html#history", items: [
-          { label: "연혁", href: "about.html#history" },
-          { label: "장로교회란?", href: "about.html#presbyterian" }
+          { label: "개혁교회란", href: "reformed-church.html" },
+          { label: "안산상록교회 연혁", href: "about.html#history" }
         ] },
         { label: "예배안내", href: "worship.html", items: [
           { label: "주일 낮", href: "worship.html" },
