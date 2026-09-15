@@ -59,6 +59,9 @@
       <div class="quote-block">"오직 성경(Sola Scriptura), 오직 그리스도(Sola Christus), 오직 믿음(Sola Fide)"</div>
       <p>안산상록교회는 종교개혁의 핵심인 다섯 개의 '오직(Sola)'과 장로교 전통을 따르고 있습니다. 개혁교회는 성경의 권위성, 하나님의 주권, 만인사제설을 강조하는 기독교 전통입니다.</p>
       <p>아래에서 개혁교회의 역사, 신학적 배경, 그리고 우리가 지향하는 신앙의 방향을 보실 수 있습니다.</p>
+      <div style="margin-top:24px;text-align:center;">
+        <button class="btn btn-primary" id="toggleViewer" style="cursor:pointer;">누리기</button>
+      </div>
     </div>
   </div>
 </section>
@@ -141,5 +144,11 @@
 <script src="js/config.js"></script>
 <script src="js/layout.js"></script>
 <script src="js/main.js"></script>
+<script>
+  document.getElementById('toggleViewer').addEventListener('click', function() {
+    const viewer = document.querySelector('.pptx-container');
+    viewer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+</script>
 </body>
 </html>
