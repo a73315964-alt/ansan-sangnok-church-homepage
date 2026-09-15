@@ -264,9 +264,12 @@
     </div>
 
     <div style="margin-top:48px;">
-      <h3 style="text-align:center;margin-bottom:24px;">우리의 교회의 뿌리 연혁</h3>
-      <div style="background:var(--bg-soft);border-radius:var(--radius);padding:20px;margin-bottom:20px;">
-        <p style="margin-top:0;color:var(--ink-soft);">안산상록교회의 역사와 성장 과정을 소개하는 자료입니다.</p>
+      <h3 style="text-align:center;margin-bottom:24px;">우리 교회의 연혁</h3>
+      <div style="background:var(--bg-soft);border-radius:var(--radius);padding:40px 20px;margin-bottom:20px;text-align:center;">
+        <p style="margin-bottom:24px;color:var(--ink-soft);">안산상록교회의 역사와 성장 과정을 소개하는 자료입니다.</p>
+        <button class="btn btn-primary" id="toggleChurchHistory" style="cursor:pointer;">누리기</button>
+      </div>
+      <div id="churchHistoryViewer" style="display:none;background:var(--bg-soft);border-radius:var(--radius);padding:20px;margin-bottom:20px;">
         <iframe
           style="width:100%;min-height:600px;border:1px solid var(--border);border-radius:6px;background:white;"
           src="https://view.officeapps.live.com/op/view.aspx?src=https://ansansangrok.or.kr/files/church-introduction.pptx"
@@ -298,5 +301,14 @@
 <script src="js/config.js"></script>
 <script src="js/layout.js"></script>
 <script src="js/main.js"></script>
+<script>
+  document.getElementById('toggleChurchHistory').addEventListener('click', function() {
+    const viewer = document.getElementById('churchHistoryViewer');
+    if (viewer.style.display === 'none') {
+      viewer.style.display = 'block';
+      viewer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+</script>
 </body>
 </html>

@@ -44,7 +44,7 @@
         ] },
         { label: "교회와 역사", href: "about.html#history", items: [
           { label: "개혁교회란", href: "reformed-church.html" },
-          { label: "우리의 교회의 뿌리 연혁", href: "about.html#history" }
+          { label: "우리 교회의 연혁", href: "about.html#history" }
         ] },
         { label: "예배안내", href: "worship.html", items: [
           { label: "주일 낮", href: "worship.html" },
