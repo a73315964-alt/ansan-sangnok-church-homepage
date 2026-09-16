@@ -270,11 +270,12 @@
         <button class="btn btn-primary" id="toggleChurchHistory" style="cursor:pointer;">누리기</button>
       </div>
       <div id="churchHistoryViewer" style="display:none;background:var(--bg-soft);border-radius:var(--radius);padding:20px;margin-bottom:20px;">
-        <iframe
-          style="width:100%;min-height:600px;border:1px solid var(--border);border-radius:6px;background:white;"
-          src="https://view.officeapps.live.com/op/view.aspx?src=https://ansansangrok.or.kr/files/church-introduction.pptx"
-          allowfullscreen="true">
-        </iframe>
+        <video
+          style="width:100%;aspect-ratio:16/9;border:1px solid var(--border);border-radius:6px;background:#000;display:block;"
+          controls preload="metadata" playsinline>
+          <source src="https://pub-99c15a82640946aaa82a9599d5c14d6b.r2.dev/videos/church-introduction.mp4" type="video/mp4">
+          이 브라우저에서는 영상을 재생할 수 없습니다.
+        </video>
         <a href="files/church-introduction.pptx" class="btn btn-outline" style="margin-top:16px;" download="안산상록교회를_소개합니다.pptx">
           📥 PowerPoint 다운로드
         </a>
@@ -302,12 +303,11 @@
 <script src="js/layout.js"></script>
 <script src="js/main.js"></script>
 <script>
-  document.getElementById('toggleChurchHistory').addEventListener('click', function() {
-    const viewer = document.getElementById('churchHistoryViewer');
-    if (viewer.style.display === 'none') {
-      viewer.style.display = 'block';
-      viewer.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+  document.getElementById('toggleChurchHistory').addEventListener('click', function () {
+    var viewer = document.getElementById('churchHistoryViewer');
+    viewer.style.display = 'block';
+    viewer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    viewer.querySelector('video').play();
   });
 </script>
 </body>
