@@ -75,8 +75,8 @@
     $("pendingPanel").hidden = pending.length === 0;
     $("pendingRows").innerHTML = pending.map(function (p) {
       return "<tr><td>" + esc(p.name) + "</td><td>" + esc(p.email) + "</td><td>" + BR.fmtFull(new Date(p.joined_at)) + "</td>" +
-        '<td style="display:flex;gap:6px;"><button class="mini-btn primary" data-approve="' + p.user_id + '">승인</button>' +
-        '<button class="mini-btn danger" data-reject="' + p.user_id + '">거절</button></td></tr>';
+        '<td style="display:flex;gap:6px;"><button class="mini-btn primary" data-approve="' + p.user_id + '">정회원 등록</button>' +
+        '<button class="mini-btn" data-reject="' + p.user_id + '">회원관리에서 처리</button></td></tr>';
     }).join("");
   }
 
@@ -150,18 +150,15 @@
 
   /* ---------- 동작 ---------- */
 
+  // 승인·거절은 최고 관리자만 — SQL실행하기/08_member_verification.sql 의 함수 사용
   async function setApproved(id, approved) {
-    var res = await window.SB.from("profiles").update({ approved: approved }).eq("id", id);
+    var res = await window.SB.rpc("admin_set_approved", { target: id, approve: approved, link_member: null });
     if (res.error) { alert("변경하지 못했습니다: " + res.error.message); return; }
     await load();
   }
 
-  async function reject(id) {
-    var p = pending.find(function (x) { return x.user_id === id; });
-    if (!confirm((p ? p.name : "이 분") + "의 가입 신청을 거절할까요?")) return;
-    var res = await window.SB.from("profiles").delete().eq("id", id);
-    if (res.error) { alert("거절하지 못했습니다: " + res.error.message); return; }
-    await load();
+  function reject() {
+    location.href = "site-members.html#pending"; // 삭제·정지는 홈페이지 회원관리에서
   }
 
   async function saveStart() {

@@ -39,8 +39,13 @@
       $("emailText").textContent = session.user.email;
       $("roleText").innerHTML = '<span class="badge ' + (role || "member") + '">' + (ROLE_LABEL[role] || "회원") + "</span>";
       $("approvedText").innerHTML = profile && profile.approved
-        ? '<span class="badge ok">승인됨</span>'
-        : '<span class="badge wait">승인 대기</span><span class="desc" style="margin:0;">관리자가 승인하면 성경읽기 기록을 시작할 수 있습니다.</span>';
+        ? '<span class="badge ok">정회원</span><span class="desc" style="margin:0;">' + (profile.verify_method === "auto" ? "교적 정보로 인증됨" : "관리자 등록") + "</span>"
+        : '<span class="badge wait">승인 대기</span><span class="desc" style="margin:0;">교적에서 확인되지 않았습니다. 아래에서 다시 대조하거나 관리자 등록을 기다려 주세요.</span>';
+      $("verifyPanel").hidden = !!(profile && profile.approved);
+      if (profile) {
+        $("vName").value = profile.name || "";
+        $("vBirth").value = profile.birth_date || "";
+      }
       $("joinedText").textContent = fmt(session.user.created_at);
 
       var n = reads.count || 0;
@@ -51,8 +56,8 @@
       if (role) {
         $("adminPanel").hidden = false;
         $("adminDesc").textContent = role === "super"
-          ? "최고 관리자는 관리자 임명·해제와 회원 계정 삭제까지 할 수 있습니다."
-          : "관리자는 교적부, 성경읽기 관리, 회원 승인을 할 수 있습니다.";
+          ? "최고 관리자는 정회원 등록, 회원 정지·삭제, 관리자 임명까지 할 수 있습니다."
+          : "관리자는 교적부와 성경읽기 관리를 할 수 있습니다.";
       }
       $("main").hidden = false;
     } catch (err) {
@@ -67,6 +72,21 @@
       $("nameMsg").textContent = res.error ? "저장 실패: " + res.error.message : "저장했습니다.";
       $("nameMsg").className = "desc " + (res.error ? "bad" : "good");
       if (!res.error) await window.SB.auth.updateUser({ data: { name: $("nameInput").value.trim() } }); // 상단 메뉴 이름도 갱신
+    });
+
+    $("verifyForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+      var msg = $("verifyMsg");
+      var res = await window.SB.rpc("verify_me", { p_name: $("vName").value.trim(), p_birth: $("vBirth").value || null });
+      if (res.error) { msg.textContent = "확인 실패: " + res.error.message; msg.className = "desc bad"; return; }
+      if (res.data === true) {
+        msg.textContent = "교적에서 확인되어 정회원으로 인증되었습니다.";
+        msg.className = "desc good";
+        setTimeout(function () { location.reload(); }, 1000);
+      } else {
+        msg.textContent = "교적에서 일치하는 분을 찾지 못했습니다. 성명·생년월일을 확인하시거나 교회 사무실에 문의해 주세요.";
+        msg.className = "desc bad";
+      }
     });
 
     $("pwForm").addEventListener("submit", async function (e) {

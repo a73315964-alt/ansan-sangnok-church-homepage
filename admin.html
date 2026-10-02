@@ -58,38 +58,21 @@
     <div class="quick">
       <a href="gyojeok.html"><b>교적부 →</b><span>교인기록카드 등록·수정, 가족사항, 카드 인쇄</span></a>
       <a href="bible-admin.html"><b>성경읽기 관리 →</b><span>성도별 진도 점검, 시작일 설정, CSV</span></a>
-      <a href="#members"><b>회원관리 ↓</b><span>가입 승인, 관리자 임명, 계정 관리</span></a>
+      <a href="site-members.html"><b>홈페이지 회원관리 →</b><span>정회원 승인, 정지, 삭제, 교적 연결, 관리자 임명</span></a>
     </div>
 
-    <div class="panel" id="members">
+    <div class="panel">
       <div class="panel-head">
         <div>
-          <h2>회원관리</h2>
-          <p class="desc" id="roleDesc" style="margin:4px 0 0;"></p>
+          <h2>승인 대기 가입자</h2>
+          <p class="desc" style="margin:4px 0 0;">성명·생년월일이 교적과 일치하지 않아 자동 인증되지 않은 분들입니다.</p>
         </div>
-      </div>
-
-      <form class="appoint" id="appointForm" hidden>
-        <b style="font-size:.88rem;">관리자 임명</b>
-        <input type="email" id="appointEmail" placeholder="관리자로 임명할 이메일" required>
-        <button type="submit" class="mini-btn primary" style="padding:9px 14px;">임명</button>
-        <span class="muted">아직 가입하지 않은 이메일도 미리 임명할 수 있습니다. 그 이메일로 가입하면 자동으로 승인됩니다.</span>
-      </form>
-
-      <div class="toolbar">
-        <input type="search" id="searchBox" placeholder="이름·이메일 검색">
-        <select id="filterSel">
-          <option value="all">전체</option>
-          <option value="pending">승인 대기</option>
-          <option value="admins">관리자</option>
-          <option value="unconfirmed">메일 확인 안 됨</option>
-        </select>
-        <span class="muted" id="countBadge" style="margin-left:auto;"></span>
+        <a href="site-members.html#pending" class="mini-btn primary">홈페이지 회원관리에서 처리 →</a>
       </div>
       <div class="table-scroll">
         <table class="grid">
-          <thead><tr><th>이름</th><th>이메일</th><th>권한</th><th>상태</th><th>가입일</th><th>마지막 로그인</th><th>성경읽기</th><th></th></tr></thead>
-          <tbody id="rows"><tr><td colspan="8" class="empty">불러오는 중…</td></tr></tbody>
+          <thead><tr><th>성명</th><th>생년월일</th><th>이메일</th><th>가입일</th></tr></thead>
+          <tbody id="rows"><tr><td colspan="4" class="empty">불러오는 중…</td></tr></tbody>
         </table>
       </div>
     </div>

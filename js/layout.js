@@ -153,7 +153,7 @@
       key: "admin", label: "교회 행정", href: "admin.html", private: true,
       groups: [
         { label: "관리자 대시보드", href: "admin.html" },
-        { label: "회원관리", href: "admin.html#members" },
+        { label: "홈페이지 회원관리", href: "site-members.html" },
         { label: "교적부", href: "gyojeok.html", items: [
           { label: "성도 목록", href: "gyojeok.html" },
           { label: "새 성도 등록", href: "gyojeok.html#new" }

@@ -56,6 +56,17 @@
       </dl>
     </div>
 
+    <div class="panel" id="verifyPanel" hidden>
+      <h2>정회원 인증 (교적 대조)</h2>
+      <p class="desc">교적부에 등록된 성명·생년월일과 같게 입력하면 바로 정회원으로 인증됩니다.</p>
+      <form id="verifyForm" class="settings-row">
+        <input id="vName" class="inline-input" placeholder="성명" required maxlength="30">
+        <input id="vBirth" class="inline-input" type="date" required>
+        <button type="submit" class="mini-btn primary" style="padding:9px 14px;">교적과 대조</button>
+        <span class="desc" id="verifyMsg" style="margin:0;"></span>
+      </form>
+    </div>
+
     <div class="panel">
       <h2>1년 성경읽기</h2>
       <p class="desc" id="readingLine">불러오는 중…</p>
@@ -68,7 +79,7 @@
       <p class="desc" id="adminDesc"></p>
       <div class="links">
         <a href="admin.html" class="btn btn-primary">관리자 대시보드</a>
-        <a href="admin.html#members" class="btn btn-outline">회원관리</a>
+        <a href="site-members.html" class="btn btn-outline">홈페이지 회원관리</a>
         <a href="gyojeok.html" class="btn btn-outline">교적부</a>
         <a href="bible-admin.html" class="btn btn-outline">성경읽기 관리</a>
       </div>

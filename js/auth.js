@@ -18,15 +18,15 @@ async function sbLogin(email, password) {
   return data;
 }
 
-// 성도 회원가입 — 가입 후 목사님 승인이 있어야 성경읽기 체크가 가능합니다.
-// Supabase 에서 이메일 확인이 켜져 있으면 확인 메일의 링크를 눌러야 로그인됩니다.
-async function sbSignup(name, email, password) {
+// 성도 회원가입 — 성명·생년월일이 교적부와 일치하면 DB 에서 자동으로 정회원 인증됩니다.
+// (SQL실행하기/08_member_verification.sql 의 handle_new_user). 일치하지 않으면 관리자 승인 대기.
+async function sbSignup(name, email, password, birthDate) {
   if (!window.SB_READY) throw new Error("Supabase 설정이 비어 있습니다.");
   const { data, error } = await window.SB.auth.signUp({
     email,
     password,
     options: {
-      data: { name },
+      data: { name, birth_date: birthDate || null },
       emailRedirectTo: new URL("login.html", location.href).href,
     },
   });

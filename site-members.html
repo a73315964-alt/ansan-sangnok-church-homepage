@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>홈페이지 회원관리 — 안산상록교회</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='0,0 58,0 46,50 58,100 0,100' fill='%2329b6f6'/%3E%3Cpolygon points='100,0 58,0 46,50 58,100 100,100' fill='%238bc34a'/%3E%3Crect x='43' y='12' width='14' height='76' fill='white'/%3E%3Crect x='22' y='43' width='56' height='14' fill='white'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/bible.css">
+<style>
+  .badge{ display:inline-block; padding:2px 9px; border-radius:99px; font-size:.74rem; font-weight:800; white-space:nowrap; }
+  .badge.super{ background:#fde8c8; color:#8a4b00; }
+  .badge.admin{ background:var(--accent-light); color:var(--accent-dark); }
+  .badge.member{ background:#edf1ee; color:var(--ink-soft); }
+  .badge.ok{ background:#e3f3e5; color:#2e7d32; }
+  .badge.wait{ background:#fff4d6; color:#8a6d1f; }
+  .badge.stop{ background:#fdecea; color:#8c1d18; }
+  .badge.off{ background:#f3f3f3; color:var(--muted); }
+  .muted{ color:var(--muted); font-size:.78rem; }
+  table.grid td.actions{ display:flex; gap:6px; flex-wrap:wrap; }
+  tr.is-suspended td{ color:var(--muted); }
+  .appoint{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; background:var(--paper-soft); border-radius:12px; padding:12px 14px; margin-bottom:14px; }
+  .appoint input{ padding:9px 12px; border-radius:9px; border:1px solid var(--border); font-family:inherit; font-size:.88rem; min-width:220px; flex:1; max-width:320px; }
+  .modal .field{ margin-bottom:12px; }
+  .modal .field label{ display:block; font-size:.82rem; font-weight:700; margin-bottom:5px; }
+  .modal select{ width:100%; padding:10px 12px; border-radius:9px; border:1px solid var(--border); font-family:inherit; font-size:.9rem; }
+  .modal-actions{ display:flex; gap:10px; margin-top:16px; }
+  .modal-actions .btn{ flex:1; justify-content:center; padding:10px; font-size:.9rem; }
+  .who-box{ background:var(--paper-soft); border-radius:10px; padding:10px 12px; font-size:.88rem; margin-bottom:14px; }
+  .legend{ display:flex; gap:12px; flex-wrap:wrap; font-size:.8rem; color:var(--muted); margin:-4px 0 14px; }
+</style>
+</head>
+<body>
+
+<div class="admin-bar">
+  <div class="wrap">
+    <div>
+      <h1>홈페이지 회원관리</h1>
+      <div class="who" id="whoLine">확인 중…</div>
+    </div>
+    <div class="bar-actions">
+      <a href="admin.html" class="btn btn-primary">관리자 대시보드</a>
+      <a href="gyojeok.html" class="btn btn-outline">교적부</a>
+      <a href="index.html" class="btn btn-outline">홈으로</a>
+      <button class="btn btn-outline" id="logoutBtn">로그아웃</button>
+    </div>
+  </div>
+</div>
+
+<div class="br-wrap">
+  <div id="notice"></div>
+
+  <div id="main" hidden>
+    <div class="tiles">
+      <div class="tile"><div class="label">전체 가입자</div><div class="value" id="tAll">0명</div><div class="sub" id="tAllSub"></div></div>
+      <div class="tile"><div class="label">정회원</div><div class="value good" id="tFull">0명</div><div class="sub" id="tFullSub"></div></div>
+      <div class="tile"><div class="label">승인 대기</div><div class="value warn" id="tPending">0명</div><div class="sub">교적과 일치하지 않은 가입자</div></div>
+      <div class="tile"><div class="label">정지</div><div class="value bad" id="tStopped">0명</div><div class="sub">로그인이 막힌 계정</div></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head">
+        <div>
+          <h2>가입자 목록</h2>
+          <p class="desc" id="roleDesc" style="margin:4px 0 0;"></p>
+        </div>
+        <button class="btn btn-outline" id="csvBtn" style="padding:8px 14px;font-size:.84rem;">엑셀(CSV)</button>
+      </div>
+      <div class="legend">
+        <span><span class="badge ok">정회원 · 교적 인증</span> 가입 때 성명·생년월일이 교적과 일치</span>
+        <span><span class="badge ok">정회원 · 관리자 등록</span> 최고 관리자가 등록</span>
+        <span><span class="badge wait">승인 대기</span> 교적에서 확인되지 않음</span>
+        <span><span class="badge stop">정지</span> 로그인 불가</span>
+      </div>
+
+      <form class="appoint" id="appointForm" hidden>
+        <b style="font-size:.88rem;">관리자 임명</b>
+        <input type="email" id="appointEmail" placeholder="관리자로 임명할 이메일" required>
+        <button type="submit" class="mini-btn primary" style="padding:9px 14px;">임명</button>
+        <span class="muted">아직 가입하지 않은 이메일도 미리 임명할 수 있습니다.</span>
+      </form>
+
+      <div class="toolbar">
+        <input type="search" id="searchBox" placeholder="이름·이메일 검색">
+        <select id="filterSel">
+          <option value="all">전체</option>
+          <option value="pending">승인 대기</option>
+          <option value="full">정회원</option>
+          <option value="unlinked">정회원 · 교적 미연결</option>
+          <option value="stopped">정지</option>
+          <option value="admins">관리자</option>
+        </select>
+        <span class="muted" id="countBadge" style="margin-left:auto;"></span>
+      </div>
+      <div class="table-scroll">
+        <table class="grid">
+          <thead><tr><th>성명 (생년월일)</th><th>이메일</th><th>권한</th><th>상태</th><th>교적 연결</th><th>가입일</th><th>마지막 로그인</th><th>성경읽기</th><th></th></tr></thead>
+          <tbody id="rows"><tr><td colspan="9" class="empty">불러오는 중…</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 정회원 등록 / 교적 연결 -->
+<div class="modal-overlay" id="approveModal">
+  <div class="modal" style="max-width:480px;">
+    <div class="modal-head">
+      <h2 id="amTitle">정회원 등록</h2>
+      <button class="close-x" data-close aria-label="닫기">×</button>
+    </div>
+    <div class="who-box" id="amWho"></div>
+    <div class="field">
+      <label for="amMember">교적 카드 연결 (선택)</label>
+      <select id="amMember"></select>
+      <div class="muted" style="margin-top:6px;">교적에 없는 분이면 "연결하지 않음"으로 두고 등록하세요. 나중에 교적부에 등록한 뒤 연결할 수 있습니다.</div>
+    </div>
+    <div class="modal-actions">
+      <button type="button" class="btn btn-outline" data-close>취소</button>
+      <button type="button" class="btn btn-primary" id="amSaveBtn">정회원 등록</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="js/config.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/site-members.js"></script>
+</body>
+</html>

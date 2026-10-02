@@ -226,7 +226,8 @@
       $("adminLink").hidden = !role;
 
       if (profile && !profile.approved) {
-        notice("<b>가입 승인 대기 중입니다.</b> 관리자가 승인하면 성경읽기 기록과 나의 교회 정보를 볼 수 있습니다.", "warn");
+        notice("<b>정회원 승인 대기 중입니다.</b> 가입 때 적은 성명·생년월일이 교적과 일치하지 않았습니다. " +
+          '<a href="mypage.html">내 정보에서 다시 대조</a>하시거나, 관리자 등록을 기다려 주세요. 정회원이 되면 성경 본문·읽기 기록·나의 교회 정보를 쓸 수 있습니다.', "warn");
       }
       renderReading(reads, settings.start_date);
       $("main").hidden = false;

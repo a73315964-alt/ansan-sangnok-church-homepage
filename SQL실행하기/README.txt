@@ -7,6 +7,9 @@ Supabase 대시보드 → SQL Editor 에서 01_members_schema.sql 을 실행하�
 (기존 교적 자료는 그대로 두고 칸·가족사항·사진 저장소만 추가합니다.)
 관리자 등급(최고 관리자/관리자)과 회원관리는 05_admin_roles.sql 입니다.
 (최고 관리자 이메일은 이 파일 안에서 지정합니다.)
+06_my_dashboard.sql — 나의 대시보드에서 본인 교적 카드 보기
+07_bible_text.sql   — 성경 본문 표 (본문은 scripts\import-bible-text.ps1 로 넣음, 저장소에 올리지 않음)
+08_member_verification.sql — 가입 시 성명·생년월일로 교적 대조 → 정회원 자동 인증, 회원 정지·승인 함수
 이 폴더에는 개인정보가 들어있지 않습니다 (테이블 구조·권한 설정만 있음).
 
 실제 성도 명단(이름/전화번호 등)을 넣는 SQL은 이 폴더가 아니라
