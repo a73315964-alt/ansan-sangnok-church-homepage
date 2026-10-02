@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>나의 대시보드 — 안산상록교회</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='0,0 58,0 46,50 58,100 0,100' fill='%2329b6f6'/%3E%3Cpolygon points='100,0 58,0 46,50 58,100 100,100' fill='%238bc34a'/%3E%3Crect x='43' y='12' width='14' height='76' fill='white'/%3E%3Crect x='22' y='43' width='56' height='14' fill='white'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/bible.css">
+<link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body data-page="dashboard">
+
+<header class="site-header" id="site-header"></header>
+
+<div class="br-wrap dash">
+  <div id="notice"></div>
+
+  <div id="main" hidden>
+    <!-- 인사 -->
+    <div class="dash-hello">
+      <div>
+        <div class="date" id="todayLine"></div>
+        <h1 id="helloLine">평안하신가요?</h1>
+        <div class="tags" id="helloTags"></div>
+      </div>
+      <div class="hello-actions">
+        <a href="mypage.html" class="btn btn-outline">내 정보</a>
+        <a href="admin.html" class="btn btn-primary" id="adminLink" hidden>관리자 대시보드</a>
+      </div>
+    </div>
+
+    <!-- 한눈에 -->
+    <div class="tiles">
+      <div class="tile"><div class="label">성경읽기 진도</div><div class="value" id="tProgress">0%</div>
+        <div class="bar" style="margin-top:8px;"><span id="tProgressBar" style="width:0%"></span></div><div class="sub" id="tProgressSub"></div></div>
+      <div class="tile"><div class="label">계획 대비</div><div class="value" id="tPace">—</div><div class="sub" id="tPaceSub"></div></div>
+      <div class="tile"><div class="label">연속 읽기</div><div class="value" id="tStreak">0일</div><div class="sub" id="tStreakSub"></div></div>
+      <div class="tile"><div class="label">교회와 함께한 시간</div><div class="value" id="tYears">—</div><div class="sub" id="tYearsSub"></div></div>
+    </div>
+
+    <div class="dash-grid">
+      <!-- 왼쪽 -->
+      <div class="col">
+        <div class="panel">
+          <div class="panel-head">
+            <div><h2>오늘의 성경읽기</h2><p class="desc" id="todayReadDay" style="margin:4px 0 0;"></p></div>
+            <a href="bible-reading.html" class="mini-btn primary">체크하러 가기 →</a>
+          </div>
+          <div class="today-ranges" id="todayReading"></div>
+          <div class="desc" id="todayReadingState"></div>
+        </div>
+
+        <div class="panel">
+          <h2>최근 12주 읽기 기록</h2>
+          <p class="desc">하루에 읽은 장 수만큼 진하게 표시됩니다.</p>
+          <div class="heat-wrap"><div class="heat" id="heatmap"></div></div>
+          <div class="heat-legend"><span>적게</span><i class="l0"></i><i class="l1"></i><i class="l2"></i><i class="l3"></i><i class="l4"></i><span>많이</span></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <h2>이번 주 설교</h2>
+            <a href="sermon.html" class="mini-btn">설교 전체 →</a>
+          </div>
+          <div id="sermonBox"></div>
+        </div>
+
+        <div class="panel">
+          <h2>오늘의 묵상</h2>
+          <div class="devo-grid" id="devoBox"></div>
+        </div>
+      </div>
+
+      <!-- 오른쪽 -->
+      <div class="col">
+        <div class="panel">
+          <h2>다음 예배</h2>
+          <div id="nextWorship"></div>
+          <ul class="worship-list" id="worshipList"></ul>
+        </div>
+
+        <div class="panel">
+          <h2>나의 교회 정보</h2>
+          <div id="myCard"></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <h2>교회 소식</h2>
+            <a href="news.html" class="mini-btn">전체 →</a>
+          </div>
+          <ul class="news-list" id="newsList"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer" id="site-footer"></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="js/config.js"></script>
+<script src="js/layout.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/bible-plan.js"></script>
+<script src="js/bible-common.js"></script>
+<script src="js/sermons.js"></script>
+<script src="js/daily-reading.js"></script>
+<script src="js/dawn-prayer.js"></script>
+<script src="js/news.js"></script>
+<script src="js/dashboard.js"></script>
+</body>
+</html>

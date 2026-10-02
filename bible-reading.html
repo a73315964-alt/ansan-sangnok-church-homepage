@@ -56,10 +56,10 @@
     <div class="panel" id="todayPanel">
       <h2 id="todayTitle">오늘의 읽기</h2>
       <div class="today-ranges" id="todayRanges"></div>
-      <p class="desc">읽은 장을 누르면 체크됩니다. 다시 누르면 취소됩니다.</p>
+      <p class="desc">장을 누르면 성경 본문이 열립니다. 다 읽고 <b>"읽음 완료"</b>를 누르면 기록됩니다.</p>
       <div class="chips" id="todayChips"></div>
       <div class="row-actions">
-        <button class="btn btn-primary" id="todayAllBtn">오늘 분량 모두 읽음</button>
+        <button class="btn btn-primary" id="todayAllBtn">📖 오늘 본문 읽기</button>
       </div>
     </div>
 
@@ -93,6 +93,33 @@
     <div class="chips" id="bmChips"></div>
     <div class="row-actions">
       <button class="btn btn-outline" id="bmAllBtn">이 권 전체 읽음</button>
+    </div>
+  </div>
+</div>
+
+<!-- 성경 본문 읽기 -->
+<div class="modal-overlay reader-overlay" id="readerModal">
+  <div class="modal reader">
+    <div class="rd-top">
+      <div>
+        <h2 id="rdTitle"></h2>
+        <div class="sub" id="rdSub"></div>
+      </div>
+      <div class="rd-tools">
+        <button class="mini-btn" id="rdSmaller" title="글자 작게">가-</button>
+        <button class="mini-btn" id="rdBigger" title="글자 크게">가+</button>
+        <button class="close-x" data-close-reader aria-label="닫기">×</button>
+      </div>
+    </div>
+    <div class="rd-body" id="rdBody"></div>
+    <div class="rd-bottom">
+      <button class="mini-btn" id="rdPrevBtn">← 이전 장</button>
+      <div class="rd-center">
+        <button class="btn btn-primary" id="rdDoneBtn">읽음 완료</button>
+        <button class="mini-btn" id="rdUndoBtn" hidden>완료 취소</button>
+        <div class="rd-progress" id="rdProgress"></div>
+      </div>
+      <button class="mini-btn" id="rdNextBtn">다음 장 →</button>
     </div>
   </div>
 </div>

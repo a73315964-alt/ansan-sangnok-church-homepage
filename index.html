@@ -180,21 +180,30 @@
       <h2>최근 소식</h2>
       <p>주보, 설교, 교회 소식을 한눈에 확인하세요.</p>
     </div>
-    <div class="grid grid-3">
-      <div class="card">
-        <h3>최근 주보</h3>
-        <div id="bulletinList"></div>
-        <a href="bulletin.html" class="btn btn-outline" style="margin-top:16px;">주보 전체 보기</a>
+    <div class="board">
+      <div class="board-row">
+        <div class="board-head">
+          <span class="board-icon" aria-hidden="true">📰</span>
+          <h3>교회 소식 및 게시판</h3>
+          <a href="news.html">전체 보기 →</a>
+        </div>
+        <div class="board-items" id="newsList"></div>
       </div>
-      <div class="card">
-        <h3>최근 설교</h3>
-        <div id="sermonList"></div>
-        <a href="sermon.html" class="btn btn-outline" style="margin-top:16px;">설교 전체 보기</a>
+      <div class="board-row">
+        <div class="board-head">
+          <span class="board-icon" aria-hidden="true">🎙️</span>
+          <h3>최근 설교</h3>
+          <a href="sermon.html">전체 보기 →</a>
+        </div>
+        <div class="board-items" id="sermonList"></div>
       </div>
-      <div class="card">
-        <h3>교회 소식 및 게시판</h3>
-        <div id="newsList"></div>
-        <a href="news.html" class="btn btn-outline" style="margin-top:16px;">전체 보기</a>
+      <div class="board-row">
+        <div class="board-head">
+          <span class="board-icon" aria-hidden="true">📄</span>
+          <h3>최근 주보</h3>
+          <a href="bulletin.html">전체 보기 →</a>
+        </div>
+        <div class="board-items" id="bulletinList"></div>
       </div>
     </div>
   </div>

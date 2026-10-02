@@ -53,12 +53,35 @@
     return { day: d.getDate(), month: months[d.getMonth()] };
   }
 
+  // 홈 "최근 소식" — 가로로 늘어선 박스 한 칸
+  function isBoard(host) { return host.classList.contains("board-items"); }
+  function excerpt(html, n) {
+    var t = String(html || "").replace(/<br\s*\/?>/gi, " ").replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
+    return t.length > n ? t.slice(0, n) + "…" : t;
+  }
+  function boardBox(href, dateStr, tag, title, sub) {
+    var d = dparts(dateStr);
+    return (
+      '<a class="board-box" href="' + href + '">' +
+      '<div class="bb-top"><span class="bb-date">' + d.month + " " + d.day + "일</span>" + (tag ? '<span class="tag-pill">' + tag + "</span>" : "") + "</div>" +
+      '<h4>' + title + "</h4>" +
+      (sub ? "<p>" + sub + "</p>" : "") +
+      "</a>"
+    );
+  }
+
   function renderBulletins(limit) {
     var host = document.getElementById("bulletinList");
     if (!host) return;
     var items = (window.BULLETINS || []).slice(0, limit || undefined);
     if (!items.length) {
       host.innerHTML = '<div class="empty-state">등록된 주보가 없습니다.</div>';
+      return;
+    }
+    if (isBoard(host)) {
+      host.innerHTML = items.map(function (b) {
+        return boardBox("bulletin.html", b.date, "", b.title, [b.scripture, b.preacher].filter(Boolean).join(" · "));
+      }).join("");
       return;
     }
     host.innerHTML = items.map(function (b) {
@@ -78,6 +101,12 @@
     var items = (window.SERMONS || []).slice(0, limit || undefined);
     if (!items.length) {
       host.innerHTML = '<div class="empty-state">등록된 설교가 없습니다.</div>';
+      return;
+    }
+    if (isBoard(host)) {
+      host.innerHTML = items.map(function (s) {
+        return boardBox("sermon.html", s.date, s.series || "설교", s.title, [s.scripture, s.preacher].filter(Boolean).join(" · "));
+      }).join("");
       return;
     }
     host.innerHTML = items.map(function (s) {
@@ -101,6 +130,12 @@
     var items = (window.NEWS || []).slice(0, limit || undefined);
     if (!items.length) {
       host.innerHTML = '<div class="empty-state">등록된 소식이 없습니다.</div>';
+      return;
+    }
+    if (isBoard(host)) {
+      host.innerHTML = items.map(function (n) {
+        return boardBox("news.html", n.date, "", n.title, excerpt(n.body, 70));
+      }).join("");
       return;
     }
     host.innerHTML = items.map(function (n) {

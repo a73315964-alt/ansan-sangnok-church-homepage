@@ -117,7 +117,7 @@
   var params = new URLSearchParams(location.search);
   // 로그인 후 돌아갈 화면 — 같은 사이트의 .html 파일만 허용
   var next = params.get("next") || "";
-  if (!/^[\w-]+\.html$/.test(next)) next = "mypage.html";
+  if (!/^[\w-]+\.html$/.test(next)) next = "dashboard.html";
 
   var FORMS = { login: "loginForm", signup: "signupForm", forgot: "forgotForm", reset: "resetForm" };
   var TITLES = {

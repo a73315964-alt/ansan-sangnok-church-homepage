@@ -116,14 +116,16 @@
     var chs = BR.dayChapters(d);
     $("todayChips").innerHTML = chs.map(function (x) {
       var b = BR.BOOKS[x.book - 1];
-      return '<button class="chip' + (isRead(x.book, x.chapter) ? " on" : "") + '" data-b="' + x.book + '" data-c="' + x.chapter + '"' +
-        (state.approved ? "" : " disabled") + ">" + esc(b.abbr) + " " + x.chapter + "</button>";
+      return '<button class="chip' + (isRead(x.book, x.chapter) ? " on" : "") + '" data-b="' + x.book + '" data-c="' + x.chapter + '" data-queue="today">' +
+        (isRead(x.book, x.chapter) ? "✓ " : "") + esc(b.abbr) + " " + x.chapter + "</button>";
     }).join("");
     var allDone = dayStatus(d) === "done";
     var btn = $("todayAllBtn");
-    btn.textContent = allDone ? "✓ 오늘 분량을 다 읽었습니다" : "오늘 분량 모두 읽음";
-    btn.disabled = !state.approved || allDone;
-    btn.onclick = function () { setRead(chs, true); };
+    btn.textContent = allDone ? "✓ 오늘 분량을 다 읽었습니다 (다시 읽기)" : "📖 오늘 본문 읽기";
+    btn.onclick = function () {
+      var first = chs.findIndex(function (x) { return !isRead(x.book, x.chapter); });
+      openReader(chs, first < 0 ? 0 : first, (d + 1) + "일째 본문");
+    };
   }
 
   function renderOverdue() {
@@ -136,7 +138,7 @@
     $("overdueList").innerHTML = shown.map(function (d) {
       var date = BR.dateOfDay(state.startDate, d);
       return "<li><span><span class=\"d\">" + (d + 1) + "일째 · " + BR.fmtDate(date) + "</span>" + esc(BR.dayLabel(d)) + "</span>" +
-        '<button class="mini-btn primary" data-day="' + d + '"' + (state.approved ? "" : " disabled") + ">읽음</button></li>";
+        '<button class="mini-btn primary" data-day="' + d + '">📖 읽기</button></li>';
     }).join("") + (days.length > shown.length ? '<li><span class="d">외 ' + (days.length - shown.length) + "일 더 — 1년 읽기표 탭에서 확인하세요</span></li>" : "");
   }
 
@@ -171,11 +173,11 @@
         html += '<div class="plan-month">' + date.getFullYear() + "년 " + (date.getMonth() + 1) + "월</div>";
       }
       var st = dayStatus(d);
-      html += '<label class="plan-row' + (d === state.idx ? " today" : "") + (st === "partial" ? " partial" : "") + '" id="plan-' + d + '">' +
-        '<input type="checkbox" data-day="' + d + '"' + (st === "done" ? " checked" : "") + (state.approved ? "" : " disabled") + ">" +
+      html += '<div class="plan-row' + (d === state.idx ? " today" : "") + (st === "partial" ? " partial" : "") + '" id="plan-' + d + '">' +
+        '<input type="checkbox" data-day="' + d + '" title="읽음 표시"' + (st === "done" ? " checked" : "") + (state.approved ? "" : " disabled") + ">" +
         '<span class="n">' + (d + 1) + "일째</span>" +
         '<span class="dt">' + BR.fmtDate(date, true) + "</span>" +
-        '<span class="lbl">' + esc(BR.dayLabel(d)) + "</span></label>";
+        '<button type="button" class="lbl" data-read-day="' + d + '" title="본문 읽기">' + esc(BR.dayLabel(d)) + "</button></div>";
     }
     $("tab-plan").innerHTML = html;
     planRendered = true;
@@ -187,11 +189,10 @@
     var book = BR.BOOKS[openBook - 1];
     var n = bookReadCount(openBook);
     $("bmTitle").textContent = book.name;
-    $("bmSub").textContent = n + " / " + book.chapters + "장 읽음" + (state.approved ? " — 장을 눌러 체크하세요" : "");
+    $("bmSub").textContent = n + " / " + book.chapters + "장 읽음 — 장을 누르면 본문이 열립니다";
     var html = "";
     for (var c = 1; c <= book.chapters; c++) {
-      html += '<button class="chip' + (isRead(openBook, c) ? " on" : "") + '" data-b="' + openBook + '" data-c="' + c + '"' +
-        (state.approved ? "" : " disabled") + ">" + c + "</button>";
+      html += '<button class="chip' + (isRead(openBook, c) ? " on" : "") + '" data-b="' + openBook + '" data-c="' + c + '" data-queue="book">' + c + "</button>";
     }
     $("bmChips").innerHTML = html;
     $("bmAllBtn").disabled = !state.approved || n === book.chapters;
@@ -208,21 +209,152 @@
 
   /* ---------- 이벤트 ---------- */
 
-  function chipToggle(e) {
+  /* ---------- 본문 읽기 창 ---------- */
+  // queue: 이어 읽을 장 목록 [{book, chapter}], pos: 지금 보는 위치
+  var reader = { queue: [], pos: 0, label: "" };
+  var textCache = {}; // "book:chapter" → [{verse, heading, body}]
+  var fontSize = 1.05;
+  try { fontSize = parseFloat(localStorage.getItem("br-font")) || 1.05; } catch (e) {}
+
+  function bookQueue(b) {
+    var list = [];
+    for (var c = 1; c <= BR.BOOKS[b - 1].chapters; c++) list.push({ book: b, chapter: c });
+    return list;
+  }
+
+  async function chapterText(b, c) {
+    var k = b + ":" + c;
+    if (textCache[k]) return textCache[k];
+    var res = await window.SB.from("bible_verses").select("verse,heading,body").eq("book", b).eq("chapter", c).order("verse");
+    if (res.error) throw res.error;
+    textCache[k] = res.data || [];
+    return textCache[k];
+  }
+
+  function openReader(queue, pos, label) {
+    reader = { queue: queue, pos: pos || 0, label: label || "" };
+    $("readerModal").classList.add("open");
+    document.body.style.overflow = "hidden";
+    showReader();
+  }
+  function closeReader() {
+    $("readerModal").classList.remove("open");
+    document.body.style.overflow = "";
+  }
+
+  function renderReaderButtons() {
+    var cur = reader.queue[reader.pos];
+    if (!cur) return;
+    var done = isRead(cur.book, cur.chapter);
+    var btn = $("rdDoneBtn");
+    btn.textContent = done ? "✓ 읽음 완료됨" : "읽음 완료";
+    btn.className = "btn " + (done ? "btn-outline" : "btn-primary");
+    btn.disabled = !state.approved;
+    $("rdUndoBtn").hidden = !done || !state.approved;
+    $("rdPrevBtn").disabled = reader.pos === 0;
+    $("rdNextBtn").disabled = reader.pos >= reader.queue.length - 1;
+    var readInQueue = reader.queue.filter(function (x) { return isRead(x.book, x.chapter); }).length;
+    $("rdProgress").textContent = reader.queue.length > 1 ? readInQueue + " / " + reader.queue.length + "장 완료" : "";
+  }
+
+  async function showReader() {
+    var cur = reader.queue[reader.pos];
+    if (!cur) return;
+    var book = BR.BOOKS[cur.book - 1];
+    $("rdTitle").textContent = book.name + " " + cur.chapter + "장";
+    $("rdSub").textContent = (reader.label ? reader.label + " · " : "") + (reader.queue.length > 1 ? (reader.pos + 1) + "번째 / " + reader.queue.length + "장" : "");
+    $("rdBody").style.fontSize = fontSize + "rem";
+    $("rdBody").innerHTML = '<p class="desc">본문을 불러오는 중…</p>';
+    renderReaderButtons();
+    $("rdBody").scrollTop = 0;
+    try {
+      var verses = await chapterText(cur.book, cur.chapter);
+      if (reader.queue[reader.pos] !== cur) return; // 그새 다른 장으로 넘어감
+      if (!verses.length) {
+        $("rdBody").innerHTML = '<p class="desc">' + (state.approved
+          ? "본문을 찾을 수 없습니다."
+          : "성경 본문은 <b>승인된 회원</b>만 볼 수 있습니다. 관리자 승인 후 다시 열어 주세요.") + "</p>";
+        return;
+      }
+      $("rdBody").innerHTML = verses.map(function (v) {
+        return (v.heading ? '<h4 class="rd-head">' + esc(v.heading) + "</h4>" : "") +
+          '<p class="rd-v"><sup>' + v.verse + "</sup>" + esc(v.body) + "</p>";
+      }).join("") + '<p class="rd-src">개역개정</p>';
+    } catch (err) {
+      $("rdBody").innerHTML = '<p class="desc bad">본문을 불러오지 못했습니다: ' + esc(err.message || err) + "</p>";
+    }
+  }
+
+  async function readerDone() {
+    var cur = reader.queue[reader.pos];
+    if (!cur || !state.approved) return;
+    if (!isRead(cur.book, cur.chapter)) await setRead([cur], true);
+    renderReaderButtons();
+    // 다음 안 읽은 장으로 이어서
+    var next = reader.queue.findIndex(function (x, i) { return i > reader.pos && !isRead(x.book, x.chapter); });
+    if (next !== -1) { reader.pos = next; showReader(); }
+    else if (reader.queue.every(function (x) { return isRead(x.book, x.chapter); }) && reader.queue.length > 1) {
+      $("rdProgress").textContent = "🎉 " + reader.queue.length + "장 모두 읽었습니다!";
+    }
+  }
+
+  function setFont(v) {
+    fontSize = Math.min(1.6, Math.max(0.85, Math.round(v * 100) / 100));
+    $("rdBody").style.fontSize = fontSize + "rem";
+    try { localStorage.setItem("br-font", String(fontSize)); } catch (e) {}
+  }
+
+  function chipOpen(e) {
     var t = e.target.closest(".chip");
-    if (!t || t.disabled) return;
+    if (!t) return;
     var b = +t.getAttribute("data-b"), c = +t.getAttribute("data-c");
-    setRead([{ book: b, chapter: c }], !isRead(b, c));
+    if (t.getAttribute("data-queue") === "today") {
+      var d = Math.min(Math.max(state.idx, 0), BR.DAYS - 1);
+      var chs = BR.dayChapters(d);
+      openReader(chs, chs.findIndex(function (x) { return x.book === b && x.chapter === c; }), (d + 1) + "일째 본문");
+    } else {
+      openReader(bookQueue(b), c - 1, BR.BOOKS[b - 1].name);
+    }
   }
 
   function bindEvents() {
     $("logoutBtn").addEventListener("click", sbLogout);
-    $("todayChips").addEventListener("click", chipToggle);
-    $("bmChips").addEventListener("click", chipToggle);
+    $("todayChips").addEventListener("click", chipOpen);
+    $("bmChips").addEventListener("click", chipOpen);
 
     $("overdueList").addEventListener("click", function (e) {
       var d = e.target.getAttribute("data-day");
-      if (d != null) setRead(BR.dayChapters(+d), true);
+      if (d == null) return;
+      var chs = BR.dayChapters(+d);
+      var first = chs.findIndex(function (x) { return !isRead(x.book, x.chapter); });
+      openReader(chs, first < 0 ? 0 : first, (+d + 1) + "일째 본문");
+    });
+
+    $("tab-plan").addEventListener("click", function (e) {
+      var d = e.target.getAttribute("data-read-day");
+      if (d == null) return;
+      var chs = BR.dayChapters(+d);
+      var first = chs.findIndex(function (x) { return !isRead(x.book, x.chapter); });
+      openReader(chs, first < 0 ? 0 : first, (+d + 1) + "일째 본문");
+    });
+
+    $("rdDoneBtn").addEventListener("click", readerDone);
+    $("rdUndoBtn").addEventListener("click", async function () {
+      var cur = reader.queue[reader.pos];
+      if (cur) { await setRead([cur], false); renderReaderButtons(); }
+    });
+    $("rdPrevBtn").addEventListener("click", function () { if (reader.pos > 0) { reader.pos--; showReader(); } });
+    $("rdNextBtn").addEventListener("click", function () { if (reader.pos < reader.queue.length - 1) { reader.pos++; showReader(); } });
+    $("rdSmaller").addEventListener("click", function () { setFont(fontSize - 0.1); });
+    $("rdBigger").addEventListener("click", function () { setFont(fontSize + 0.1); });
+    $("readerModal").addEventListener("click", function (e) {
+      if (e.target.id === "readerModal" || e.target.hasAttribute("data-close-reader")) closeReader();
+    });
+    document.addEventListener("keydown", function (e) {
+      if (!$("readerModal").classList.contains("open")) return;
+      if (e.key === "Escape") closeReader();
+      if (e.key === "ArrowRight") $("rdNextBtn").click();
+      if (e.key === "ArrowLeft") $("rdPrevBtn").click();
     });
 
     $("tabs").addEventListener("click", function (e) {

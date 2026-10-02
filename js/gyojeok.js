@@ -393,6 +393,7 @@
     var payload = {};
     TEXT_FIELDS.forEach(function (f) { var v = $("f_" + f).value.trim(); payload[f] = v || null; });
     DATE_FIELDS.forEach(function (f) { payload[f] = $("f_" + f).value || null; });
+    if (payload.email) payload.email = payload.email.toLowerCase(); // 나의 대시보드와 연결할 때 로그인 이메일과 비교
     payload.birth_calendar = $("f_birth_calendar").value || "양";
     payload.service_orgs = Array.prototype.map.call($("f_orgs").querySelectorAll("input:checked"), function (c) { return c.value; });
     payload.family_members = readFamily();

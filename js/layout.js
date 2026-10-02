@@ -181,18 +181,25 @@
   }
   var USER = currentUser();
 
-  // 로그인 전: [로그인] [예배 안내] / 로그인 후: [내 정보] 로그아웃 — 헤더 폭이 넘치지 않도록 예배 안내는 뺌
+  // 로그인 전: [로그인] [예배 안내]
+  // 로그인 후: 로고 옆 [나의 대시보드] + 오른쪽 "내 정보 · 로그아웃" (헤더 폭이 넘치지 않도록 예배 안내는 뺌)
   function authCtaHtml() {
     if (!USER) {
       return '<a class="btn btn-outline" href="login.html">로그인</a>' +
         '<a class="btn btn-primary" href="worship.html">예배 안내</a>';
     }
-    return '<a class="btn btn-outline" href="mypage.html" title="' + esc((USER.name ? USER.name + "님 · " : "") + USER.email) + '">내 정보</a>' +
+    return '<a class="header-logout" href="mypage.html" title="' + esc((USER.name ? USER.name + "님 · " : "") + USER.email) + '">내 정보</a>' +
       '<a class="header-logout" href="login.html?logout=1">로그아웃</a>';
+  }
+  function dashChipHtml() {
+    if (!USER) return "";
+    return '<a class="dash-chip' + (page === "dashboard" ? " on" : "") + '" href="dashboard.html" title="나의 신앙생활 한눈에 보기">' +
+      '<span class="dot" aria-hidden="true"></span>나의 대시보드</a>';
   }
   function authMobileHtml() {
     if (!USER) return '<a class="m-direct" href="login.html">로그인</a>';
-    return '<a class="m-direct" href="mypage.html">내 정보' + (USER.name ? " (" + esc(USER.name) + "님)" : "") + "</a>" +
+    return '<a class="m-direct" href="dashboard.html">나의 대시보드' + (USER.name ? " (" + esc(USER.name) + "님)" : "") + "</a>" +
+      '<a class="m-direct" href="mypage.html">내 정보</a>' +
       '<a class="m-direct" href="login.html?logout=1">로그아웃</a>';
   }
 
@@ -285,6 +292,7 @@
       '<div class="wrap">' +
       '<a href="index.html" class="brand"><span class="mark">' + markIcon() + "</span>" +
       "<span>" + esc(C.name || "") + "<small>" + esc(C.englishName || "") + "</small></span></a>" +
+      dashChipHtml() +
       '<nav class="nav-desktop">' + NAV.map(desktopItemHtml).join("") + "</nav>" +
       '<div class="header-cta">' +
       authCtaHtml() +
