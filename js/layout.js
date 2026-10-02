@@ -23,9 +23,7 @@
         { label: "주보", href: "bulletin.html" },
         { label: "성경 속으로", href: "word.html", items: [
           { label: "생명의 삶(QT)", href: "word.html#dailyReadingWrap" },
-          { label: "성경 읽기", href: "word.html#archive" },
-          { label: "1년 성경읽기", href: "word.html#yearReading" },
-          { label: "성경 전권 읽기 안내표", href: "word.html#yearReading" }
+          { label: "1년 성경읽기", href: "word.html#yearReading" }
         ] },
         { label: "새가족 등록", href: "worship.html#newcomer" },
         { label: "예배시간 안내", href: "worship.html", items: [
