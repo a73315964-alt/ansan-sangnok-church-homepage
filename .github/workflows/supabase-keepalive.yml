@@ -1,0 +1,38 @@
+# Supabase 무료 플랜은 7일간 활동이 없으면 프로젝트를 일시정지합니다.
+# 3일마다 DB 에 가벼운 요청을 보내 정지를 막습니다.
+# 접속 정보는 js/config.js 의 SUPABASE_URL / SUPABASE_ANON_KEY 를 그대로 읽습니다.
+# 요청이 실패하면(이미 정지됨 등) 워크플로가 실패로 표시되어 GitHub 알림 메일이 옵니다.
+name: Supabase keep-alive
+
+on:
+  schedule:
+    - cron: "0 0 */3 * *" # 3일마다 09:00 (한국 시간)
+  workflow_dispatch: # Actions 탭에서 수동 실행
+
+permissions:
+  contents: read
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Ping Supabase
+        run: |
+          URL=$(grep -oP 'SUPABASE_URL\s*=\s*"\K[^"]+' js/config.js)
+          KEY=$(grep -oP 'SUPABASE_ANON_KEY\s*=\s*"\K[^"]+' js/config.js)
+          if [ -z "$URL" ] || [ -z "$KEY" ]; then
+            echo "js/config.js 에서 Supabase 설정을 찾지 못했습니다." >&2
+            exit 1
+          fi
+          # 비로그인 요청이라 RLS 때문에 빈 결과([])가 오지만, DB 쿼리는 실행되어 활동으로 집계됩니다.
+          STATUS=$(curl -sS -o /dev/null -w "%{http_code}" --max-time 30 \
+            "$URL/rest/v1/members?select=id&limit=1" \
+            -H "apikey: $KEY" \
+            -H "Authorization: Bearer $KEY")
+          echo "HTTP $STATUS"
+          if [ "$STATUS" != "200" ]; then
+            echo "Supabase 응답 이상 (HTTP $STATUS) — 프로젝트가 일시정지됐는지 대시보드를 확인하세요." >&2
+            exit 1
+          fi
