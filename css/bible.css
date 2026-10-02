@@ -1,0 +1,122 @@
+/* 1년 성경읽기 — 성도 화면 / 목사님 화면 공통 스타일 (style.css 다음에 불러옴) */
+body{ background:var(--paper-soft); }
+[hidden]{ display:none !important; }
+
+.admin-bar{ background:#fff; border-bottom:1px solid var(--border); padding:14px 0; }
+.admin-bar .wrap{ display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+.admin-bar h1{ font-size:1.1rem; margin:0; }
+.admin-bar .who{ font-size:.82rem; color:var(--muted); margin-top:2px; }
+.bar-actions{ display:flex; gap:8px; flex-wrap:wrap; }
+.bar-actions .btn{ padding:8px 14px; font-size:.84rem; }
+
+.br-wrap{ max-width:1120px; margin:0 auto; padding:24px 24px 64px; }
+@media (max-width:560px){ .br-wrap{ padding:18px 16px 56px; } }
+
+.notice{ border-radius:12px; padding:14px 16px; font-size:.9rem; margin-bottom:18px; line-height:1.6; }
+.notice.warn{ background:#fff4d6; border:1px solid #e8b923; color:#7a5d12; }
+.notice.info{ background:var(--accent-light); border:1px solid #c9d6ea; color:var(--accent-dark); }
+.notice.error{ background:#fdecea; border:1px solid #f2c9c5; color:#8c1d18; }
+
+/* 요약 타일 */
+.tiles{ display:grid; grid-template-columns:repeat(4, 1fr); gap:12px; margin-bottom:18px; }
+@media (max-width:860px){ .tiles{ grid-template-columns:repeat(2, 1fr); } }
+.tile{ background:#fff; border:1px solid var(--border); border-radius:var(--radius); padding:16px 18px; }
+.tile .label{ font-size:.8rem; color:var(--muted); font-weight:700; }
+.tile .value{ font-size:1.5rem; font-weight:800; color:var(--ink); margin-top:4px; line-height:1.2; }
+.tile .sub{ font-size:.8rem; color:var(--muted); margin-top:4px; }
+.good{ color:#2e7d32 !important; }
+.warn{ color:#a86b00 !important; }
+.bad{ color:#b3261e !important; }
+
+.panel{ background:#fff; border:1px solid var(--border); border-radius:var(--radius); padding:20px; margin-bottom:18px; }
+.panel h2{ font-size:1.05rem; margin:0 0 4px; }
+.panel .desc{ font-size:.85rem; color:var(--muted); margin:0 0 14px; }
+.panel-head{ display:flex; align-items:flex-start; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:12px; }
+.panel-head h2{ margin:0; }
+
+/* 진행 막대 */
+.bar{ height:8px; background:#edf1ee; border-radius:99px; overflow:hidden; }
+.bar > span{ display:block; height:100%; background:var(--accent); border-radius:99px; }
+.bar.done > span{ background:#2e7d32; }
+
+/* 오늘의 읽기 */
+.today-ranges{ font-size:1.15rem; font-weight:800; color:var(--ink); margin:6px 0 12px; }
+.chips{ display:flex; flex-wrap:wrap; gap:6px; }
+.chip{
+  min-width:44px; padding:7px 10px; border-radius:9px; border:1px solid var(--border); background:#fff;
+  font-family:inherit; font-size:.82rem; font-weight:700; color:var(--ink-soft); cursor:pointer;
+}
+.chip.on{ background:var(--accent); border-color:var(--accent); color:#fff; }
+.chip:disabled{ cursor:default; opacity:.6; }
+.row-actions{ display:flex; gap:8px; flex-wrap:wrap; margin-top:14px; }
+.row-actions .btn{ padding:9px 16px; font-size:.86rem; }
+.mini-btn{ padding:5px 10px; border-radius:8px; border:1px solid var(--border); background:#fff; font-size:.78rem; cursor:pointer; font-weight:700; font-family:inherit; color:var(--ink-soft); white-space:nowrap; }
+.mini-btn.primary{ background:var(--accent); border-color:var(--accent); color:#fff; }
+.mini-btn.danger{ color:#b3261e; border-color:#f2c9c5; }
+.mini-btn:disabled{ opacity:.5; cursor:default; }
+
+.overdue{ list-style:none; margin:0; padding:0; }
+.overdue li{ display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 0; border-top:1px solid var(--border); font-size:.88rem; }
+.overdue .d{ color:var(--muted); font-size:.8rem; margin-right:6px; }
+
+/* 탭 */
+.tabs{ display:flex; gap:6px; margin-bottom:14px; border-bottom:1px solid var(--border); }
+.tabs button{
+  padding:10px 14px; border:0; background:none; font-family:inherit; font-size:.92rem; font-weight:700;
+  color:var(--muted); cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px;
+}
+.tabs button.on{ color:var(--accent); border-bottom-color:var(--accent); }
+
+/* 성경별 진도 */
+.testament{ font-size:.85rem; font-weight:800; color:var(--ink-soft); margin:16px 0 8px; }
+.testament:first-child{ margin-top:0; }
+.books{ display:grid; grid-template-columns:repeat(auto-fill, minmax(150px, 1fr)); gap:8px; }
+.book{
+  text-align:left; background:#fff; border:1px solid var(--border); border-radius:10px; padding:10px 12px;
+  font-family:inherit; cursor:pointer;
+}
+.book:hover{ border-color:var(--accent); }
+.book .t{ display:flex; justify-content:space-between; gap:6px; font-size:.86rem; font-weight:700; color:var(--ink); margin-bottom:7px; }
+.book .t small{ color:var(--muted); font-weight:600; }
+
+/* 1년 읽기표 */
+.plan-month{ font-size:.9rem; font-weight:800; margin:18px 0 6px; color:var(--accent-dark); }
+.plan-month:first-child{ margin-top:0; }
+.plan-row{ display:grid; grid-template-columns:28px 64px 92px 1fr; gap:8px; align-items:center; padding:8px 6px; border-top:1px solid var(--border); font-size:.86rem; }
+.plan-row.today{ background:var(--accent-light); border-radius:8px; }
+.plan-row .n{ color:var(--muted); font-size:.78rem; }
+.plan-row .dt{ color:var(--ink-soft); font-size:.8rem; }
+.plan-row input{ width:18px; height:18px; accent-color:var(--accent); }
+.plan-row.partial .lbl::after{ content:" · 일부"; color:#a86b00; font-size:.78rem; }
+@media (max-width:560px){ .plan-row{ grid-template-columns:24px 1fr; } .plan-row .n{ display:none; } .plan-row .dt{ grid-column:2; } .plan-row .lbl{ grid-column:2; } }
+
+/* 표 (목사님 화면) */
+.toolbar{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:12px; }
+.toolbar input, .toolbar select{ padding:9px 12px; border-radius:9px; border:1px solid var(--border); font-size:.88rem; font-family:inherit; background:#fff; }
+.toolbar input[type="search"]{ min-width:200px; flex:1; max-width:280px; }
+.table-scroll{ overflow-x:auto; border:1px solid var(--border); border-radius:12px; }
+table.grid{ width:100%; border-collapse:collapse; background:#fff; font-size:.86rem; }
+table.grid th, table.grid td{ padding:10px 12px; border-bottom:1px solid var(--border); text-align:left; white-space:nowrap; }
+table.grid tbody tr:last-child td{ border-bottom:0; }
+table.grid th{ background:var(--paper-soft); font-weight:700; color:var(--ink-soft); }
+table.grid tbody tr:hover{ background:#fafcfb; }
+table.grid td.prog{ min-width:150px; }
+table.grid td.prog .bar{ margin-top:4px; }
+.empty{ text-align:center; color:var(--muted); padding:28px !important; }
+
+.settings-row{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+.settings-row input{ padding:9px 12px; border-radius:9px; border:1px solid var(--border); font-family:inherit; font-size:.9rem; }
+
+/* 모달 */
+.modal-overlay{ position:fixed; inset:0; background:rgba(20,24,22,.45); display:none; align-items:center; justify-content:center; padding:16px; z-index:200; }
+.modal-overlay.open{ display:flex; }
+.modal{ background:#fff; border-radius:16px; padding:22px; width:100%; max-width:640px; max-height:88vh; overflow:auto; }
+.modal-head{ display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:14px; }
+.modal-head h2{ font-size:1.05rem; margin:0; }
+.modal-head .sub{ font-size:.82rem; color:var(--muted); margin-top:3px; }
+.close-x{ border:0; background:none; font-size:1.4rem; line-height:1; cursor:pointer; color:var(--muted); padding:2px 6px; }
+.book-list{ display:grid; grid-template-columns:repeat(2, 1fr); gap:6px 18px; }
+@media (max-width:520px){ .book-list{ grid-template-columns:1fr; } }
+.book-list .item{ font-size:.82rem; }
+.book-list .item .t{ display:flex; justify-content:space-between; margin-bottom:3px; }
+.book-list .item .t small{ color:var(--muted); }

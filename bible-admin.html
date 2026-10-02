@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>성경읽기 관리 — 안산상록교회</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='0,0 58,0 46,50 58,100 0,100' fill='%2329b6f6'/%3E%3Cpolygon points='100,0 58,0 46,50 58,100 100,100' fill='%238bc34a'/%3E%3Crect x='43' y='12' width='14' height='76' fill='white'/%3E%3Crect x='22' y='43' width='56' height='14' fill='white'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/bible.css">
+</head>
+<body>
+
+<div class="admin-bar">
+  <div class="wrap">
+    <div>
+      <h1>1년 성경읽기 · 목사님 관리 화면</h1>
+      <div class="who" id="whoLine">확인 중…</div>
+    </div>
+    <div class="bar-actions">
+      <a href="bible-reading.html" class="btn btn-outline">내 성경읽기</a>
+      <a href="gyojeok.html" class="btn btn-outline">교적 관리</a>
+      <button class="btn btn-outline" id="logoutBtn">로그아웃</button>
+    </div>
+  </div>
+</div>
+
+<div class="br-wrap">
+  <div id="notice"></div>
+
+  <div id="main" hidden>
+    <div class="tiles">
+      <div class="tile">
+        <div class="label">참여 성도</div>
+        <div class="value" id="tMembers">0명</div>
+        <div class="sub" id="tMembersSub"></div>
+      </div>
+      <div class="tile">
+        <div class="label">평균 진도</div>
+        <div class="value" id="tAvg">0%</div>
+        <div class="sub" id="tAvgSub"></div>
+      </div>
+      <div class="tile">
+        <div class="label">계획대로 진행</div>
+        <div class="value good" id="tOnTrack">0명</div>
+        <div class="sub">밀림 1일 이하</div>
+      </div>
+      <div class="tile">
+        <div class="label">점검 필요</div>
+        <div class="value bad" id="tCheck">0명</div>
+        <div class="sub">7일 넘게 밀렸거나 7일간 기록 없음</div>
+      </div>
+    </div>
+
+    <div class="panel" id="pendingPanel" hidden>
+      <h2>가입 승인 대기</h2>
+      <p class="desc">성도로 확인되면 승인해 주세요. 승인된 분만 읽기 기록을 남길 수 있습니다.</p>
+      <div class="table-scroll">
+        <table class="grid">
+          <thead><tr><th>이름</th><th>이메일</th><th>신청일</th><th></th></tr></thead>
+          <tbody id="pendingRows"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head">
+        <div>
+          <h2>성도별 진행 상황</h2>
+          <p class="desc" id="todayLine" style="margin:4px 0 0;"></p>
+        </div>
+        <button class="btn btn-outline" id="csvBtn" style="padding:8px 14px;font-size:.84rem;">엑셀(CSV) 내려받기</button>
+      </div>
+      <div class="toolbar">
+        <input type="search" id="searchBox" placeholder="이름·이메일 검색">
+        <select id="sortSel">
+          <option value="behind">많이 밀린 순</option>
+          <option value="progress">진도 높은 순</option>
+          <option value="recent">최근 기록 없는 순</option>
+          <option value="name">이름 순</option>
+        </select>
+        <select id="filterSel">
+          <option value="all">전체</option>
+          <option value="check">점검 필요만</option>
+          <option value="ontrack">계획대로만</option>
+        </select>
+      </div>
+      <div class="table-scroll">
+        <table class="grid">
+          <thead><tr><th>이름</th><th>진도</th><th>읽은 장</th><th>계획 대비</th><th>마지막 기록</th><th>읽는 중</th><th></th></tr></thead>
+          <tbody id="memberRows"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>읽기 시작일</h2>
+      <p class="desc">교회 전체의 1년 읽기표가 이 날짜부터 1일째로 계산됩니다. 바꾸면 모든 성도의 "오늘 읽을 본문"과 "계획 대비"가 함께 바뀝니다.</p>
+      <div class="settings-row">
+        <input type="date" id="startDate">
+        <button class="btn btn-primary" id="saveStartBtn" style="padding:9px 16px;font-size:.86rem;">저장</button>
+        <span class="desc" id="endLine" style="margin:0;"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 성도 한 분의 권별 진도 -->
+<div class="modal-overlay" id="memberModal">
+  <div class="modal">
+    <div class="modal-head">
+      <div>
+        <h2 id="mmTitle"></h2>
+        <div class="sub" id="mmSub"></div>
+      </div>
+      <button class="close-x" data-close aria-label="닫기">×</button>
+    </div>
+    <div class="testament">구약</div>
+    <div class="book-list" id="mmOT"></div>
+    <div class="testament">신약</div>
+    <div class="book-list" id="mmNT"></div>
+    <div class="row-actions" style="justify-content:flex-end;">
+      <button class="mini-btn danger" id="mmRevokeBtn">승인 취소</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="js/config.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/bible-plan.js"></script>
+<script src="js/bible-common.js"></script>
+<script src="js/bible-admin.js"></script>
+</body>
+</html>

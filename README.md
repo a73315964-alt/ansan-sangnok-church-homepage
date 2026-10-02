@@ -56,6 +56,11 @@
 
 ## 비공개 교적 관리 (login.html / gyojeok.html)
 
+상단 메뉴 "교회 행정" → 교적부. 종이 "교인기록카드"와 같은 항목(번호·작성일·교구·구역, 이름(한글/한문)·성별·생년월일(음/양)·
+휴대폰·전화·E-mail·주소·직장, 주거환경·신급·직분·봉사기관·세례일·등록일·인도자·수상경력·취미·학력, 사진, 가족사항 표)을 입력하고,
+카드 모양으로 보고 인쇄할 수 있습니다. 가족이 우리 교회 교인이면 "교인 연결"로 서로 이어집니다.
+DB 칸은 `SQL실행하기/04_members_registry.sql` 에서 추가합니다.
+
 성도 이름·전화번호 등 개인정보를 다루는 화면입니다. 공개 메뉴 어디에도 링크를 걸어두지
 않았고, 주소를 알아도 로그인해야만 내용을 볼 수 있습니다 (Supabase 로그인 + RLS).
 
@@ -65,6 +70,24 @@
   괜찮습니다 (anon key는 공개돼도 되는 키). 하지만 `안산상록교회-교적-비공개자료` 폴더는
   **절대 이 홈페이지 폴더 안으로 옮기거나 GitHub에 올리지 마세요** — 실제 성도 개인정보가
   평문으로 들어 있습니다.
+
+## 1년 성경읽기 (bible-reading.html / bible-admin.html)
+
+성도가 회원가입·로그인해서 자기 성경읽기 진도를 체크하고, 목사님이 전체 성도의 진행 상황을 점검하는 기능입니다.
+
+- `login.html` — 로그인 / 회원가입 / 비밀번호 찾기. 가입한 성도는 목사님 승인 후 기록할 수 있습니다.
+- `bible-reading.html` — 성도 화면: 오늘 읽을 본문, 밀린 읽기, 성경 66권별 진도, 1년 읽기표
+- `bible-admin.html` — 목사님 화면: 가입 승인, 성도별 진도·계획 대비·마지막 기록, 권별 보기, CSV 내려받기, 시작일 설정
+  (`admin_emails` 에 등록된 계정만 볼 수 있습니다)
+- `js/bible-plan.js` — 365일 읽기표 (창세기→요한계시록, 하루 분량은 절 수 기준으로 고르게).
+  `scripts/make-bible-plan.ps1` 로 성경 txt 파일에서 다시 만들 수 있습니다. 성경 본문은 저작권 때문에 싣지 않습니다.
+
+**처음 설정**
+1. Supabase SQL Editor 에서 `SQL실행하기/02_admin_allowlist.sql`, `03_bible_reading.sql` 을 차례로 실행하고, 목사님 이메일을 `admin_emails` 에 추가합니다.
+2. Supabase → Authentication → Sign In / Providers 에서 이메일 회원가입(Allow new users to sign up)을 **켭니다**.
+3. Supabase → Authentication → URL Configuration 에서 Site URL 을 `https://ansansangrok.or.kr` 로,
+   Redirect URLs 에 `https://ansansangrok.or.kr/**` 를 추가합니다 (가입 확인·비밀번호 재설정 메일의 링크가 이 주소로 돌아옵니다).
+4. 목사님 화면에서 읽기 시작일을 정합니다 (기본값 2027-01-01).
 
 ## 올리는 방법 (예: GitHub Pages)
 

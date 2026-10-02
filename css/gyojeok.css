@@ -1,0 +1,81 @@
+/* 교적부 (gyojeok.html) — bible.css 다음에 불러옴 */
+.tag{ display:inline-block; padding:2px 8px; border-radius:99px; background:var(--accent-light); color:var(--accent-dark); font-size:.74rem; font-weight:700; margin:1px 2px 1px 0; }
+.muted{ color:var(--muted); font-size:.78rem; }
+table.grid td.actions{ display:flex; gap:6px; }
+.name-btn{ border:0; background:none; padding:0; font:inherit; font-weight:800; color:var(--ink); cursor:pointer; }
+.name-btn:hover{ color:var(--accent); text-decoration:underline; }
+
+.modal.card-modal{ max-width:860px; }
+
+/* 입력 폼 */
+.form-section{ border-top:1px solid var(--border); padding-top:14px; margin-top:14px; }
+.form-section:first-of-type{ border-top:0; padding-top:0; margin-top:0; }
+.form-section h3{ font-size:.88rem; color:var(--accent-dark); margin:0 0 10px; }
+.form-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px 14px; }
+.form-grid.g3{ grid-template-columns:repeat(3, 1fr); }
+.form-grid.g4{ grid-template-columns:repeat(4, 1fr); }
+.form-grid .full{ grid-column:1 / -1; }
+@media (max-width:700px){ .form-grid.g3, .form-grid.g4{ grid-template-columns:1fr 1fr; } }
+@media (max-width:480px){ .form-grid, .form-grid.g3, .form-grid.g4{ grid-template-columns:1fr; } }
+.field label{ display:block; font-size:.8rem; font-weight:700; margin-bottom:5px; color:var(--ink); }
+.field input, .field select, .field textarea{
+  width:100%; padding:9px 11px; border-radius:9px; border:1px solid var(--border); font-family:inherit; font-size:.9rem; background:#fff;
+}
+.field input[type="file"]{ padding:6px; font-size:.8rem; }
+.field textarea{ min-height:56px; resize:vertical; }
+.hint{ font-size:.75rem; color:var(--muted); margin-top:4px; }
+.inline-check:not([hidden]){ display:flex !important; align-items:center; gap:5px; font-weight:600 !important; margin-top:6px; }
+.checks{ display:flex; flex-wrap:wrap; gap:6px 14px; }
+.checks label{ display:flex; align-items:center; gap:5px; font-size:.86rem; font-weight:600; margin:0; }
+.checks input{ width:16px; height:16px; accent-color:var(--accent); }
+.modal-actions{ display:flex; gap:10px; margin-top:18px; }
+.modal-actions .btn{ flex:1; justify-content:center; }
+
+.photo-row{ display:flex; gap:16px; align-items:flex-start; }
+.photo-box{
+  width:110px; height:140px; flex:none; border:1px dashed var(--border); border-radius:10px; background:var(--paper-soft);
+  display:flex; align-items:center; justify-content:center; color:var(--muted); font-size:.85rem; overflow:hidden;
+}
+.photo-box img{ width:100%; height:100%; object-fit:cover; }
+@media (max-width:560px){ .photo-row{ flex-direction:column; } }
+
+/* 가족사항 입력 — 한 사람씩 카드 */
+.family-edit{ display:flex; flex-direction:column; gap:10px; }
+.fam-row{ border:1px solid var(--border); border-radius:10px; padding:10px 12px; background:#fcfdfc; }
+.fam-row .fam-grid{ display:grid; grid-template-columns:repeat(6, 1fr); gap:8px; }
+.fam-row .fam-grid .w2{ grid-column:span 2; }
+@media (max-width:700px){ .fam-row .fam-grid{ grid-template-columns:repeat(2, 1fr); } .fam-row .fam-grid .w2{ grid-column:span 2; } }
+.fam-row .field label{ font-size:.74rem; margin-bottom:3px; }
+.fam-row .field input, .fam-row .field select{ padding:7px 9px; font-size:.85rem; }
+.fam-row-head{ display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; font-size:.8rem; font-weight:800; color:var(--ink-soft); }
+.fam-empty{ font-size:.85rem; color:var(--muted); padding:8px 0; }
+
+/* ── 교인기록카드 (보기 / 인쇄) — 종이 카드와 같은 배치 ── */
+.rc{ --rc-green:#c9dfae; --rc-line:#7a9a5a; font-size:.86rem; color:#1f2724; }
+.rc-top{ display:flex; align-items:flex-end; justify-content:space-between; gap:12px; margin-bottom:8px; flex-wrap:wrap; }
+.rc-title{ font-size:1.5rem; font-weight:900; letter-spacing:.35em; margin:0; }
+.rc table{ width:100%; border-collapse:collapse; table-layout:fixed; }
+.rc th, .rc td{ border:1px solid var(--rc-line); padding:6px 8px; vertical-align:middle; word-break:keep-all; overflow-wrap:anywhere; }
+.rc th{ background:var(--rc-green); font-weight:800; text-align:center; white-space:nowrap; }
+.rc td.photo{ text-align:center; padding:4px; }
+.rc td.photo img{ width:100%; max-height:150px; object-fit:cover; display:block; }
+.rc .meta th{ width:60px; }
+.rc .fam th{ font-size:.8rem; }
+.rc .fam td{ font-size:.82rem; text-align:center; }
+.rc .fam td.l{ text-align:left; }
+.rc .vlabel{ writing-mode:vertical-rl; letter-spacing:.5em; }
+.rc .linked{ color:var(--accent); font-weight:700; cursor:pointer; border:0; background:none; padding:0; font:inherit; }
+.rc-scroll{ overflow-x:auto; }
+.rc-scroll > table{ min-width:640px; }
+.rc-extra{ margin-top:10px; font-size:.84rem; }
+.rc-extra b{ color:var(--ink-soft); }
+
+@media print{
+  body{ background:#fff; }
+  .no-print, .admin-bar, .br-wrap{ display:none !important; }
+  .modal-overlay#viewOverlay{ position:static; display:block !important; background:none; padding:0; }
+  .modal-overlay#modalOverlay{ display:none !important; }
+  .modal.card-modal{ max-width:none; max-height:none; overflow:visible; padding:0; border-radius:0; }
+  .rc-scroll{ overflow:visible; }
+  .rc th{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+}

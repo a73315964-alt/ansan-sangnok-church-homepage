@@ -3,15 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>스탭 로그인 — 안산상록교회</title>
+<title>로그인 — 안산상록교회</title>
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='0,0 58,0 46,50 58,100 0,100' fill='%2329b6f6'/%3E%3Cpolygon points='100,0 58,0 46,50 58,100 100,100' fill='%238bc34a'/%3E%3Crect x='43' y='12' width='14' height='76' fill='white'/%3E%3Crect x='22' y='43' width='56' height='14' fill='white'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="css/style.css">
 <style>
   body{ min-height:100vh; display:flex; align-items:center; justify-content:center; background:var(--paper-soft); }
-  .login-card{ width:100%; max-width:360px; margin:24px; }
+  .login-card{ width:100%; max-width:380px; margin:24px; }
   .login-card h1{ font-size:1.3rem; text-align:center; margin-bottom:6px; }
-  .login-card p.sub{ text-align:center; margin-bottom:24px; font-size:.88rem; }
+  .login-card p.sub{ text-align:center; margin-bottom:22px; font-size:.88rem; }
+  .tabs{ display:flex; gap:6px; background:var(--paper-soft); border-radius:12px; padding:4px; margin-bottom:20px; }
+  .tabs button{
+    flex:1; padding:9px 0; border:0; border-radius:9px; background:transparent; font-family:inherit;
+    font-size:.9rem; font-weight:700; color:var(--muted); cursor:pointer;
+  }
+  .tabs button.on{ background:#fff; color:var(--accent); box-shadow:0 1px 4px rgba(31,39,36,.08); }
   .field{ margin-bottom:14px; }
   .field label{ display:block; font-size:.85rem; font-weight:700; margin-bottom:6px; color:var(--ink); }
   .field input{
@@ -19,19 +25,30 @@
     font-size:.95rem; font-family:inherit;
   }
   .field input:focus{ outline:2px solid var(--accent); outline-offset:1px; }
+  .field .hint{ font-size:.78rem; color:var(--muted); margin-top:5px; }
   .login-card .btn{ width:100%; justify-content:center; margin-top:6px; }
-  .msg{ font-size:.85rem; text-align:center; margin-top:14px; }
+  .msg{ font-size:.85rem; text-align:center; margin-top:14px; line-height:1.6; }
   .msg.error{ color:#b3261e; }
   .msg.info{ color:var(--muted); }
+  .msg.ok{ color:#2e7d32; }
+  .text-link{ display:block; text-align:center; margin-top:14px; font-size:.84rem; color:var(--muted); background:none; border:0; cursor:pointer; font-family:inherit; width:100%; }
+  .text-link:hover{ color:var(--accent); }
   .back-link{ display:block; text-align:center; margin-top:18px; font-size:.85rem; color:var(--muted); }
+  [hidden]{ display:none !important; }
 </style>
 </head>
 <body>
 
 <div class="card login-card">
-  <h1>스탭 로그인</h1>
-  <p class="sub">교적 관리 등 비공개 기능은 로그인 후 이용하실 수 있습니다.</p>
+  <h1 id="title">로그인</h1>
+  <p class="sub" id="sub">1년 성경읽기 등 성도 전용 기능은 로그인 후 이용하실 수 있습니다.</p>
 
+  <div class="tabs" id="tabs">
+    <button type="button" data-mode="login" class="on">로그인</button>
+    <button type="button" data-mode="signup">회원가입</button>
+  </div>
+
+  <!-- 로그인 -->
   <form id="loginForm">
     <div class="field">
       <label for="email">이메일</label>
@@ -41,8 +58,53 @@
       <label for="password">비밀번호</label>
       <input type="password" id="password" autocomplete="current-password" required>
     </div>
-    <button type="submit" class="btn btn-primary" id="submitBtn">로그인</button>
+    <button type="submit" class="btn btn-primary">로그인</button>
+    <button type="button" class="text-link" data-goto="forgot">비밀번호를 잊으셨나요?</button>
   </form>
+
+  <!-- 회원가입 -->
+  <form id="signupForm" hidden>
+    <div class="field">
+      <label for="su_name">이름</label>
+      <input id="su_name" autocomplete="name" required maxlength="30" placeholder="예: 홍길동">
+      <div class="hint">목사님이 알아보실 수 있도록 실명으로 적어주세요.</div>
+    </div>
+    <div class="field">
+      <label for="su_email">이메일</label>
+      <input type="email" id="su_email" autocomplete="email" required>
+    </div>
+    <div class="field">
+      <label for="su_password">비밀번호</label>
+      <input type="password" id="su_password" autocomplete="new-password" required minlength="8">
+      <div class="hint">8자 이상</div>
+    </div>
+    <div class="field">
+      <label for="su_password2">비밀번호 확인</label>
+      <input type="password" id="su_password2" autocomplete="new-password" required minlength="8">
+    </div>
+    <button type="submit" class="btn btn-primary">가입 신청</button>
+  </form>
+
+  <!-- 비밀번호 찾기 -->
+  <form id="forgotForm" hidden>
+    <div class="field">
+      <label for="fg_email">가입한 이메일</label>
+      <input type="email" id="fg_email" autocomplete="email" required>
+    </div>
+    <button type="submit" class="btn btn-primary">재설정 메일 받기</button>
+    <button type="button" class="text-link" data-goto="login">← 로그인으로</button>
+  </form>
+
+  <!-- 새 비밀번호 (재설정 메일의 링크로 들어온 경우) -->
+  <form id="resetForm" hidden>
+    <div class="field">
+      <label for="rs_password">새 비밀번호</label>
+      <input type="password" id="rs_password" autocomplete="new-password" required minlength="8">
+      <div class="hint">8자 이상</div>
+    </div>
+    <button type="submit" class="btn btn-primary">비밀번호 변경</button>
+  </form>
+
   <div class="msg" id="msg"></div>
   <a href="index.html" class="back-link">← 홈으로</a>
 </div>
@@ -52,27 +114,126 @@
 <script src="js/auth.js"></script>
 <script>
   var msg = document.getElementById("msg");
-  if (!window.SB_READY) {
-    msg.textContent = "Supabase 연결이 설정되지 않았습니다. js/config.js 의 SUPABASE_URL / SUPABASE_ANON_KEY 를 채워주세요.";
-    msg.className = "msg error";
+  var params = new URLSearchParams(location.search);
+  // 로그인 후 돌아갈 화면 — 같은 사이트의 .html 파일만 허용
+  var next = params.get("next") || "";
+  if (!/^[\w-]+\.html$/.test(next)) next = "bible-reading.html";
+
+  var FORMS = { login: "loginForm", signup: "signupForm", forgot: "forgotForm", reset: "resetForm" };
+  var TITLES = {
+    login: ["로그인", "1년 성경읽기 등 성도 전용 기능은 로그인 후 이용하실 수 있습니다."],
+    signup: ["회원가입", "가입 후 목사님의 승인이 있으면 성경읽기 기록을 시작할 수 있습니다."],
+    forgot: ["비밀번호 찾기", "가입한 이메일로 비밀번호 재설정 링크를 보내드립니다."],
+    reset: ["새 비밀번호 설정", "사용하실 새 비밀번호를 입력해주세요."],
+  };
+
+  function show(text, kind) {
+    msg.textContent = text || "";
+    msg.className = "msg " + (kind || "info");
   }
 
-  document.getElementById("loginForm").addEventListener("submit", async function (e) {
-    e.preventDefault();
-    if (!window.SB_READY) return;
-    var btn = document.getElementById("submitBtn");
+  function setMode(mode) {
+    Object.keys(FORMS).forEach(function (m) {
+      document.getElementById(FORMS[m]).hidden = m !== mode;
+    });
+    document.getElementById("tabs").hidden = !(mode === "login" || mode === "signup");
+    document.querySelectorAll("#tabs button").forEach(function (b) {
+      b.classList.toggle("on", b.getAttribute("data-mode") === mode);
+    });
+    document.getElementById("title").textContent = TITLES[mode][0];
+    document.getElementById("sub").textContent = TITLES[mode][1];
+    show("");
+  }
+
+  function errorText(err) {
+    var m = (err && err.message) || "";
+    if (/Invalid login credentials/i.test(m)) return "이메일 또는 비밀번호가 맞지 않습니다.";
+    if (/Email not confirmed/i.test(m)) return "이메일 확인이 아직 안 되었습니다. 받은 메일의 확인 링크를 눌러주세요.";
+    if (/already registered|already exists/i.test(m)) return "이미 가입된 이메일입니다. 로그인해 주세요.";
+    if (/Signups not allowed/i.test(m)) return "현재 회원가입이 닫혀 있습니다. 교회 사무실에 문의해 주세요.";
+    if (/Password should be/i.test(m)) return "비밀번호가 너무 짧거나 쉽습니다. 8자 이상으로 정해주세요.";
+    if (/rate limit/i.test(m)) return "요청이 많아 잠시 막혔습니다. 몇 분 뒤 다시 시도해 주세요.";
+    return m || "잠시 후 다시 시도해 주세요.";
+  }
+
+  async function busy(form, fn) {
+    var btn = form.querySelector('button[type="submit"]');
     btn.disabled = true;
-    msg.textContent = "로그인 중…";
-    msg.className = "msg info";
-    try {
-      await sbLogin(document.getElementById("email").value.trim(), document.getElementById("password").value);
-      location.href = "gyojeok.html";
-    } catch (err) {
-      msg.textContent = "로그인 실패: " + (err.message || "이메일 또는 비밀번호를 확인해주세요.");
-      msg.className = "msg error";
-      btn.disabled = false;
-    }
+    try { await fn(); } catch (err) { show(errorText(err), "error"); }
+    btn.disabled = false;
+  }
+
+  document.getElementById("tabs").addEventListener("click", function (e) {
+    var m = e.target.getAttribute("data-mode");
+    if (m) setMode(m);
   });
+  document.querySelectorAll("[data-goto]").forEach(function (b) {
+    b.addEventListener("click", function () { setMode(b.getAttribute("data-goto")); });
+  });
+
+  document.getElementById("loginForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var form = this;
+    busy(form, async function () {
+      show("로그인 중…");
+      await sbLogin(document.getElementById("email").value.trim(), document.getElementById("password").value);
+      location.href = next;
+    });
+  });
+
+  document.getElementById("signupForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var form = this;
+    var pw = document.getElementById("su_password").value;
+    if (pw !== document.getElementById("su_password2").value) {
+      show("비밀번호 확인이 일치하지 않습니다.", "error");
+      return;
+    }
+    busy(form, async function () {
+      show("가입 신청 중…");
+      var data = await sbSignup(
+        document.getElementById("su_name").value.trim(),
+        document.getElementById("su_email").value.trim(),
+        pw
+      );
+      if (data.session) {
+        location.href = next; // 이메일 확인을 끈 경우 바로 로그인됨
+        return;
+      }
+      form.reset();
+      show("가입 신청이 접수되었습니다. 입력하신 이메일로 확인 메일을 보냈습니다 — 메일의 링크를 누른 뒤 로그인해 주세요. (목사님 승인 후 성경읽기 기록이 가능합니다)", "ok");
+    });
+  });
+
+  document.getElementById("forgotForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var form = this;
+    busy(form, async function () {
+      await sbSendPasswordReset(document.getElementById("fg_email").value.trim());
+      show("재설정 메일을 보냈습니다. 메일의 링크를 눌러 새 비밀번호를 정해주세요.", "ok");
+    });
+  });
+
+  document.getElementById("resetForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var form = this;
+    busy(form, async function () {
+      await sbUpdatePassword(document.getElementById("rs_password").value);
+      show("비밀번호가 변경되었습니다. 잠시 후 이동합니다…", "ok");
+      setTimeout(function () { location.href = next; }, 1200);
+    });
+  });
+
+  (async function init() {
+    if (!window.SB_READY) {
+      show("Supabase 연결이 설정되지 않았습니다. js/config.js 의 SUPABASE_URL / SUPABASE_ANON_KEY 를 채워주세요.", "error");
+      return;
+    }
+    if (params.get("mode") === "reset") { setMode("reset"); return; }
+    if (params.get("mode") === "signup") setMode("signup");
+    // 이미 로그인되어 있으면(이메일 확인 링크로 들어온 경우 포함) 바로 이동
+    if (await sbCurrentSession()) location.href = next;
+  })();
 </script>
 </body>
 </html>

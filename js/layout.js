@@ -24,7 +24,7 @@
         { label: "성경 속으로", href: "word.html", items: [
           { label: "생명의 삶(QT)", href: "word.html#dailyReadingWrap" },
           { label: "성경 읽기", href: "word.html#archive" },
-          { label: "성경 전권 읽기 안내표", href: "word.html#archive" }
+          { label: "성경 전권 읽기 안내표", href: "bible-reading.html" }
         ] },
         { label: "새가족 등록", href: "worship.html#newcomer" },
         { label: "예배시간 안내", href: "worship.html", items: [
@@ -146,6 +146,19 @@
         ] },
         { label: "갤러리", href: "community.html#gallery" }
       ]
+    },
+    {
+      // 로그인이 필요한 화면들 — 하단 사이트맵에는 넣지 않습니다 (private)
+      key: "admin", label: "교회 행정", href: "gyojeok.html", private: true,
+      groups: [
+        { label: "교적부", href: "gyojeok.html", items: [
+          { label: "성도 목록", href: "gyojeok.html" },
+          { label: "새 성도 등록", href: "gyojeok.html#new" }
+        ] },
+        { label: "성경읽기 관리", href: "bible-admin.html" },
+        { label: "나의 성경읽기", href: "bible-reading.html" },
+        { label: "로그인", href: "login.html" }
+      ]
     }
   ];
 
@@ -240,6 +253,7 @@
       "<span>" + esc(C.name || "") + "<small>" + esc(C.englishName || "") + "</small></span></a>" +
       '<nav class="nav-desktop">' + NAV.map(desktopItemHtml).join("") + "</nav>" +
       '<div class="header-cta">' +
+      '<a class="btn btn-outline" href="bible-reading.html">성경읽기 · 로그인</a>' +
       '<a class="btn btn-primary" href="worship.html">예배 안내</a>' +
       "</div>" +
       '<button class="nav-toggle" id="navToggle" aria-label="메뉴 열기" aria-expanded="false"><span></span></button>' +
@@ -247,6 +261,7 @@
       '<nav class="nav-mobile" id="navMobile">' +
       NAV.map(mobileItemHtml).join("") +
       '<a class="m-direct" href="location.html">오시는 길</a>' +
+      '<a class="m-direct" href="bible-reading.html">1년 성경읽기 · 로그인</a>' +
       "</nav>";
 
     var toggle = document.getElementById("navToggle");
@@ -278,7 +293,7 @@
       return "<li>" + esc(w.name) + " · " + esc(w.time) + "</li>";
     }).join("");
 
-    var cols = NAV.map(function (top) {
+    var cols = NAV.filter(function (top) { return !top.private; }).map(function (top) {
       var items = (top.groups || []).slice(0, 6).map(function (g) {
         return "<li>" + anchor(g) + "</li>";
       }).join("");
