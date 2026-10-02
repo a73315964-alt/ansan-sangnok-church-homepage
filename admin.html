@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>관리자 대시보드 — 안산상록교회</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='0,0 58,0 46,50 58,100 0,100' fill='%2329b6f6'/%3E%3Cpolygon points='100,0 58,0 46,50 58,100 100,100' fill='%238bc34a'/%3E%3Crect x='43' y='12' width='14' height='76' fill='white'/%3E%3Crect x='22' y='43' width='56' height='14' fill='white'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/bible.css">
+<style>
+  .quick{ display:grid; grid-template-columns:repeat(3, 1fr); gap:12px; margin-bottom:18px; }
+  @media (max-width:760px){ .quick{ grid-template-columns:1fr; } }
+  .quick a{ display:block; background:#fff; border:1px solid var(--border); border-radius:var(--radius); padding:18px 20px; color:var(--ink); }
+  .quick a:hover{ border-color:var(--accent); }
+  .quick b{ display:block; font-size:1rem; margin-bottom:4px; }
+  .quick span{ font-size:.84rem; color:var(--muted); }
+  .badge{ display:inline-block; padding:2px 9px; border-radius:99px; font-size:.74rem; font-weight:800; white-space:nowrap; }
+  .badge.super{ background:#fde8c8; color:#8a4b00; }
+  .badge.admin{ background:var(--accent-light); color:var(--accent-dark); }
+  .badge.member{ background:#edf1ee; color:var(--ink-soft); }
+  .badge.ok{ background:#e3f3e5; color:#2e7d32; }
+  .badge.wait{ background:#fff4d6; color:#8a6d1f; }
+  .badge.off{ background:#f3f3f3; color:var(--muted); }
+  table.grid td.actions{ display:flex; gap:6px; flex-wrap:wrap; }
+  .appoint{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; background:var(--paper-soft); border-radius:12px; padding:12px 14px; margin-bottom:14px; }
+  .appoint input{ padding:9px 12px; border-radius:9px; border:1px solid var(--border); font-family:inherit; font-size:.88rem; min-width:220px; flex:1; max-width:320px; }
+  .muted{ color:var(--muted); font-size:.78rem; }
+</style>
+</head>
+<body>
+
+<div class="admin-bar">
+  <div class="wrap">
+    <div>
+      <h1>관리자 대시보드</h1>
+      <div class="who" id="whoLine">확인 중…</div>
+    </div>
+    <div class="bar-actions">
+      <a href="mypage.html" class="btn btn-outline">내 정보</a>
+      <a href="index.html" class="btn btn-outline">홈으로</a>
+      <button class="btn btn-outline" id="logoutBtn">로그아웃</button>
+    </div>
+  </div>
+</div>
+
+<div class="br-wrap">
+  <div id="notice"></div>
+
+  <div id="main" hidden>
+    <div class="tiles">
+      <div class="tile"><div class="label">회원</div><div class="value" id="tUsers">0명</div><div class="sub" id="tUsersSub"></div></div>
+      <div class="tile"><div class="label">승인 대기</div><div class="value warn" id="tPending">0명</div><div class="sub">아래 회원관리에서 승인</div></div>
+      <div class="tile"><div class="label">교적 등록 교인</div><div class="value" id="tMembers">0명</div><div class="sub">교적부 기준</div></div>
+      <div class="tile"><div class="label">성경읽기 평균 진도</div><div class="value" id="tReading">0%</div><div class="sub" id="tReadingSub"></div></div>
+    </div>
+
+    <div class="quick">
+      <a href="gyojeok.html"><b>교적부 →</b><span>교인기록카드 등록·수정, 가족사항, 카드 인쇄</span></a>
+      <a href="bible-admin.html"><b>성경읽기 관리 →</b><span>성도별 진도 점검, 시작일 설정, CSV</span></a>
+      <a href="#members"><b>회원관리 ↓</b><span>가입 승인, 관리자 임명, 계정 관리</span></a>
+    </div>
+
+    <div class="panel" id="members">
+      <div class="panel-head">
+        <div>
+          <h2>회원관리</h2>
+          <p class="desc" id="roleDesc" style="margin:4px 0 0;"></p>
+        </div>
+      </div>
+
+      <form class="appoint" id="appointForm" hidden>
+        <b style="font-size:.88rem;">관리자 임명</b>
+        <input type="email" id="appointEmail" placeholder="관리자로 임명할 이메일" required>
+        <button type="submit" class="mini-btn primary" style="padding:9px 14px;">임명</button>
+        <span class="muted">아직 가입하지 않은 이메일도 미리 임명할 수 있습니다. 그 이메일로 가입하면 자동으로 승인됩니다.</span>
+      </form>
+
+      <div class="toolbar">
+        <input type="search" id="searchBox" placeholder="이름·이메일 검색">
+        <select id="filterSel">
+          <option value="all">전체</option>
+          <option value="pending">승인 대기</option>
+          <option value="admins">관리자</option>
+          <option value="unconfirmed">메일 확인 안 됨</option>
+        </select>
+        <span class="muted" id="countBadge" style="margin-left:auto;"></span>
+      </div>
+      <div class="table-scroll">
+        <table class="grid">
+          <thead><tr><th>이름</th><th>이메일</th><th>권한</th><th>상태</th><th>가입일</th><th>마지막 로그인</th><th>성경읽기</th><th></th></tr></thead>
+          <tbody id="rows"><tr><td colspan="8" class="empty">불러오는 중…</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="js/config.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>

@@ -117,7 +117,7 @@
   var params = new URLSearchParams(location.search);
   // 로그인 후 돌아갈 화면 — 같은 사이트의 .html 파일만 허용
   var next = params.get("next") || "";
-  if (!/^[\w-]+\.html$/.test(next)) next = "bible-reading.html";
+  if (!/^[\w-]+\.html$/.test(next)) next = "mypage.html";
 
   var FORMS = { login: "loginForm", signup: "signupForm", forgot: "forgotForm", reset: "resetForm" };
   var TITLES = {
@@ -227,6 +227,17 @@
   (async function init() {
     if (!window.SB_READY) {
       show("Supabase 연결이 설정되지 않았습니다. js/config.js 의 SUPABASE_URL / SUPABASE_ANON_KEY 를 채워주세요.", "error");
+      return;
+    }
+    // 상단 메뉴의 "로그아웃" → 여기서 로그아웃하고 홈으로
+    if (params.get("logout") === "1") {
+      show("로그아웃 중…");
+      try { await window.SB.auth.signOut(); } catch (e) {}
+      // 네트워크 오류로 서버 로그아웃이 실패해도 이 브라우저에서는 확실히 지움
+      try {
+        Object.keys(localStorage).forEach(function (k) { if (/^sb-.*-auth-token/.test(k)) localStorage.removeItem(k); });
+      } catch (e) {}
+      location.replace("index.html");
       return;
     }
     if (params.get("mode") === "reset") { setMode("reset"); return; }

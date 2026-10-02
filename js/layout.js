@@ -150,17 +150,51 @@
     },
     {
       // 로그인이 필요한 화면들 — 하단 사이트맵에는 넣지 않습니다 (private)
-      key: "admin", label: "교회 행정", href: "gyojeok.html", private: true,
+      key: "admin", label: "교회 행정", href: "admin.html", private: true,
       groups: [
+        { label: "관리자 대시보드", href: "admin.html" },
+        { label: "회원관리", href: "admin.html#members" },
         { label: "교적부", href: "gyojeok.html", items: [
           { label: "성도 목록", href: "gyojeok.html" },
           { label: "새 성도 등록", href: "gyojeok.html#new" }
         ] },
-        { label: "성경읽기 관리", href: "bible-admin.html" },
-        { label: "로그인", href: "login.html" }
+        { label: "성경읽기 관리", href: "bible-admin.html" }
       ]
     }
   ];
+
+  /* 로그인 상태 — Supabase 가 브라우저에 저장해 둔 세션을 읽기만 합니다 (라이브러리 없이).
+     access token 이 만료돼도 refresh token 이 있으면 다음 화면에서 자동 갱신되므로 로그인 상태로 봅니다. */
+  function currentUser() {
+    try {
+      var m = String(window.SUPABASE_URL || "").match(/^https:\/\/([a-z0-9]+)\.supabase\.co/);
+      if (!m) return null;
+      var raw = localStorage.getItem("sb-" + m[1] + "-auth-token");
+      if (!raw) return null;
+      var s = JSON.parse(raw);
+      if (!s || !s.user || !s.refresh_token) return null;
+      var meta = s.user.user_metadata || {};
+      return { email: s.user.email || "", name: meta.name || "" };
+    } catch (e) {
+      return null;
+    }
+  }
+  var USER = currentUser();
+
+  // 로그인 전: [로그인] [예배 안내] / 로그인 후: [내 정보] 로그아웃 — 헤더 폭이 넘치지 않도록 예배 안내는 뺌
+  function authCtaHtml() {
+    if (!USER) {
+      return '<a class="btn btn-outline" href="login.html">로그인</a>' +
+        '<a class="btn btn-primary" href="worship.html">예배 안내</a>';
+    }
+    return '<a class="btn btn-outline" href="mypage.html" title="' + esc((USER.name ? USER.name + "님 · " : "") + USER.email) + '">내 정보</a>' +
+      '<a class="header-logout" href="login.html?logout=1">로그아웃</a>';
+  }
+  function authMobileHtml() {
+    if (!USER) return '<a class="m-direct" href="login.html">로그인</a>';
+    return '<a class="m-direct" href="mypage.html">내 정보' + (USER.name ? " (" + esc(USER.name) + "님)" : "") + "</a>" +
+      '<a class="m-direct" href="login.html?logout=1">로그아웃</a>';
+  }
 
   function esc(s) {
     return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
@@ -253,15 +287,14 @@
       "<span>" + esc(C.name || "") + "<small>" + esc(C.englishName || "") + "</small></span></a>" +
       '<nav class="nav-desktop">' + NAV.map(desktopItemHtml).join("") + "</nav>" +
       '<div class="header-cta">' +
-      '<a class="btn btn-outline" href="login.html">로그인</a>' +
-      '<a class="btn btn-primary" href="worship.html">예배 안내</a>' +
+      authCtaHtml() +
       "</div>" +
       '<button class="nav-toggle" id="navToggle" aria-label="메뉴 열기" aria-expanded="false"><span></span></button>' +
       "</div>" +
       '<nav class="nav-mobile" id="navMobile">' +
       NAV.map(mobileItemHtml).join("") +
       '<a class="m-direct" href="location.html">오시는 길</a>' +
-      '<a class="m-direct" href="login.html">로그인</a>' +
+      authMobileHtml() +
       "</nav>";
 
     var toggle = document.getElementById("navToggle");

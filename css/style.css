@@ -148,6 +148,8 @@ section{ padding: 88px 0; }
 
 .header-cta{ display: flex; align-items: center; gap: 10px; flex: none; }
 .header-cta .btn{ white-space: nowrap; padding: 10px 18px; font-size: .86rem; }
+.header-logout{ font-size: .8rem; font-weight: 700; color: var(--muted); white-space: nowrap; padding: 6px 2px; }
+.header-logout:hover{ color: var(--accent); text-decoration: underline; }
 
 /* 유튜브 메뉴 아이콘 (푸터에서 사용) */
 .site-footer a.nav-youtube{ display: inline-flex; align-items: center; gap: 6px; }

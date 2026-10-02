@@ -54,6 +54,13 @@ async function sbIsAdmin() {
   return !error && data === true;
 }
 
+// "super" (최고 관리자) / "admin" (관리자) / null (일반 회원)
+async function sbMyRole() {
+  if (!window.SB_READY) return null;
+  const { data, error } = await window.SB.rpc("my_admin_role");
+  return error ? null : data || null;
+}
+
 async function sbMyProfile() {
   const session = await sbCurrentSession();
   if (!session) return null;
@@ -64,7 +71,7 @@ async function sbMyProfile() {
 async function sbLogout() {
   if (!window.SB_READY) return;
   await window.SB.auth.signOut();
-  location.href = "login.html";
+  location.href = "index.html";
 }
 
 async function sbCurrentSession() {

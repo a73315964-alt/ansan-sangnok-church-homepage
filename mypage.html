@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>내 정보 — 안산상록교회</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='0,0 58,0 46,50 58,100 0,100' fill='%2329b6f6'/%3E%3Cpolygon points='100,0 58,0 46,50 58,100 100,100' fill='%238bc34a'/%3E%3Crect x='43' y='12' width='14' height='76' fill='white'/%3E%3Crect x='22' y='43' width='56' height='14' fill='white'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/bible.css">
+<style>
+  .me-wrap{ max-width:760px; }
+  dl.info{ display:grid; grid-template-columns:110px 1fr; gap:10px 12px; margin:0; font-size:.92rem; align-items:center; }
+  dl.info dt{ color:var(--muted); font-weight:700; }
+  dl.info dd{ margin:0; display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+  .inline-input{ padding:8px 11px; border-radius:9px; border:1px solid var(--border); font-family:inherit; font-size:.9rem; min-width:0; width:180px; }
+  .badge{ display:inline-block; padding:3px 10px; border-radius:99px; font-size:.76rem; font-weight:800; }
+  .badge.super{ background:#fde8c8; color:#8a4b00; }
+  .badge.admin{ background:var(--accent-light); color:var(--accent-dark); }
+  .badge.member{ background:#edf1ee; color:var(--ink-soft); }
+  .badge.ok{ background:#e3f3e5; color:#2e7d32; }
+  .badge.wait{ background:#fff4d6; color:#8a6d1f; }
+  .links{ display:flex; gap:8px; flex-wrap:wrap; }
+  .links .btn{ padding:9px 16px; font-size:.86rem; }
+</style>
+</head>
+<body>
+
+<div class="admin-bar">
+  <div class="wrap">
+    <div>
+      <h1>내 정보</h1>
+      <div class="who" id="whoLine">확인 중…</div>
+    </div>
+    <div class="bar-actions">
+      <a href="index.html" class="btn btn-outline">홈으로</a>
+      <button class="btn btn-outline" id="logoutBtn">로그아웃</button>
+    </div>
+  </div>
+</div>
+
+<div class="br-wrap me-wrap">
+  <div id="notice"></div>
+
+  <div id="main" hidden>
+    <div class="panel">
+      <h2>회원 정보</h2>
+      <p class="desc">이름은 직접 고칠 수 있습니다. 이메일 변경은 관리자에게 문의해 주세요.</p>
+      <dl class="info">
+        <dt>이름</dt>
+        <dd><input class="inline-input" id="nameInput" maxlength="30"><button class="mini-btn primary" id="saveNameBtn">저장</button><span class="desc" id="nameMsg" style="margin:0;"></span></dd>
+        <dt>이메일</dt><dd id="emailText"></dd>
+        <dt>권한</dt><dd id="roleText"></dd>
+        <dt>승인 상태</dt><dd id="approvedText"></dd>
+        <dt>가입일</dt><dd id="joinedText"></dd>
+      </dl>
+    </div>
+
+    <div class="panel">
+      <h2>1년 성경읽기</h2>
+      <p class="desc" id="readingLine">불러오는 중…</p>
+      <div class="bar" style="margin-bottom:14px;"><span id="readingBar" style="width:0%"></span></div>
+      <div class="links"><a href="bible-reading.html" class="btn btn-primary">나의 성경읽기 →</a></div>
+    </div>
+
+    <div class="panel" id="adminPanel" hidden>
+      <h2>관리 메뉴</h2>
+      <p class="desc" id="adminDesc"></p>
+      <div class="links">
+        <a href="admin.html" class="btn btn-primary">관리자 대시보드</a>
+        <a href="admin.html#members" class="btn btn-outline">회원관리</a>
+        <a href="gyojeok.html" class="btn btn-outline">교적부</a>
+        <a href="bible-admin.html" class="btn btn-outline">성경읽기 관리</a>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>비밀번호 변경</h2>
+      <form id="pwForm" class="settings-row">
+        <input type="password" id="pw1" class="inline-input" placeholder="새 비밀번호 (8자 이상)" minlength="8" required autocomplete="new-password">
+        <input type="password" id="pw2" class="inline-input" placeholder="새 비밀번호 확인" minlength="8" required autocomplete="new-password">
+        <button type="submit" class="mini-btn primary" style="padding:9px 14px;">변경</button>
+        <span class="desc" id="pwMsg" style="margin:0;"></span>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="js/config.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/mypage.js"></script>
+</body>
+</html>
