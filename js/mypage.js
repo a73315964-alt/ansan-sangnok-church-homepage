@@ -55,6 +55,7 @@
 
       if (role) {
         $("adminPanel").hidden = false;
+        $("pwPanel").hidden = false;
         $("adminDesc").textContent = role === "super"
           ? "최고 관리자는 정회원 등록, 회원 정지·삭제, 관리자 임명까지 할 수 있습니다."
           : "관리자는 교적부와 성경읽기 관리를 할 수 있습니다.";

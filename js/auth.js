@@ -18,13 +18,40 @@ async function sbLogin(email, password) {
   return data;
 }
 
+// 일반 회원의 로그인 비밀번호 — 생년월일(YYYY-MM-DD)에서 만듭니다.
+// SQL실행하기/10_birth_login.sql 의 birth_login_password 와 반드시 같아야 합니다.
+function birthPassword(birthDate) {
+  return "sangnok:" + birthDate;
+}
+
+// "19650312", "1965-03-12", "1965.3.12" 등 → "1965-03-12" (잘못된 날짜면 null)
+function normalizeBirth(text) {
+  var s = String(text || "").trim();
+  var m = /^(\d{4})(\d{2})(\d{2})$/.exec(s) || /^(\d{4})\D+(\d{1,2})\D+(\d{1,2})\D*$/.exec(s);
+  if (!m) return null;
+  var y = +m[1], mo = +m[2], d = +m[3];
+  var dt = new Date(Date.UTC(y, mo - 1, d));
+  if (dt.getUTCFullYear() !== y || dt.getUTCMonth() !== mo - 1 || dt.getUTCDate() !== d) return null;
+  return y + "-" + String(mo).padStart(2, "0") + "-" + String(d).padStart(2, "0");
+}
+
+// 생년월일 로그인 (일반 회원) — 생년월일로 계정을 찾고, 생년월일 비밀번호로 로그인
+async function sbBirthLogin(birthDate) {
+  if (!window.SB_READY) throw new Error("Supabase 설정이 비어 있습니다.");
+  const { data: email, error } = await window.SB.rpc("birth_login_email", { p_birth: birthDate });
+  if (error) throw error;
+  if (!email) throw new Error("BIRTH_NOT_FOUND");
+  return sbLogin(email, birthPassword(birthDate));
+}
+
 // 성도 회원가입 — 성명·생년월일이 교적부와 일치하면 DB 에서 자동으로 정회원 인증됩니다.
 // (SQL실행하기/08_member_verification.sql 의 handle_new_user). 일치하지 않으면 관리자 승인 대기.
-async function sbSignup(name, email, password, birthDate) {
+// 비밀번호는 따로 받지 않고 생년월일로 만듭니다 (로그인은 생년월일만).
+async function sbSignup(name, email, birthDate) {
   if (!window.SB_READY) throw new Error("Supabase 설정이 비어 있습니다.");
   const { data, error } = await window.SB.auth.signUp({
     email,
-    password,
+    password: birthPassword(birthDate),
     options: {
       data: { name, birth_date: birthDate || null },
       emailRedirectTo: new URL("login.html", location.href).href,

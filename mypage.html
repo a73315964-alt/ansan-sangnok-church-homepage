@@ -85,7 +85,8 @@
       </div>
     </div>
 
-    <div class="panel">
+    <!-- 관리자만 — 일반 회원은 생년월일로 로그인하므로 비밀번호를 바꾸면 안 됨 -->
+    <div class="panel" id="pwPanel" hidden>
       <h2>비밀번호 변경</h2>
       <form id="pwForm" class="settings-row">
         <input type="password" id="pw1" class="inline-input" placeholder="새 비밀번호 (8자 이상)" minlength="8" required autocomplete="new-password">
