@@ -5,6 +5,18 @@
    - manuscript: 설교문 전문. 줄바꿈은 그대로 유지됩니다. 비워두면 "설교문 준비 중"으로 표시됩니다. */
 window.SERMONS = [
   {
+    date: "2026-10-04",
+    dateLabel: "2026. 10. 4",
+    title: "믿음의 사람이 가져야 할 세 가지 기둥",
+    scripture: "시편 119:145-152",
+    book: "시편",
+    preacher: "이재용 목사",
+    series: "주일예배",
+    youtube: "",
+    summary: "",
+    manuscript: "",
+  },
+  {
     date: "2026-09-13",
     dateLabel: "2026. 9. 13",
     title: "성령을 아는 신자가 되라",
