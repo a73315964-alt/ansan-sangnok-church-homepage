@@ -12,7 +12,7 @@ window.SERMONS = [
     book: "시편",
     preacher: "이재용 목사",
     series: "주일예배",
-    youtube: "",
+    youtube: "Nhytoqb4hJM",
     summary: "",
     manuscript: "",
   },
