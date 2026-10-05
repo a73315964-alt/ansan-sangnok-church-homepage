@@ -154,7 +154,7 @@
         { label: "홈페이지 회원관리", href: "site-members.html" },
         { label: "교적부", href: "gyojeok.html", items: [
           { label: "성도 목록", href: "gyojeok.html" },
-          { label: "새 성도 등록", href: "gyojeok.html#new" }
+          { label: "새 교인 등록", href: "gyojeok.html#new" }
         ] },
         { label: "성경읽기 관리", href: "bible-admin.html" }
       ]
