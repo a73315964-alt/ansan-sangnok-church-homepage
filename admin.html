@@ -8,6 +8,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='0,0 58,0 46,50 58,100 0,100' fill='%2329b6f6'/%3E%3Cpolygon points='100,0 58,0 46,50 58,100 100,100' fill='%238bc34a'/%3E%3Crect x='43' y='12' width='14' height='76' fill='white'/%3E%3Crect x='22' y='43' width='56' height='14' fill='white'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/bible.css">
+<link rel="stylesheet" href="css/admin-charts.css">
 <style>
   .quick{ display:grid; grid-template-columns:repeat(3, 1fr); gap:12px; margin-bottom:18px; }
   @media (max-width:760px){ .quick{ grid-template-columns:1fr; } }
@@ -50,7 +51,7 @@
   <div id="main" hidden>
     <div class="tiles">
       <div class="tile"><div class="label">회원</div><div class="value" id="tUsers">0명</div><div class="sub" id="tUsersSub"></div></div>
-      <div class="tile"><div class="label">승인 대기</div><div class="value warn" id="tPending">0명</div><div class="sub">아래 회원관리에서 승인</div></div>
+      <div class="tile"><div class="label">승인 대기</div><div class="value warn" id="tPending">0명</div><div class="sub">아래 "가입 승인 대기" 탭</div></div>
       <div class="tile"><div class="label">교적 등록 교인</div><div class="value" id="tMembers">0명</div><div class="sub">교적부 기준</div></div>
       <div class="tile"><div class="label">성경읽기 평균 진도</div><div class="value" id="tReading">0%</div><div class="sub" id="tReadingSub"></div></div>
     </div>
@@ -61,27 +62,91 @@
       <a href="site-members.html"><b>홈페이지 회원관리 →</b><span>정회원 승인, 정지, 삭제, 교적 연결, 관리자 임명</span></a>
     </div>
 
-    <div class="panel">
+    <!-- 교회관리 -->
+    <section class="panel church-admin" id="church">
       <div class="panel-head">
         <div>
-          <h2>승인 대기 가입자</h2>
-          <p class="desc" style="margin:4px 0 0;">성명·생년월일이 교적과 일치하지 않아 자동 인증되지 않은 분들입니다.</p>
+          <h2>교회관리</h2>
+          <p class="desc" style="margin:4px 0 0;" id="churchLine"></p>
         </div>
-        <a href="site-members.html#pending" class="mini-btn primary">홈페이지 회원관리에서 처리 →</a>
       </div>
-      <div class="table-scroll">
-        <table class="grid">
-          <thead><tr><th>성명</th><th>생년월일</th><th>이메일</th><th>가입일</th></tr></thead>
-          <tbody id="rows"><tr><td colspan="4" class="empty">불러오는 중…</td></tr></tbody>
-        </table>
+      <div class="tabs" id="churchTabs" role="tablist">
+        <button type="button" class="on" data-tab="saints" role="tab">성도 관리</button>
+        <button type="button" data-tab="pending" role="tab">가입 승인 대기 <span class="tab-count" id="pendingCount"></span></button>
       </div>
-    </div>
+
+      <!-- 성도 관리: 성경읽기 진행 그래프 -->
+      <div id="tab-saints">
+        <div class="viz-root">
+          <div class="viz-card">
+            <div class="viz-head">
+              <h3>계획 대비 진행 상태</h3>
+              <span class="viz-sub" id="statusSub"></span>
+            </div>
+            <div class="stack" id="statusStack"></div>
+            <ul class="status-legend" id="statusLegend"></ul>
+          </div>
+
+          <div class="viz-card">
+            <div class="viz-head">
+              <h3>성도별 성경읽기 진도</h3>
+              <div class="viz-tools">
+                <select id="progressSort" aria-label="정렬">
+                  <option value="progress">진도 높은 순</option>
+                  <option value="behind">많이 밀린 순</option>
+                  <option value="name">이름 순</option>
+                </select>
+                <a href="bible-admin.html" class="mini-btn">표로 보기 →</a>
+              </div>
+            </div>
+            <p class="viz-note" id="progressNote"></p>
+            <div class="hbars" id="progressBars"></div>
+          </div>
+
+          <div class="viz-grid">
+            <div class="viz-card">
+              <div class="viz-head">
+                <h3>최근 30일 교회 전체 읽기</h3>
+                <span class="viz-sub" id="dailySub"></span>
+              </div>
+              <div class="cols" id="dailyCols"></div>
+            </div>
+            <div class="viz-card">
+              <div class="viz-head">
+                <h3>성경 66권별 평균 진도</h3>
+                <span class="viz-sub">정회원 평균 · 진할수록 많이 읽음</span>
+              </div>
+              <div id="bookHeat"></div>
+              <div class="heat-scale" id="heatScale"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 가입 승인 대기 -->
+      <div id="tab-pending" hidden>
+        <div class="panel-head" style="margin-top:4px;">
+          <p class="desc" style="margin:0;">성명·생년월일이 교적과 일치하지 않아 자동 인증되지 않은 분들입니다.</p>
+          <a href="site-members.html#pending" class="mini-btn primary">홈페이지 회원관리에서 처리 →</a>
+        </div>
+        <div class="table-scroll">
+          <table class="grid">
+            <thead><tr><th>성명</th><th>생년월일</th><th>이메일</th><th>가입일</th></tr></thead>
+            <tbody id="rows"><tr><td colspan="4" class="empty">불러오는 중…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+    <div class="viz-tip" id="vizTip" role="tooltip" hidden></div>
   </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script src="js/config.js"></script>
 <script src="js/auth.js"></script>
+<script src="js/bible-plan.js"></script>
+<script src="js/bible-common.js"></script>
+<script src="js/admin-charts.js"></script>
 <script src="js/admin.js"></script>
 </body>
 </html>
