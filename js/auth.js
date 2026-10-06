@@ -47,14 +47,20 @@ async function sbBirthLogin(birthDate) {
 // 성도 회원가입 — 성명·생년월일이 교적부와 일치하면 DB 에서 자동으로 정회원 인증됩니다.
 // (SQL실행하기/08_member_verification.sql 의 handle_new_user). 일치하지 않으면 관리자 승인 대기.
 // 비밀번호는 따로 받지 않고 생년월일로 만듭니다 (로그인은 생년월일만).
-async function sbSignup(name, email, birthDate) {
+// 이메일도 받지 않고 계정용 내부 주소를 자동으로 만듭니다 (메일은 보내지 않음).
+// ※ Supabase → Authentication → Sign In / Providers → Email 의 "Confirm email" 이 꺼져 있어야 합니다.
+function memberEmail(birthDate) {
+  var rand = Math.random().toString(36).slice(2, 8);
+  return "m" + String(birthDate).replace(/-/g, "") + "-" + rand + "@member.ansansangrok.or.kr";
+}
+
+async function sbSignup(name, birthDate) {
   if (!window.SB_READY) throw new Error("Supabase 설정이 비어 있습니다.");
   const { data, error } = await window.SB.auth.signUp({
-    email,
+    email: memberEmail(birthDate),
     password: birthPassword(birthDate),
     options: {
       data: { name, birth_date: birthDate || null },
-      emailRedirectTo: new URL("login.html", location.href).href,
     },
   });
   if (error) throw error;

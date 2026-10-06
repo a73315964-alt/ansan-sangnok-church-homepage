@@ -85,11 +85,6 @@
       <input type="date" id="su_birth" autocomplete="bday" required>
       <div class="hint">교적부의 성명·생년월일과 일치하면 바로 <b>정회원</b>으로 인증됩니다. 교적에 없으면 관리자 확인 후 등록됩니다.</div>
     </div>
-    <div class="field">
-      <label for="su_email">이메일</label>
-      <input type="email" id="su_email" autocomplete="email" required>
-      <div class="hint">가입 확인 메일을 받는 데만 쓰입니다. 로그인은 생년월일로 합니다.</div>
-    </div>
     <button type="submit" class="btn btn-primary">가입 신청</button>
   </form>
 
@@ -222,15 +217,14 @@
       show("가입 신청 중…");
       var data = await sbSignup(
         document.getElementById("su_name").value.trim(),
-        document.getElementById("su_email").value.trim(),
         document.getElementById("su_birth").value
       );
       if (data.session) {
-        location.href = next; // 이메일 확인을 끈 경우 바로 로그인됨
+        location.href = next; // 가입 즉시 로그인됨
         return;
       }
       form.reset();
-      show("가입 신청이 접수되었습니다. 입력하신 이메일로 확인 메일을 보냈습니다 — 메일의 링크를 누른 뒤 로그인해 주세요. (목사님 승인 후 성경읽기 기록이 가능합니다)", "ok");
+      show("가입 신청이 접수되었습니다. 생년월일로 로그인해 주세요. (목사님 승인 후 성경읽기 기록이 가능합니다)", "ok");
     });
   });
 
