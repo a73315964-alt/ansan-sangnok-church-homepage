@@ -576,7 +576,7 @@ body.nav-open .nav-mobile{ display: flex; }
 .devotion-card h3{ font-size: 1.15rem; margin-bottom: 12px; }
 .devotion-card .scripture-text{ background: var(--bg-soft); padding: 14px; border-radius: 8px; margin-bottom: 14px; border-left: 3px solid var(--accent); }
 .devotion-card .scripture-text pre{ font-family: inherit; white-space: pre-wrap; word-wrap: break-word; margin: 0; font-size: .92rem; line-height: 1.6; color: var(--ink); text-align: justify; word-break: keep-all; }
-.devotion-card .reflection{ font-size: .93rem; color: var(--ink-soft); margin-bottom: 0; }
+.devotion-card .reflection{ font-size: .93rem; color: var(--ink-soft); margin-bottom: 0; text-align: justify; word-break: keep-all; }
 .devotion-card .meditation{ margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--border); }
 .devotion-card .meditation-label{ font-size: 1.2rem; font-weight: 800; color: var(--ink); margin: 0 0 10px; }
 .devotion-card .meditation-title{ font-size: 1.08rem; font-weight: 700; color: var(--accent-dark); margin: 0 0 16px; }
