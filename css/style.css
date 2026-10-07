@@ -575,12 +575,12 @@ body.nav-open .nav-mobile{ display: flex; }
 .devotion-card .range{ font-weight: 700; color: var(--accent-dark); font-size: .95rem; margin-bottom: 4px; }
 .devotion-card h3{ font-size: 1.15rem; margin-bottom: 12px; }
 .devotion-card .scripture-text{ background: var(--bg-soft); padding: 14px; border-radius: 8px; margin-bottom: 14px; border-left: 3px solid var(--accent); }
-.devotion-card .scripture-text pre{ font-family: inherit; white-space: pre-wrap; word-wrap: break-word; margin: 0; font-size: .92rem; line-height: 1.6; color: var(--ink); }
+.devotion-card .scripture-text pre{ font-family: inherit; white-space: pre-wrap; word-wrap: break-word; margin: 0; font-size: .92rem; line-height: 1.6; color: var(--ink); text-align: justify; word-break: keep-all; }
 .devotion-card .reflection{ font-size: .93rem; color: var(--ink-soft); margin-bottom: 0; }
 .devotion-card .meditation{ margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--border); }
 .devotion-card .meditation-label{ font-size: 1.2rem; font-weight: 800; color: var(--ink); margin: 0 0 10px; }
 .devotion-card .meditation-title{ font-size: 1.08rem; font-weight: 700; color: var(--accent-dark); margin: 0 0 16px; }
-.devotion-card .meditation p{ font-size: .95rem; line-height: 1.85; color: var(--ink-soft); margin: 0 0 10px; word-break: keep-all; }
+.devotion-card .meditation p{ font-size: .95rem; line-height: 1.85; color: var(--ink-soft); margin: 0 0 10px; word-break: keep-all; text-align: justify; }
 .devotion-card .meditation p:last-child{ margin-bottom: 0; }
 .devotion-card .meditation-intro{ margin-bottom: 22px; }
 .devotion-card .meditation-section{ margin-bottom: 22px; }
