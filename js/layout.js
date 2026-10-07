@@ -216,11 +216,11 @@
 
   function markIcon() {
     return (
-      '<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">' +
-      '<polygon points="0,0 58,0 46,50 58,100 0,100" fill="#29b6f6"/>' +
-      '<polygon points="100,0 58,0 46,50 58,100 100,100" fill="#8bc34a"/>' +
-      '<rect x="43" y="12" width="14" height="76" fill="#ffffff"/>' +
-      '<rect x="22" y="43" width="56" height="14" fill="#ffffff"/>' +
+      '<svg viewBox="2 7 73 104" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">' +
+      '<polygon points="2,7 42,14 42,88 2,94" fill="#3cafff"/>' +
+      '<polygon points="35,19 75,10 75,111 35,101" fill="#92d700"/>' +
+      '<rect x="35.5" y="19" width="7" height="68.5" fill="#ffffff"/>' +
+      '<rect x="16.5" y="39.5" width="44" height="6" fill="#ffffff"/>' +
       "</svg>"
     );
   }
@@ -344,7 +344,7 @@
       '<div class="footer-sitemap">' + cols + "</div>" +
       '<div class="footer-grid">' +
       "<div>" +
-      '<div class="footer-brand"><span class="mark" style="width:32px;height:32px;">' + markIcon() + "</span>" + esc(C.name || "") + "</div>" +
+      '<div class="footer-brand"><span class="mark" style="width:25px;height:36px;">' + markIcon() + "</span>" + esc(C.name || "") + "</div>" +
       "<p>" + esc(C.address || "") + "</p>" +
       "<p>" + (C.phone ? "전화 " + esc(C.phone) : "") + (C.email ? " · " + esc(C.email) : "") + "</p>" +
       "</div>" +

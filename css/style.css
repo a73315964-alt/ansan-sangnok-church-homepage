@@ -81,7 +81,7 @@ section{ padding: 88px 0; }
 }
 .brand{ display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.05rem; color: var(--ink); }
 .brand .mark{
-  width: 38px; height: 38px; border-radius: 10px; overflow: hidden;
+  width: 30px; height: 42px;
   display: flex; align-items: center; justify-content: center; color: #fff; flex: none;
 }
 .brand small{ display:block; font-weight: 500; font-size: .68rem; color: var(--muted); letter-spacing: .08em; }
