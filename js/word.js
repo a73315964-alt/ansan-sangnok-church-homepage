@@ -90,11 +90,40 @@
       : '';
     host.innerHTML =
       '<span class="date-badge">' + esc(today.dateLabel) + "</span>" +
-      (opts.series ? '<div class="range">' + esc(today.series) + "</div>" : "") +
+      (opts.series && today.series ? '<div class="range">' + esc(today.series) + "</div>" : "") +
       '<div class="range">' + esc(today.range) + "</div>" +
-      "<h3>" + esc(today.title || "") + "</h3>" +
+      (today.title ? "<h3>" + esc(today.title) + "</h3>" : "") +
       scriptureHtml +
-      '<p class="reflection">' + esc(today.reflection) + "</p>";
+      (today.meditation
+        ? meditationHtml(today.meditation)
+        : '<p class="reflection">' + esc(today.reflection) + "</p>");
+  }
+
+  function paragraphs(text) {
+    return String(text || "").split(/\n\s*\n/).map(function (p) {
+      return "<p>" + esc(p) + "</p>";
+    }).join("");
+  }
+
+  function meditationHtml(m) {
+    return (
+      '<div class="meditation">' +
+      '<h4 class="meditation-label">말씀 묵상</h4>' +
+      (m.title ? '<p class="meditation-title">“' + esc(m.title) + '”</p>' : "") +
+      (m.intro ? '<div class="meditation-intro">' + paragraphs(m.intro) + "</div>" : "") +
+      (m.sections || []).map(function (s) {
+        return (
+          '<div class="meditation-section">' +
+          '<h5><span class="meditation-icon" aria-hidden="true">' + esc(s.icon || "") + "</span>" + esc(s.heading) + "</h5>" +
+          paragraphs(s.body) +
+          "</div>"
+        );
+      }).join("") +
+      (m.prayer
+        ? '<div class="meditation-prayer"><h5><span class="meditation-icon" aria-hidden="true">🙏</span>마무리 기도</h5>' + paragraphs(m.prayer) + "</div>"
+        : "") +
+      "</div>"
+    );
   }
 
   function renderDevotionHistory(hostId, data) {
@@ -110,7 +139,7 @@
       return (
         '<div class="list-item">' +
         '<div class="date"><span class="d">' + d.day + '</span><span class="m">' + d.month + "</span></div>" +
-        "<div><h4>" + esc(item.title || item.series || "") + "</h4><p>" + esc(item.range) + "</p></div>" +
+        "<div><h4>" + esc(item.title || (item.meditation && item.meditation.title) || item.series || "") + "</h4><p>" + esc(item.range) + "</p></div>" +
         "</div>"
       );
     }).join("");
