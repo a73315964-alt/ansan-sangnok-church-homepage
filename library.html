@@ -8,6 +8,35 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-13 7 104 104'%3E%3Cpolygon points='2,7 42,14 42,88 2,94' fill='%233cafff'/%3E%3Cpolygon points='35,19 75,10 75,111 35,101' fill='%2392d700'/%3E%3Crect x='35.5' y='19' width='7' height='68.5' fill='white'/%3E%3Crect x='16.5' y='39.5' width='44' height='6' fill='white'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="css/style.css">
 <link rel="canonical" href="https://ansansangrok.or.kr/library.html">
+<style>
+  .featured-book { max-width: 360px; margin: 0 auto 40px; text-align: center; }
+  .featured-cover { width: 220px; max-width: 70%; border-radius: 6px; box-shadow: 0 4px 14px rgba(0,0,0,.15); }
+  .featured-book h2 { margin: 14px 0 4px; }
+  .featured-meta { margin: 0; color: var(--muted, #666); font-size: .92rem; }
+  .synopsis-btn {
+    display: inline-flex; align-items: center; gap: 6px; margin-top: 14px;
+    padding: 8px 14px; border: 1px solid var(--border); border-radius: 999px;
+    background: #fff; color: inherit; font: inherit; font-size: .88rem; cursor: pointer;
+  }
+  .synopsis-btn:hover { border-color: var(--accent, #3cafff); }
+  .synopsis-dialog {
+    width: calc(100% - 32px); max-width: 640px; border: 0; border-radius: 12px; padding: 0;
+    box-shadow: 0 12px 40px rgba(0,0,0,.25); background: #fff; color: inherit;
+  }
+  .synopsis-dialog::backdrop { background: rgba(0,0,0,.5); }
+  .synopsis-head {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 16px 20px; border-bottom: 1px solid var(--border);
+  }
+  .synopsis-head h3 { margin: 0; font-size: 1.05rem; }
+  .synopsis-close { background: none; border: 0; font-size: 1.1rem; cursor: pointer; padding: 4px 8px; color: inherit; }
+  .synopsis-body {
+    padding: 18px 22px 24px; max-height: 70vh; overflow: auto;
+    text-align: justify; word-break: keep-all; line-height: 1.8;
+  }
+  .synopsis-body h4 { margin: 18px 0 8px; }
+  .synopsis-body h4:first-child { margin-top: 0; }
+</style>
 </head>
 <body data-page="library">
 
@@ -23,23 +52,36 @@
 
 <section>
   <div class="wrap">
-    <div class="card" style="max-width:820px;margin:0 auto 40px;display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start;">
-      <img src="images/book-faith-cover.jpg" alt="그래도, 믿음이 필요하다 표지 — 강정훈 지음"
-        style="width:200px;max-width:100%;border-radius:6px;box-shadow:0 4px 14px rgba(0,0,0,.15);flex-shrink:0;">
-      <div style="flex:1;min-width:260px;text-align:justify;word-break:keep-all;">
-        <span class="cat">이달의 책</span>
-        <h2 style="margin:8px 0 4px;">그래도, 믿음이 필요하다</h2>
-        <p style="margin:0 0 18px;color:var(--muted, #666);">강정훈 지음 · 두란노</p>
-        <h4 style="margin:0 0 8px;">이 시대에 종교는 꼭 필요할까?</h4>
+    <div class="featured-book">
+      <img class="featured-cover" src="images/book-faith-cover.jpg" alt="그래도, 믿음이 필요하다 표지 — 강정훈 지음">
+      <span class="cat">이달의 책</span>
+      <h2>그래도, 믿음이 필요하다</h2>
+      <p class="featured-meta">강정훈 지음 · 두란노</p>
+      <button type="button" class="synopsis-btn" id="synopsisOpen" aria-haspopup="dialog" aria-controls="synopsisDialog">
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+          <path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2V5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M4 19a2 2 0 0 1 2-2h13" fill="none" stroke="currentColor" stroke-width="2"/>
+        </svg>
+        줄거리 보기
+      </button>
+    </div>
+
+    <dialog id="synopsisDialog" class="synopsis-dialog" aria-labelledby="synopsisTitle">
+      <div class="synopsis-head">
+        <h3 id="synopsisTitle">그래도, 믿음이 필요하다</h3>
+        <button type="button" class="synopsis-close" id="synopsisClose" aria-label="닫기">✕</button>
+      </div>
+      <div class="synopsis-body">
+        <h4>이 시대에 종교는 꼭 필요할까?</h4>
         <p>지금 세상은 무신론, 종교 해악론, 종교 말살론이 기세를 떨치고 있다. 무신론자들은 “인류가 신의 섭리에 따라 서로를 짓밟고 살아왔기에 지금부터는 인간다운 판단과 실천으로 신을 떨쳐버리고 새로운 미래를 꿈꿔야 한다”고 주장하며, 신이라는 존재 없이도 인간은 충분히 행복할 수 있다고 말한다. 종교는 일종의 폭력행위이며, 나쁜 역할도 많이 했고, 인류 역사에 지은 죄가 헤아릴 수 없이 많다는 것이다. 그러면서 무신론자들이 서로 연대하여 종교를 공격하는 집단행동에 나서야 한다고 극단적으로 말하기도 한다. 특히 대한민국에서 기독교는 비판받고 폄훼되고 사방으로 공격을 당하는 중이다. 비이성적이고 독선적이며 시대에 뒤떨어진 구시대 종교 유물이라 조롱한다. 이런 주장들이 대세를 이루면서 청소년, 청년들, 비판적인 시각을 가진 이들이 탈 기독교를 외치며 교회를 떠나고 있다. 그런데 이들의 주장처럼 인간은 종교 없이도 살 수 있을까? 정말 종교 없이도 행복할까?</p>
-        <h4 style="margin:18px 0 8px;">믿음이 없어도 쾌적한 삶을 살 수 있다</h4>
+        <h4>믿음이 없어도 쾌적한 삶을 살 수 있다</h4>
         <p>그러나 구원으로 얻을 수 있는 영원한 행복은 없다.</p>
         <p>하나님 없이도 쾌적하게 살 수는 있다. 자녀들을 잘 키우고 행복한 가정을 꾸려 나갈 수도 있다. 그럼에도 우리가 믿음을 갖고 있고 그 믿음을 소중하게 여기는 까닭은, 이 세상이 전부가 아니라는 사실을 믿기 때문이다. 우리의 믿음은 세상에서도 소중하지만 삶과 죽음이 교대하는 그 순간에 더욱 필요하다. 유한한, 영원에 비하면 점 하나에 불과한 우리 인생을 어떻게 살아야 할까? 분명한 것은 천국은 확실히 있다는 사실이다. 성경 말씀에 의하면 하나님은 ‘만들어진 신’도 아니고 기독교는 인간의 종교 산물도 아니다. 인간을 구원하기 위해 주신 하나님의 선물이다. 그 약속된 구원으로 지금도 그 이후로도 영원히 행복할 수 있다.</p>
-        <h4 style="margin:18px 0 8px;">진짜 믿음, 진짜 구원, 영원한 행복</h4>
+        <h4>진짜 믿음, 진짜 구원, 영원한 행복</h4>
         <p>우리는 ‘진화론적 종교’와 ‘창조론적 종교’ 사이에 있다. 과학과 진화론이 감당할 가시권의 세계가 있는가 하면, 종교와 창조론이 감당하는 비가시권은 분명 존재한다. 인간은 눈에 보이는 현실에서 살지만 우리 영혼을 채우는 것은 눈에 보이지 않는 비가시권이다. 인간의 한계를 인정하고 우주의 시작과 끝을 계시하는 성경을 토대로 우리 인생을 설계해야 한다. 그것은 바로 성경을 토대로 하는 믿음이다. 이 책이 말하고자 하는 믿음론은 여기에 근거하고 있다. 이 책은 진짜 믿음, 진짜 구원, 영원한 행복에 대해 이야기한다.</p>
         <p>종교생활이 정말 필요한지 의문이 드는가? 믿음이 있다고 생각하는데도 행복하지 않은가? 정말 구원받았다는 확신이 없는가? 믿음의 본질이 무엇인지 알고 싶은가? 구원의 확증과 진정한 믿음이 무엇인지 확실히 깨닫고자 하는 분들에게 일독을 권한다.</p>
       </div>
-    </div>
+    </dialog>
 
     <input type="search" id="librarySearch" placeholder="제목·저자로 검색"
       style="width:100%;max-width:420px;display:block;margin:0 auto 30px;padding:12px 16px;border-radius:10px;border:1px solid var(--border);font-family:inherit;font-size:.92rem;">
@@ -57,6 +99,19 @@
 <script src="js/main.js"></script>
 <script>
 (function () {
+  // 이달의 책 줄거리 창 (표지 아래 "줄거리 보기" 버튼)
+  var dialog = document.getElementById("synopsisDialog");
+  document.getElementById("synopsisOpen").addEventListener("click", function () {
+    dialog.showModal();
+  });
+  document.getElementById("synopsisClose").addEventListener("click", function () {
+    dialog.close();
+  });
+  // 창 바깥(어두운 배경)을 눌러도 닫히도록
+  dialog.addEventListener("click", function (e) {
+    if (e.target === dialog) dialog.close();
+  });
+
   function esc(s) {
     return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) {
       return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
