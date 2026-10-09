@@ -173,11 +173,15 @@
       var btn = e.target.closest("button[data-file]");
       if (!btn) return;
       btn.disabled = true;
+      // 휴대폰 브라우저는 클릭 직후에 연 창만 막지 않으므로, 먼저 빈 창을 열어 두고 주소를 나중에 넣습니다.
+      var win = window.open("", "_blank");
       try {
         var res = await window.SB.storage.from("library").createSignedUrl(btn.getAttribute("data-file"), 600);
         if (res.error || !res.data) throw res.error || new Error("no url");
-        window.open(res.data.signedUrl, "_blank", "noopener");
+        if (win) win.location.href = res.data.signedUrl;
+        else window.location.href = res.data.signedUrl;
       } catch (err) {
+        if (win) win.close();
         alert("자료를 여는 중 문제가 생겼습니다. 다시 로그인한 뒤 시도해 주세요.");
       } finally {
         btn.disabled = false;
