@@ -135,12 +135,11 @@
     }
     host.innerHTML = list.map(function (item) {
       var linkHtml;
+      // 읽기 버튼은 모든 방문자에게 보입니다. 누르면 읽기 화면에서 로그인·정회원 여부를 확인합니다.
       if (!item.file) {
         linkHtml = '<span class="btn btn-outline" style="opacity:.5;pointer-events:none;">준비 중</span>';
-      } else if (member) {
-        linkHtml = '<a class="btn btn-outline" href="reader.html?file=' + encodeURIComponent(item.file) + '">읽기</a>';
       } else {
-        linkHtml = '<a class="btn btn-outline" href="login.html?next=library.html">회원 전용 · 로그인</a>';
+        linkHtml = '<a class="btn btn-outline" href="reader.html?file=' + encodeURIComponent(item.file) + '">읽기</a>';
       }
       return (
         '<div class="card library-item">' +
