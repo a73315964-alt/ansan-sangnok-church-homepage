@@ -101,7 +101,8 @@
     var res = await window.SB.storage.from("library").createSignedUrl(file, 600);
     if (res.error || !res.data) {
       console.error("reader: signed url failed", res.error);
-      showMessage("자료를 불러오지 못했습니다. 다시 로그인한 뒤 시도해 주세요.");
+      var why = res.error && res.error.message ? res.error.message : "데이터 없음";
+      showMessage("자료를 불러오지 못했습니다. 다시 로그인한 뒤 시도해 주세요.\n\n(안내 코드: " + why + " / 파일: " + file + ")");
       return;
     }
 
