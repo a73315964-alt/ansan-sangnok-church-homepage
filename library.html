@@ -138,7 +138,7 @@
       if (!item.file) {
         linkHtml = '<span class="btn btn-outline" style="opacity:.5;pointer-events:none;">준비 중</span>';
       } else if (member) {
-        linkHtml = '<button type="button" class="btn btn-outline" data-file="' + esc(item.file) + '">내려받기</button>';
+        linkHtml = '<a class="btn btn-outline" href="reader.html?file=' + encodeURIComponent(item.file) + '">읽기</a>';
       } else {
         linkHtml = '<a class="btn btn-outline" href="login.html?next=library.html">회원 전용 · 로그인</a>';
       }
@@ -168,27 +168,6 @@
     refresh();
     search.addEventListener("input", refresh);
 
-    // 회원만 받을 수 있도록 로그인 상태를 확인한 뒤, 잠깐 쓸 수 있는 임시 링크를 만듭니다.
-    document.getElementById("libraryList").addEventListener("click", async function (e) {
-      var btn = e.target.closest("button[data-file]");
-      if (!btn) return;
-      btn.disabled = true;
-      // 휴대폰 브라우저는 클릭 직후에 연 창만 막지 않으므로, 먼저 빈 창을 열어 두고 주소를 나중에 넣습니다.
-      var win = window.open("", "_blank");
-      try {
-        var res = await window.SB.storage.from("library").createSignedUrl(btn.getAttribute("data-file"), 600);
-        if (res.error || !res.data) throw res.error || new Error("no url");
-        if (win) win.location.href = res.data.signedUrl;
-        else window.location.href = res.data.signedUrl;
-      } catch (err) {
-        if (win) win.close();
-        console.error("library download failed:", err);
-        var detail = err && err.message ? err.message : String(err);
-        alert("자료를 여는 중 문제가 생겼습니다. 다시 로그인한 뒤 시도해 주세요.\n\n(안내 코드: " + detail + ")");
-      } finally {
-        btn.disabled = false;
-      }
-    });
   });
 })();
 </script>

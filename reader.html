@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>자료 읽기 — 안산상록교회</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-13 7 104 104'%3E%3Cpolygon points='2,7 42,14 42,88 2,94' fill='%233cafff'/%3E%3Cpolygon points='35,19 75,10 75,111 35,101' fill='%2392d700'/%3E%3Crect x='35.5' y='19' width='7' height='68.5' fill='white'/%3E%3Crect x='16.5' y='39.5' width='44' height='6' fill='white'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  #viewer { max-width: 820px; margin: 0 auto; }
+  #viewer .page-box { background: #fff; margin: 0 auto 14px; box-shadow: 0 2px 10px rgba(0,0,0,.12); }
+  #viewer canvas { display: block; width: 100%; height: auto; }
+  #viewer .page-box.pending { background: #f3f3f3; }
+  .reader-bar { max-width: 820px; margin: 0 auto 16px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .reader-msg { text-align: center; padding: 40px 16px; color: var(--muted, #666); line-height: 1.7; }
+  /* 화면에서 글자 드래그·길게 누르기 저장 메뉴를 줄이기 위한 설정 (완전한 복사 방지는 아님) */
+  #viewer { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+</style>
+</head>
+<body data-page="reader">
+
+<header class="site-header" id="site-header"></header>
+
+<section class="page-hero">
+  <div class="wrap">
+    <div class="crumb"><a href="library.html">도서관</a> / 자료 읽기</div>
+    <h1 id="bookTitle">자료 읽기</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="reader-bar" id="readerBar" style="display:none;">
+      <span id="pageInfo" style="color:var(--muted,#666);font-size:.92rem;"></span>
+      <a class="btn btn-outline" href="library.html">도서관으로 돌아가기</a>
+    </div>
+    <div id="status" class="reader-msg">자료를 불러오는 중입니다…</div>
+    <div id="viewer"></div>
+  </div>
+</section>
+
+<footer class="site-footer" id="site-footer"></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="js/config.js"></script>
+<script src="js/layout.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/library.js"></script>
+<script src="js/main.js"></script>
+<script>
+(function () {
+  var statusEl = document.getElementById("status");
+  var viewer = document.getElementById("viewer");
+  var bar = document.getElementById("readerBar");
+  var pageInfo = document.getElementById("pageInfo");
+
+  function showMessage(text) {
+    statusEl.style.display = "";
+    statusEl.textContent = text;
+  }
+
+  var params = new URLSearchParams(location.search);
+  // 로그인 페이지를 거쳐 돌아올 때는 주소의 ?file= 값이 사라지므로 잠시 저장해 둡니다.
+  var file = params.get("file") || "";
+  try {
+    if (file) sessionStorage.setItem("readerFile", file);
+    else file = sessionStorage.getItem("readerFile") || "";
+  } catch (e) { /* 저장소를 쓸 수 없는 브라우저 */ }
+  var book = (window.LIBRARY || []).filter(function (b) { return b.file === file; })[0];
+
+  // 1) 도서관에 등록된 자료만 열 수 있습니다.
+  if (!book) {
+    showMessage("자료를 찾을 수 없습니다. 도서관 목록에서 다시 선택해 주세요.");
+    return;
+  }
+  document.getElementById("bookTitle").textContent = book.title;
+  document.title = book.title + " — 안산상록교회";
+
+  // 2) 로그인 → 정회원 확인 → 임시 주소 발급 → PDF 그리기
+  async function start() {
+    if (!window.SB_READY) {
+      showMessage("회원 시스템이 설정되지 않아 자료를 열 수 없습니다.");
+      return;
+    }
+    var session = await sbCurrentSession();
+    if (!session) {
+      location.href = "login.html?next=reader.html";
+      return;
+    }
+    var profile = await sbMyProfile();
+    if (!(profile && profile.approved && !profile.suspended)) {
+      showMessage("정회원만 읽을 수 있는 자료입니다. 승인 여부는 교회 사무실에 문의해 주세요.");
+      return;
+    }
+
+    var res = await window.SB.storage.from("library").createSignedUrl(file, 600);
+    if (res.error || !res.data) {
+      console.error("reader: signed url failed", res.error);
+      showMessage("자료를 불러오지 못했습니다. 다시 로그인한 뒤 시도해 주세요.");
+      return;
+    }
+
+    var pdf = await pdfjsLib.getDocument({ url: res.data.signedUrl }).promise;
+    await drawPages(pdf);
+  }
+
+  async function drawPages(pdf) {
+    var total = pdf.numPages;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var width = Math.min(viewer.clientWidth || 820, 820);
+    var boxes = [];
+
+    // 각 쪽의 크기를 먼저 알아서, 스크롤 위치가 흔들리지 않게 칸을 만듭니다.
+    for (var n = 1; n <= total; n++) {
+      var page = await pdf.getPage(n);
+      var vp1 = page.getViewport({ scale: 1 });
+      var cssH = Math.round(width * vp1.height / vp1.width);
+      var box = document.createElement("div");
+      box.className = "page-box pending";
+      box.style.width = width + "px";
+      box.style.height = cssH + "px";
+      box.dataset.page = n;
+      viewer.appendChild(box);
+      boxes.push(box);
+    }
+
+    statusEl.style.display = "none";
+    bar.style.display = "flex";
+    pageInfo.textContent = "전체 " + total + "쪽";
+
+    // 화면 가까이 온 쪽만 그립니다 (휴대폰에서도 빠르게 열리도록).
+    var drawn = {};
+    async function drawOne(box) {
+      var n = +box.dataset.page;
+      if (drawn[n]) return;
+      drawn[n] = true;
+      var page = await pdf.getPage(n);
+      var vp1 = page.getViewport({ scale: 1 });
+      var scale = width / vp1.width;
+      var vp = page.getViewport({ scale: scale * dpr });
+      var canvas = document.createElement("canvas");
+      canvas.width = Math.floor(vp.width);
+      canvas.height = Math.floor(vp.height);
+      box.innerHTML = "";
+      box.appendChild(canvas);
+      box.classList.remove("pending");
+      await page.render({ canvasContext: canvas.getContext("2d"), viewport: vp }).promise;
+    }
+
+    if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting) drawOne(en.target);
+        });
+      }, { rootMargin: "1200px 0px" });
+      boxes.forEach(function (b) { io.observe(b); });
+    } else {
+      for (var i = 0; i < boxes.length; i++) await drawOne(boxes[i]);
+    }
+  }
+
+  // 저장·인쇄 단축키를 막습니다 (브라우저 메뉴를 통한 저장은 완전히 막을 수 없습니다).
+  document.addEventListener("keydown", function (e) {
+    if ((e.ctrlKey || e.metaKey) && (e.key === "s" || e.key === "p")) e.preventDefault();
+  });
+  viewer.addEventListener("contextmenu", function (e) { e.preventDefault(); });
+
+  start().catch(function (err) {
+    console.error("reader failed:", err);
+    showMessage("자료를 여는 중 문제가 생겼습니다. 다시 로그인한 뒤 시도해 주세요.");
+  });
+})();
+</script>
+</body>
+</html>
