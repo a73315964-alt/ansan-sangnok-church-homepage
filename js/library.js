@@ -5,6 +5,13 @@
 window.LIBRARY = [
   {
     category: "신앙도서",
+    title: "그리스도인으로 산다는 것은",
+    author: "이재용",
+    desc: "담임목사 이재용의 신앙 도서입니다.",
+    url: "",
+  },
+  {
+    category: "신앙도서",
     title: "새신자 안내 책자",
     author: "안산상록교회",
     desc: "처음 교회에 오신 분들을 위한 신앙생활 안내서입니다.",
