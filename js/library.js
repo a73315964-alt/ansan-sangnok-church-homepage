@@ -11,13 +11,13 @@ window.LIBRARY = [
     title: "그래도 믿음이 필요하다",
     author: "강정훈",
     desc: "강정훈 저자의 신앙 도서입니다.",
-    file: "",
+    file: "faith-needed-kang-jeonghun.pdf",
   },
   {
     category: "신앙도서",
     title: "그리스도인으로 산다는 것은",
     author: "이재용",
     desc: "담임목사 이재용의 신앙 도서입니다.",
-    file: "",
+    file: "christian-life-lee-jaeyong.pdf",
   },
 ];
