@@ -49,8 +49,10 @@
 
 <footer class="site-footer" id="site-footer"></footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script src="js/config.js"></script>
 <script src="js/layout.js"></script>
+<script src="js/auth.js"></script>
 <script src="js/library.js"></script>
 <script src="js/main.js"></script>
 <script>
@@ -60,6 +62,16 @@
       return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
     });
   }
+  // 디지털 도서(내려받기)는 승인된 정회원만 볼 수 있습니다.
+  async function isMember() {
+    try {
+      var profile = await sbMyProfile();
+      return !!(profile && profile.approved && !profile.suspended);
+    } catch (e) {
+      return false;
+    }
+  }
+  var member = false;
   function render(list) {
     var host = document.getElementById("libraryList");
     if (!list.length) {
@@ -67,9 +79,14 @@
       return;
     }
     host.innerHTML = list.map(function (item) {
-      var linkHtml = item.url
-        ? '<a class="btn btn-outline" target="_blank" rel="noopener" href="' + esc(item.url) + '">내려받기</a>'
-        : '<span class="btn btn-outline" style="opacity:.5;pointer-events:none;">준비 중</span>';
+      var linkHtml;
+      if (!item.url) {
+        linkHtml = '<span class="btn btn-outline" style="opacity:.5;pointer-events:none;">준비 중</span>';
+      } else if (member) {
+        linkHtml = '<a class="btn btn-outline" target="_blank" rel="noopener" href="' + esc(item.url) + '">내려받기</a>';
+      } else {
+        linkHtml = '<a class="btn btn-outline" href="login.html?next=library.html">회원 전용 · 로그인</a>';
+      }
       return (
         '<div class="card library-item">' +
         "<div><span class=\"cat\">" + esc(item.category || "자료") + "</span>" +
@@ -81,19 +98,20 @@
     }).join("");
   }
 
-  document.addEventListener("DOMContentLoaded", function () {
+  document.addEventListener("DOMContentLoaded", async function () {
     var all = window.LIBRARY || [];
-    render(all);
     var search = document.getElementById("librarySearch");
-    search.addEventListener("input", function () {
+    function refresh() {
       var q = search.value.trim().toLowerCase();
-      if (!q) { render(all); return; }
-      render(all.filter(function (item) {
+      render(!q ? all : all.filter(function (item) {
         return [item.title, item.author, item.desc].some(function (v) {
           return v && v.toLowerCase().indexOf(q) !== -1;
         });
       }));
-    });
+    }
+    member = await isMember();
+    refresh();
+    search.addEventListener("input", refresh);
   });
 })();
 </script>
