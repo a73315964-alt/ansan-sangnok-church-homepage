@@ -298,6 +298,7 @@
       '<div class="header-cta">' +
       authCtaHtml() +
       "</div>" +
+      '<button type="button" class="header-install header-install-top" hidden>앱 설치</button>' +
       '<button class="nav-toggle" id="navToggle" aria-label="메뉴 열기" aria-expanded="false"><span></span></button>' +
       "</div>" +
       '<nav class="nav-mobile" id="navMobile">' +
@@ -358,6 +359,11 @@
       "<span>" + esc(C.pastorTitle || "담임목사") + " " + esc(C.pastor || "") + "</span>" +
       "</div>" +
       "</div>";
+  }
+
+  // 설치 가능 조건(안드로이드 크롬은 서비스 워커가 있어야 함): 아주 단순한 워커를 등록합니다 (오프라인 캐시 없음)
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("sw.js").catch(function () {});
   }
 
   // 앱 설치 (크롬·안드로이드 등): 설치 가능 상태가 되면 버튼을 보이고, 누르면 설치 창을 띄웁니다.

@@ -155,6 +155,8 @@ section{ padding: 88px 0; }
 .header-install[hidden]{ display: none; }
 .m-direct.header-install{ width: 100%; font: inherit; font-size: inherit; color: var(--ink); background: none; border: 0; border-radius: 0; text-align: left; padding: 14px 2px; cursor: pointer; }
 .m-direct.header-install[hidden]{ display: none; }
+.header-install-top{ display: none; }
+@media (max-width: 980px){ .header-install-top:not([hidden]){ display: inline-block; margin-left: auto; margin-right: 10px; } }
 
 /* 로그인 후 로고 옆 "나의 대시보드" */
 .dash-chip{
