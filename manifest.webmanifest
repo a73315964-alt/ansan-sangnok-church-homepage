@@ -1,0 +1,15 @@
+{
+  "name": "안산상록교회",
+  "short_name": "상록교회",
+  "description": "안산상록교회 홈페이지 — 예배 안내, 주보, 설교, 새벽기도 묵상",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2a4a75",
+  "lang": "ko",
+  "icons": [
+    { "src": "images/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "images/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
