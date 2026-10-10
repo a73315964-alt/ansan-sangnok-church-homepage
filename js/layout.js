@@ -111,8 +111,7 @@
           { label: "소개", href: "cult.html#center" },
           { label: "사역", href: "cult.html#center" },
           { label: "상담안내", href: "cult.html#center" }
-        ] },
-        { label: "탈퇴자 간증", href: "cult.html#testimony" }
+        ] }
       ]
     },
     {
