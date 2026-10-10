@@ -72,7 +72,7 @@ window.FAITH_LESSONS = [
   },
 
   {
-    no: 4,
+    no: 3,
     title: "성경은 어떤 책인가?",
     subtitle: "왜 기독교인은 성경을 신뢰하는가",
     intro: [
@@ -110,7 +110,7 @@ window.FAITH_LESSONS = [
   },
 
   {
-    no: 5,
+    no: 4,
     title: "성경 보존의 역사와 변천",
     subtitle: "성경은 어떻게 우리 손에 들어왔는가?",
     intro: [
@@ -136,7 +136,7 @@ window.FAITH_LESSONS = [
   },
 
   {
-    no: 6,
+    no: 5,
     title: "하나님은 누구신가?",
     subtitle: "Who is God? — 계시를 통해 알려 주신 하나님",
     intro: [
@@ -170,7 +170,7 @@ window.FAITH_LESSONS = [
   },
 
   {
-    no: 7,
+    no: 6,
     title: "하나님은 어떻게 존재하시는가?",
     subtitle: "삼위일체 신앙고백의 역사와 성경적 근거",
     intro: [
@@ -212,7 +212,7 @@ window.FAITH_LESSONS = [
   },
 
   {
-    no: 8,
+    no: 7,
     title: "당신은 하나님의 섭리를 믿습니까?",
     subtitle: "만물을 보존하시고 통치하시는 하나님",
     intro: [
@@ -247,7 +247,7 @@ window.FAITH_LESSONS = [
   },
 
   {
-    no: 9,
+    no: 8,
     title: "정말 예수님이 하나님이신가요?",
     subtitle: "삼위일체 신앙과 예수 그리스도의 신성",
     intro: [
@@ -293,7 +293,7 @@ window.FAITH_LESSONS = [
   },
 
   {
-    no: 10,
+    no: 9,
     title: "정통과 이단이란?",
     subtitle: "복음의 진리를 지키고 성도를 보호하기 위한 기준",
     intro: [
