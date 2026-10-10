@@ -108,7 +108,7 @@
   function meditationHtml(m) {
     return (
       '<div class="meditation">' +
-      '<h4 class="meditation-label">말씀 묵상</h4>' +
+      '<h4 class="meditation-label">묵상을 위한 본문 해설</h4>' +
       (m.title ? '<p class="meditation-title">“' + esc(m.title) + '”</p>' : "") +
       (m.intro ? '<div class="meditation-intro">' + paragraphs(m.intro) + "</div>" : "") +
       (m.sections || []).map(function (s) {
