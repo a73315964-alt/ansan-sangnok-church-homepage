@@ -179,13 +179,17 @@
 
   // 로그인 전: [로그인] [예배 안내]
   // 로그인 후: 로고 옆 [나의 대시보드] + 오른쪽 "내 정보 · 로그아웃" (헤더 폭이 넘치지 않도록 예배 안내는 뺌)
+  // 앱 설치 버튼: 크롬 등 설치 가능한 브라우저에서만 보입니다 (아래 beforeinstallprompt 에서 켭니다)
+  var INSTALL_BTN = '<button type="button" class="header-install" hidden>앱 설치</button>';
   function authCtaHtml() {
     if (!USER) {
-      return '<a class="btn btn-outline" href="login.html">로그인</a>' +
+      return INSTALL_BTN +
+        '<a class="btn btn-outline" href="login.html">로그인</a>' +
         '<a class="btn btn-primary" href="worship.html">예배 안내</a>';
     }
     return '<a class="header-logout" href="mypage.html" title="' + esc((USER.name ? USER.name + "님 · " : "") + USER.email) + '">내 정보</a>' +
-      '<a class="header-logout" href="login.html?logout=1">로그아웃</a>';
+      '<a class="header-logout" href="login.html?logout=1">로그아웃</a>' +
+      INSTALL_BTN;
   }
   function dashChipHtml() {
     if (!USER) return "";
@@ -196,7 +200,8 @@
     if (!USER) return '<a class="m-direct" href="login.html">로그인</a>';
     return '<a class="m-direct" href="dashboard.html">나의 대시보드' + (USER.name ? " (" + esc(USER.name) + "님)" : "") + "</a>" +
       '<a class="m-direct" href="mypage.html">내 정보</a>' +
-      '<a class="m-direct" href="login.html?logout=1">로그아웃</a>';
+      '<a class="m-direct" href="login.html?logout=1">로그아웃</a>' +
+      '<button type="button" class="m-direct header-install" hidden>앱 설치</button>';
   }
 
   function esc(s) {
@@ -354,6 +359,30 @@
       "</div>" +
       "</div>";
   }
+
+  // 앱 설치 (크롬·안드로이드 등): 설치 가능 상태가 되면 버튼을 보이고, 누르면 설치 창을 띄웁니다.
+  var deferredInstall = null;
+  function setInstallVisible(on) {
+    document.querySelectorAll(".header-install").forEach(function (b) { b.hidden = !on; });
+  }
+  window.addEventListener("beforeinstallprompt", function (e) {
+    e.preventDefault();
+    deferredInstall = e;
+    setInstallVisible(true);
+  });
+  window.addEventListener("appinstalled", function () {
+    deferredInstall = null;
+    setInstallVisible(false);
+  });
+  document.addEventListener("click", function (e) {
+    var btn = e.target.closest && e.target.closest(".header-install");
+    if (!btn || !deferredInstall) return;
+    deferredInstall.prompt();
+    deferredInstall.userChoice.then(function () {
+      deferredInstall = null;
+      setInstallVisible(false);
+    });
+  });
 
   renderHeader();
   renderFooter();
