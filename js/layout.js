@@ -108,7 +108,7 @@
         { label: "최근 이단의 동향", href: "cult.html#trend" },
         { label: "안산이단상담소", href: "cult.html#center", items: [
           { label: "소개", href: "cult.html#center" },
-          { label: "사역", href: "cult.html#center" },
+          { label: "사역 소개", href: "cult.html#center" },
           { label: "상담안내", href: "cult.html#center" }
         ] }
       ]

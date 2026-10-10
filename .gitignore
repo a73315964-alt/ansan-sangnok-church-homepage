@@ -11,3 +11,7 @@ supabase/.temp/
 Thumbs.db
 desktop.ini
 .DS_Store
+
+# 상담소 사역 소개 슬라이드 원본 — 성도 전용이라 공개 저장소에 올리지 않음
+#   (Supabase Storage 의 library 버킷 center 폴더에 직접 올려 사용)
+상담소슬라이드_업로드용/
