@@ -6,3 +6,6 @@
 
 alter table public.members
   add column if not exists affiliation text;  -- 소속기관
+
+-- 화면(API)이 새 칸을 바로 알도록 구조 캐시를 새로고침합니다
+notify pgrst, 'reload schema';
