@@ -13,7 +13,7 @@
     "시아버지", "시어머니", "장인", "장모", "기타"];
 
   var TEXT_FIELDS = ["card_no", "district", "group_label", "name", "name_hanja", "gender", "position", "faith_level", "guide",
-    "awards", "mobile_phone", "home_phone", "email", "address", "housing", "hobby", "education", "workplace", "job_title",
+    "affiliation", "mobile_phone", "home_phone", "email", "address", "housing", "hobby", "education", "workplace", "job_title",
     "work_phone", "family", "note"];
   var DATE_FIELDS = ["written_at", "birth_date", "baptism_date", "registered_at"];
   var FAM_FIELDS = ["name", "relation", "gender", "birth_date", "birth_calendar", "faith_level", "position", "job", "education", "religion", "note"];
@@ -244,7 +244,7 @@
       "<tr><th>주 소</th><td colspan=\"3\">" + v(r.address) + "</td><th>봉사기관</th><td colspan=\"3\">" + v((r.service_orgs || []).join(", ")) + "</td></tr>" +
       "<tr><th>직 장</th><td colspan=\"3\">" + v(r.workplace) + (r.job_title ? " / 직위 " + v(r.job_title) : "") + (r.work_phone ? " / ☎ " + v(r.work_phone) : "") +
         "</td><th>주거환경</th><td>" + v(r.housing) + "</td><th>인도자</th><td>" + v(r.guide) + "</td></tr>" +
-      "<tr><th>취 미</th><td>" + v(r.hobby) + "</td><th>학 력</th><td>" + v(r.education) + "</td><th>수상경력</th><td colspan=\"4\">" + v(r.awards) + "</td></tr>" +
+      "<tr><th>취 미</th><td>" + v(r.hobby) + "</td><th>학 력</th><td>" + v(r.education) + "</td><th>소속기관</th><td colspan=\"4\">" + v(r.affiliation) + "</td></tr>" +
       "<tr><th>세례일</th><td>" + v(fmtDate(r.baptism_date)) + "</td><th>등록일</th><td>" + v(fmtDate(r.registered_at)) + "</td><th>기 타</th><td colspan=\"4\">" + v(r.note) + "</td></tr>" +
       "</table></div>" +
 
@@ -450,14 +450,14 @@
 
   function downloadCsv() {
     var head = ["번호", "작성일", "교구", "구역(속)", "이름", "한문", "성별", "생년월일", "음양", "나이", "휴대폰", "전화(집)", "E-mail", "주소",
-      "주거환경", "신급", "직분", "봉사기관", "세례일", "등록일", "인도자", "수상경력", "취미", "학력", "직장", "직위", "직장전화", "가족사항", "가족 메모", "메모"];
+      "주거환경", "신급", "직분", "봉사기관", "세례일", "등록일", "인도자", "소속기관", "취미", "학력", "직장", "직위", "직장전화", "가족사항", "가족 메모", "메모"];
     var lines = [head].concat(filtered().map(function (r) {
       var fam = famList(r).map(function (f) {
         return [f.name, f.relation, f.gender, f.birth_date, f.position].filter(Boolean).join(" ");
       }).join(" / ");
       return [r.card_no, r.written_at, r.district, r.group_label, r.name, r.name_hanja, r.gender, r.birth_date || r.birth, r.birth_calendar,
         age(r.birth_date), r.mobile_phone, r.home_phone, r.email, r.address, r.housing, r.faith_level, r.position,
-        (r.service_orgs || []).join(" / "), r.baptism_date, r.registered_at, r.guide, r.awards, r.hobby, r.education,
+        (r.service_orgs || []).join(" / "), r.baptism_date, r.registered_at, r.guide, r.affiliation, r.hobby, r.education,
         r.workplace, r.job_title, r.work_phone, fam, r.family, r.note];
     }));
     var csv = lines.map(function (row) {
