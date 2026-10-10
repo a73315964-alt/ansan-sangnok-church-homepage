@@ -61,8 +61,6 @@
         { label: "주일 낮 설교", href: "sermon.html", items: [
           { label: "유튜브 생방송", href: YOUTUBE_URL, external: true }
         ] },
-        { label: "주일 오후 설교", href: "sermon.html" },
-        { label: "수요 예배", href: "sermon.html" },
         { label: "세미나", href: "sermon.html#seminar", items: [
           { label: "특강 및 세미나", href: "sermon.html#seminar" },
           { label: "사도신경을 왜 고백하는가", href: "sermon.html#seminar" }
