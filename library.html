@@ -51,7 +51,7 @@
   <div class="wrap">
     <div class="crumb">홈 / 도서관</div>
     <h1>도서관</h1>
-    <p>신앙 도서와 교육 자료를 찾아보고 내려받으실 수 있습니다.</p>
+    <p>이달의 책을 소개합니다.</p>
   </div>
 </section>
 
@@ -87,10 +87,6 @@
         <p>종교생활이 정말 필요한지 의문이 드는가? 믿음이 있다고 생각하는데도 행복하지 않은가? 정말 구원받았다는 확신이 없는가? 믿음의 본질이 무엇인지 알고 싶은가? 구원의 확증과 진정한 믿음이 무엇인지 확실히 깨닫고자 하는 분들에게 일독을 권한다.</p>
       </div>
     </dialog>
-
-    <input type="search" id="librarySearch" placeholder="제목·저자로 검색"
-      style="width:100%;max-width:420px;display:block;margin:0 auto 30px;padding:12px 16px;border-radius:10px;border:1px solid var(--border);font-family:inherit;font-size:.92rem;">
-    <div id="libraryList" style="max-width:820px;margin:0 auto;display:grid;gap:16px;"></div>
   </div>
 </section>
 
@@ -100,7 +96,6 @@
 <script src="js/config.js"></script>
 <script src="js/layout.js"></script>
 <script src="js/auth.js"></script>
-<script src="js/library.js"></script>
 <script src="js/main.js"></script>
 <script>
 (function () {
@@ -115,63 +110,6 @@
   // 창 바깥(어두운 배경)을 눌러도 닫히도록
   dialog.addEventListener("click", function (e) {
     if (e.target === dialog) dialog.close();
-  });
-
-  function esc(s) {
-    return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) {
-      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
-    });
-  }
-  // 디지털 도서(내려받기)는 승인된 정회원만 볼 수 있습니다.
-  async function isMember() {
-    try {
-      var profile = await sbMyProfile();
-      return !!(profile && profile.approved && !profile.suspended);
-    } catch (e) {
-      return false;
-    }
-  }
-  var member = false;
-  function render(list) {
-    var host = document.getElementById("libraryList");
-    if (!list.length) {
-      host.innerHTML = '<div class="empty-state">등록된 자료가 없습니다.</div>';
-      return;
-    }
-    host.innerHTML = list.map(function (item) {
-      var linkHtml;
-      // 읽기 버튼은 모든 방문자에게 보입니다. 누르면 읽기 화면에서 로그인·정회원 여부를 확인합니다.
-      if (!item.file) {
-        linkHtml = '<span class="btn btn-outline" style="opacity:.5;pointer-events:none;">준비 중</span>';
-      } else {
-        linkHtml = '<a class="btn btn-outline" href="reader.html?file=' + encodeURIComponent(item.file) + '">읽기</a>';
-      }
-      return (
-        '<div class="card library-item">' +
-        "<div><span class=\"cat\">" + esc(item.category || "자료") + "</span>" +
-        "<h4>" + esc(item.title) + "</h4>" +
-        "<p>" + esc(item.author ? item.author + " · " : "") + esc(item.desc || "") + "</p></div>" +
-        linkHtml +
-        "</div>"
-      );
-    }).join("");
-  }
-
-  document.addEventListener("DOMContentLoaded", async function () {
-    var all = window.LIBRARY || [];
-    var search = document.getElementById("librarySearch");
-    function refresh() {
-      var q = search.value.trim().toLowerCase();
-      render(!q ? all : all.filter(function (item) {
-        return [item.title, item.author, item.desc].some(function (v) {
-          return v && v.toLowerCase().indexOf(q) !== -1;
-        });
-      }));
-    }
-    member = await isMember();
-    refresh();
-    search.addEventListener("input", refresh);
-
   });
 })();
 </script>
