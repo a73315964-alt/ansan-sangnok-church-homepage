@@ -386,6 +386,20 @@
     return path;
   }
 
+  // DB 에 아직 없는 칸(예: SQL 13 을 실행하기 전의 affiliation)이 있으면 그 칸만 빼고 다시 저장
+  async function writeMember(id, payload) {
+    for (;;) {
+      var res = id
+        ? await window.SB.from("members").update(payload).eq("id", id).select("id").single()
+        : await window.SB.from("members").insert(payload).select("id").single();
+      var m = res.error && /Could not find the '([a-z_]+)' column|column members\.([a-z_]+) does not exist/.exec(res.error.message || "");
+      var col = m && (m[1] || m[2]);
+      if (!col || !(col in payload)) return res;
+      delete payload[col];
+      notice("DB에 <b>" + esc(col) + "</b> 칸이 없어 그 항목은 빼고 저장했습니다. <code>SQL실행하기/13_members_affiliation.sql</code> 을 실행하면 함께 저장됩니다.", "warn");
+    }
+  }
+
   async function saveMember(e) {
     e.preventDefault();
     var id = $("f_id").value;
@@ -404,14 +418,9 @@
     var btn = $("saveBtn");
     btn.disabled = true;
     try {
-      if (id) {
-        var up = await window.SB.from("members").update(payload).eq("id", id);
-        if (up.error) throw up.error;
-      } else {
-        var ins = await window.SB.from("members").insert(payload).select("id").single();
-        if (ins.error) throw ins.error;
-        id = ins.data.id;
-      }
+      var saved = await writeMember(id, payload);
+      if (saved.error) throw saved.error;
+      id = saved.data.id;
       // 사진: 새로 올리거나 삭제
       var oldPath = row && row.photo_path;
       if (file) {
