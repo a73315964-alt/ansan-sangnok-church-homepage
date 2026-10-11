@@ -870,6 +870,10 @@ body.nav-open .nav-mobile{ display: flex; }
 }
 .faith-closing p:last-child{ margin: 0; color: var(--ink-soft); line-height: 1.9; }
 
+.faith-share{ max-width: 820px; margin: 36px auto 0; text-align: center; }
+.faith-share-btn{ padding: 11px 26px; font-size: .95rem; gap: 6px; }
+.faith-share-panel{ margin-top: 16px; text-align: left; }
+
 .faith-pager{
   display: flex; align-items: center; justify-content: space-between; gap: 10px;
   max-width: 820px; margin: 40px auto 0; padding-top: 24px; border-top: 1px solid var(--border);

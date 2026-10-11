@@ -69,6 +69,7 @@
           paras(l.closing.body) + "</div>"
         : "") +
       "</article>" +
+      '<div class="faith-share" id="faithShare" data-lesson="' + l.no + '"></div>' +
       '<nav class="faith-pager">' +
       (prev ? '<a class="btn btn-outline" href="faith.html?n=' + prev.no + '">← 제 ' + prev.no + " 과</a>" : "<span></span>") +
       '<a class="btn btn-outline" href="faith.html">전체 목록</a>' +

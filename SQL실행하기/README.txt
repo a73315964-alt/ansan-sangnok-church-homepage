@@ -19,3 +19,4 @@ Supabase 대시보드 → SQL Editor 에서 01_members_schema.sql 을 실행하�
 그 폴더는 GitHub 등 어디에도 절대 올리지 마세요 — README_주의.md 를 꼭 읽어주세요.
 
 14_content_editor.sql — 관리자 중 지정된 사람에게 주보·주일 설교 편집 권한 칸 추가 (권한만, 편집 화면은 아직 없음)
+15_faith_shares.sql — 바른 신앙의 길잡이 각 과 맨 아래 "은혜 한마디" (정회원만 쓰기·보기)
