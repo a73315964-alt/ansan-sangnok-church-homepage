@@ -25,8 +25,8 @@
       body = s.manuscript.split("\n").map(function (line) {
         var t = line.trim();
         if (!t) return "";
-        // 서론 / 결론 / "1." 로 시작하는 줄은 소제목으로 봅니다
-        if (/^(서\s*론|결\s*론)$/.test(t) || /^\d+\.\s/.test(t)) {
+        // 서론(도입) / 결론 / "1." 로 시작하는 줄은 소제목으로 봅니다
+        if (/^(서\s*론|도\s*입|결\s*론)$/.test(t) || /^\d+\.\s/.test(t)) {
           return '<h3 class="tw-head">' + esc(t) + "</h3>";
         }
         return "<p>" + esc(t) + "</p>";
