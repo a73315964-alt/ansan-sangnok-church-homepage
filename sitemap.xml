@@ -2,37 +2,82 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://ansansangrok.or.kr/</loc>
-    <lastmod>2026-09-08</lastmod>
+    <lastmod>2026-10-12</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://ansansangrok.or.kr/worship.html</loc>
-    <lastmod>2026-09-08</lastmod>
+    <lastmod>2026-10-12</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://ansansangrok.or.kr/sermon.html</loc>
-    <lastmod>2026-09-08</lastmod>
+    <lastmod>2026-10-12</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://ansansangrok.or.kr/location.html</loc>
-    <lastmod>2026-09-08</lastmod>
+    <lastmod>2026-10-12</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://ansansangrok.or.kr/about.html</loc>
-    <lastmod>2026-09-08</lastmod>
+    <lastmod>2026-10-12</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ansansangrok.or.kr/word.html</loc>
+    <lastmod>2026-10-12</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://ansansangrok.or.kr/bulletin.html</loc>
-    <lastmod>2026-09-08</lastmod>
+    <lastmod>2026-10-12</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://ansansangrok.or.kr/news.html</loc>
-    <lastmod>2026-09-08</lastmod>
+    <lastmod>2026-10-12</lastmod>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ansansangrok.or.kr/education.html</loc>
+    <lastmod>2026-10-12</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ansansangrok.or.kr/faith.html</loc>
+    <lastmod>2026-10-12</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ansansangrok.or.kr/reformed-church.html</loc>
+    <lastmod>2026-10-12</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://ansansangrok.or.kr/word-window.html</loc>
+    <lastmod>2026-10-12</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://ansansangrok.or.kr/community.html</loc>
+    <lastmod>2026-10-12</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://ansansangrok.or.kr/library.html</loc>
+    <lastmod>2026-10-12</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://ansansangrok.or.kr/cult.html</loc>
+    <lastmod>2026-10-12</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://ansansangrok.or.kr/sincheonji.html</loc>
+    <lastmod>2026-10-12</lastmod>
+    <priority>0.5</priority>
   </url>
 </urlset>

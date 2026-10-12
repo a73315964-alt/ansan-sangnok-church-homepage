@@ -4,5 +4,11 @@ Allow: /
 # 비공개 페이지 — 검색 결과에 나오지 않도록 제외
 Disallow: /gyojeok.html
 Disallow: /login.html
+Disallow: /admin.html
+Disallow: /bible-admin.html
+Disallow: /dashboard.html
+Disallow: /mypage.html
+Disallow: /site-members.html
+Disallow: /bible-reading.html
 
 Sitemap: https://ansansangrok.or.kr/sitemap.xml
