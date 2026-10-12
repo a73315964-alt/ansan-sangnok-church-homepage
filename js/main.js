@@ -39,6 +39,32 @@
     }).join("");
   }
 
+  // 예배 및 모임 안내 — 왼쪽 예배, 오른쪽 모임
+  function renderScheduleBoard() {
+    var host = document.getElementById("scheduleBoard");
+    if (!host) return;
+    function panel(cls, title, en, list) {
+      return (
+        '<div class="sched-panel ' + cls + '">' +
+        '<div class="sched-head"><h3>' + title + '</h3><span>' + en + "</span></div>" +
+        '<ul class="sched-rows">' +
+        (list || []).map(function (w) {
+          var t = String(w.time).match(/^(오전|오후)\s*(.+)$/);
+          return (
+            "<li>" +
+            '<span class="sched-name">' + w.name + "</span>" +
+            '<span class="sched-day">' + (w.day || "") + "</span>" +
+            '<span class="sched-time">' + (t ? "<small>" + t[1] + "</small>" + t[2] : w.time) + "</span>" +
+            "</li>"
+          );
+        }).join("") +
+        "</ul></div>"
+      );
+    }
+    host.innerHTML = panel("is-worship", "예배", "Worship", C.worship) +
+      panel("is-meeting", "모임", "Fellowship", C.meetings);
+  }
+
   function renderWorshipMini() {
     var host = document.getElementById("worshipMini");
     if (!host || !C.worship) return;
@@ -153,6 +179,7 @@
     fillFields();
     setupMap();
     renderWorship();
+    renderScheduleBoard();
     renderWorshipMini();
     renderBulletins(document.body.getAttribute("data-page") === "bulletin" ? null : 3);
     renderSermons(document.body.getAttribute("data-page") === "sermon" ? null : 3);

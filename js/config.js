@@ -31,11 +31,19 @@ window.CHURCH = {
   siteUrl: "https://ansansangrok.or.kr",
 
   worship: [
-    { name: "주일 오전 예배", time: "오전 11:00", desc: "" },
-    { name: "주일 오후 예배", time: "오후 1:30", desc: "" },
-    { name: "수요 예배", time: "오후 7:30", desc: "" },
-    { name: "금요 기도회", time: "오후 9:00", desc: "" },
-    { name: "새벽 기도회", time: "오전 5:00", desc: "" },
+    { name: "주일 오전 예배", day: "주일", time: "오전 11:00", desc: "" },
+    { name: "주일 오후 예배", day: "주일", time: "오후 1:30", desc: "" },
+    { name: "수요 예배", day: "수요일", time: "오후 7:30", desc: "" },
+    { name: "금요 기도회", day: "금요일", time: "오후 9:00", desc: "" },
+    { name: "새벽 기도회", day: "월~토", time: "오전 5:00", desc: "" },
+  ],
+
+  /* 모임 — 예배 및 모임 안내(worship.html) 오른쪽 칸 */
+  meetings: [
+    { name: "새가족반", day: "주일", time: "오후 1:00" },
+    { name: "사랑방 모임", day: "주일", time: "오후 1:00" },
+    { name: "대학청년부", day: "주일", time: "오후 1:30" },
+    { name: "제자훈련", day: "주일", time: "오후 1:00" },
   ],
 
   // SNS 주소 — youtube 에 교회 유튜브 채널 주소를 넣으면 상단 메뉴 "유튜브"가 그 채널로 연결됩니다.
