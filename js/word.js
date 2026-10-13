@@ -99,7 +99,8 @@
       (item.scripture ? '<div class="scripture-text"><pre>' + esc(item.scripture) + "</pre></div>" : "") +
       (item.meditation
         ? meditationHtml(item.meditation)
-        : item.reflection ? '<p class="reflection">' + esc(item.reflection) + "</p>" : "")
+        : item.reflection ? '<p class="reflection">' + esc(item.reflection) + "</p>" : "") +
+      (item.reflectionBy ? '<p class="reflection-by">— ' + esc(item.reflectionBy) + "</p>" : "")
     );
   }
 
@@ -186,7 +187,6 @@
     revealHero();
     renderSermonFeature();
     renderDevotionCard("dailyReadingCard", window.DAILY_READING, { emptyText: "오늘의 성경읽기가 아직 등록되지 않았습니다.", badge: "하루 3장씩 화이팅" });
-    renderDevotionHistory("dailyReadingHistory", window.DAILY_READING);
     renderDevotionCard("dawnPrayerCard", window.DAWN_PRAYER, { emptyText: "오늘의 새벽기도 묵상이 아직 등록되지 않았습니다.", series: true });
     renderDevotionHistory("dawnPrayerHistory", window.DAWN_PRAYER);
     renderArchive();

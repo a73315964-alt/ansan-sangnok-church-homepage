@@ -2,15 +2,16 @@
    range: 성경 본문의 위치
    scripture: 개역개정 성경 본문 (선택사항 — 본문 전체를 싣고 싶을 때만)
    title: 묵상 제목
-   reflection: 짧은 묵상 한 줄 */
+   reflection: 짧은 묵상 한 줄
+   reflectionBy: 인용한 글일 때 말한 사람 (선택사항) */
 window.DAILY_READING = [
   {
     date: "2026-09-13",
     dateLabel: "2026. 9. 13",
     range: "여호수아 1:8",
-    title: "말씀을 묵상하는 삶",
     scripture: "이 율법책을 네 입에서 떠나지 말게 하며 주야로 그것을 묵상하여 그 안에 기록된 대로 모두 지켜 행하라 그리하면 네 길이 평탄할 것이며 네가 형통하리니",
-    reflection: "말씀을 묵상하고 실천할 때 우리의 삶이 평탄해지고 형통합니다.",
+    reflection: "“성경은 하나님께서 인간에게 주신 가장 위대한 선물이다. 그러므로 우리는 그것을 읽고, 묵상하고, 삶으로 살아내야 한다.”",
+    reflectionBy: "찰스 스펄전 (Charles H. Spurgeon)",
   },
   {
     date: "2026-09-09",
