@@ -86,7 +86,7 @@
     }
     var today = list[0];
     host.innerHTML =
-      '<span class="date-badge">' + esc(today.dateLabel) + "</span>" +
+      '<span class="date-badge">' + esc(opts.badge || today.dateLabel) + "</span>" +
       (opts.series && today.series ? '<div class="range">' + esc(today.series) + "</div>" : "") +
       '<div class="range">' + esc(today.range) + "</div>" +
       (today.title ? "<h3>" + esc(today.title) + "</h3>" : "") +
@@ -185,7 +185,7 @@
   document.addEventListener("DOMContentLoaded", function () {
     revealHero();
     renderSermonFeature();
-    renderDevotionCard("dailyReadingCard", window.DAILY_READING, { emptyText: "오늘의 성경읽기가 아직 등록되지 않았습니다." });
+    renderDevotionCard("dailyReadingCard", window.DAILY_READING, { emptyText: "오늘의 성경읽기가 아직 등록되지 않았습니다.", badge: "하루 3장씩 화이팅" });
     renderDevotionHistory("dailyReadingHistory", window.DAILY_READING);
     renderDevotionCard("dawnPrayerCard", window.DAWN_PRAYER, { emptyText: "오늘의 새벽기도 묵상이 아직 등록되지 않았습니다.", series: true });
     renderDevotionHistory("dawnPrayerHistory", window.DAWN_PRAYER);
