@@ -38,7 +38,10 @@
       "</div>" +
       '<div class="share-panel" role="tabpanel" id="sharePanel"></div>';
     host.querySelectorAll(".share-tab").forEach(function (b) {
-      b.addEventListener("click", function () { select(b.getAttribute("data-room")); });
+      b.addEventListener("click", async function () {
+        await refreshUser();
+        select(b.getAttribute("data-room"));
+      });
     });
   }
 
@@ -98,7 +101,8 @@
       return;
     }
     var current = room;
-    panel((canWrite ? formHtml() : "") + '<div id="shareList"><div class="share-empty">불러오는 중…</div></div>');
+    var adminOnly = '<div class="share-notice"><p>정회원 인증이 끝나면 나눔을 쓸 수 있습니다.</p></div>';
+    panel((canWrite ? formHtml() : adminOnly) +'<div id="shareList"><div class="share-empty">불러오는 중…</div></div>');
     bindForm();
     var res = await window.SB.from("devotion_shares")
       .select("id, user_id, author_name, content, created_at")
@@ -148,6 +152,21 @@
     load();
   }
 
+  // 탭을 누를 때마다 지금 로그인한 사람과 정회원 여부를 새로 확인
+  // (같은 폰에서 다른 사람이 로그인했거나 뒤로가기로 돌아온 화면에서도 글쓰기 창이 열리도록)
+  async function refreshUser() {
+    var session = await sbCurrentSession();
+    if (!session) {
+      me = null; isAdmin = false; canWrite = false;
+      return;
+    }
+    var results = await Promise.all([sbMyProfile(), sbIsAdmin()]);
+    var profile = results[0];
+    me = session.user;
+    isAdmin = results[1];
+    canWrite = !!(profile && profile.approved && !profile.suspended);
+  }
+
   async function init() {
     host = document.getElementById("devotionShare");
     var today = (window.DAWN_PRAYER || [])[0];
@@ -155,15 +174,17 @@
     day = today.date;
     shell();
     room = savedRoom();
-    var session = await sbCurrentSession();
-    if (session) {
-      me = session.user;
-      var results = await Promise.all([sbMyProfile(), sbIsAdmin()]);
-      var profile = results[0];
-      isAdmin = results[1];
-      canWrite = !!(profile && profile.approved && !profile.suspended);
-    }
+    await refreshUser();
     select(room);
+    // 로그인한 사람이 바뀌었을 때만 다시 그림 (쓰던 글이 지워지지 않게)
+    window.SB.auth.onAuthStateChange(function (event, session) {
+      var id = session ? session.user.id : null;
+      if (id === (me ? me.id : null)) return;
+      setTimeout(function () { refreshUser().then(function () { select(room); }); }, 0);
+    });
+    window.addEventListener("pageshow", function (e) {
+      if (e.persisted) refreshUser().then(function () { select(room); });
+    });
   }
 
   init();
