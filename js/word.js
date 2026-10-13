@@ -85,6 +85,10 @@
       return;
     }
     var today = list[0];
+    // 이 화면에서만 묵상 제목·한 줄 묵상 대신 고정 인용문을 보여 줌 (자료는 그대로)
+    if (opts.quote) {
+      today = Object.assign({}, today, { title: "", reflection: opts.quote.text, reflectionBy: opts.quote.by });
+    }
     host.innerHTML =
       '<span class="date-badge">' + esc(opts.badge || today.dateLabel) + "</span>" +
       (opts.series && today.series ? '<div class="range">' + esc(today.series) + "</div>" : "") +
@@ -186,7 +190,12 @@
   document.addEventListener("DOMContentLoaded", function () {
     revealHero();
     renderSermonFeature();
-    renderDevotionCard("dailyReadingCard", window.DAILY_READING, { emptyText: "오늘의 성경읽기가 아직 등록되지 않았습니다.", badge: "하루 3장씩 화이팅" });
+    renderDevotionCard("dailyReadingCard", window.DAILY_READING, { emptyText: "오늘의 성경읽기가 아직 등록되지 않았습니다.", badge: "하루 3장씩 화이팅",
+      quote: {
+        text: "“성경은 하나님께서 인간에게 주신 가장 위대한 선물이다. 그러므로 우리는 그것을 읽고, 묵상하고, 삶으로 살아내야 한다.”",
+        by: "찰스 스펄전 (Charles H. Spurgeon)",
+      },
+    });
     renderDevotionCard("dawnPrayerCard", window.DAWN_PRAYER, { emptyText: "오늘의 새벽기도 묵상이 아직 등록되지 않았습니다.", series: true });
     renderDevotionHistory("dawnPrayerHistory", window.DAWN_PRAYER);
     renderArchive();
