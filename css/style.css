@@ -673,8 +673,16 @@ body.nav-open .nav-mobile{ display: flex; }
 .share-item p{ margin: 0; font-size: .93rem; line-height: 1.7; color: var(--ink-soft); white-space: pre-wrap; text-align: justify; word-break: keep-all; }
 .share-empty{ text-align: center; font-size: .9rem; color: var(--muted); padding: 14px 0; }
 .devotion-history{ max-height: 0; overflow: hidden; transition: max-height .35s ease; }
-.devotion-history.open{ max-height: 2000px; margin-top: 14px; }
-.devotion-history .list-item{ grid-template-columns: 80px 1fr; padding: 14px 4px; }
+.devotion-history.open{ max-height: none; margin-top: 14px; }
+.devotion-history .list-item{ grid-template-columns: 80px 1fr auto; padding: 14px 4px; }
+.history-item{
+  width: 100%; background: none; border: 0; border-bottom: 1px solid var(--border);
+  font: inherit; color: inherit; text-align: left; cursor: pointer;
+}
+.history-item .date, .history-item .date .d, .history-item .date .m{ display: block; }
+.history-arrow{ color: var(--accent); font-size: 1rem; transition: transform .2s ease; }
+.history-item[aria-expanded="true"] .history-arrow{ transform: rotate(180deg); }
+.history-body{ padding: 16px 4px 20px; border-bottom: 1px solid var(--border); }
 .devotion-history .list-item .date{ padding: 8px 4px; }
 .devotion-history .list-item .date .d{ font-size: 1.05rem; }
 .history-toggle{

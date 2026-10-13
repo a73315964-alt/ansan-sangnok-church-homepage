@@ -85,18 +85,22 @@
       return;
     }
     var today = list[0];
-    var scriptureHtml = today.scripture
-      ? '<div class="scripture-text"><pre>' + esc(today.scripture) + '</pre></div>'
-      : '';
     host.innerHTML =
       '<span class="date-badge">' + esc(today.dateLabel) + "</span>" +
       (opts.series && today.series ? '<div class="range">' + esc(today.series) + "</div>" : "") +
       '<div class="range">' + esc(today.range) + "</div>" +
       (today.title ? "<h3>" + esc(today.title) + "</h3>" : "") +
-      scriptureHtml +
-      (today.meditation
-        ? meditationHtml(today.meditation)
-        : '<p class="reflection">' + esc(today.reflection) + "</p>");
+      devotionBodyHtml(today);
+  }
+
+  // 본문 말씀 + 묵상 해설(또는 짧은 묵상) — 오늘 묵상과 지난 묵상이 함께 씀
+  function devotionBodyHtml(item) {
+    return (
+      (item.scripture ? '<div class="scripture-text"><pre>' + esc(item.scripture) + "</pre></div>" : "") +
+      (item.meditation
+        ? meditationHtml(item.meditation)
+        : item.reflection ? '<p class="reflection">' + esc(item.reflection) + "</p>" : "")
+    );
   }
 
   function paragraphs(text) {
@@ -137,12 +141,24 @@
     host.innerHTML = list.map(function (item) {
       var d = dparts(item.date);
       return (
-        '<div class="list-item">' +
-        '<div class="date"><span class="d">' + d.day + '</span><span class="m">' + d.month + "</span></div>" +
-        "<div><h4>" + esc(item.title || (item.meditation && item.meditation.title) || item.series || "") + "</h4><p>" + esc(item.range) + "</p></div>" +
+        '<div class="history-entry">' +
+        '<button type="button" class="list-item history-item" aria-expanded="false">' +
+        '<span class="date"><span class="d">' + d.day + '</span><span class="m">' + d.month + "</span></span>" +
+        "<span><h4>" + esc(item.title || (item.meditation && item.meditation.title) || item.series || "") + "</h4><p>" + esc(item.range) + "</p></span>" +
+        '<span class="history-arrow" aria-hidden="true">▾</span>' +
+        "</button>" +
+        '<div class="history-body" hidden>' + devotionBodyHtml(item) + "</div>" +
         "</div>"
       );
     }).join("");
+    host.querySelectorAll(".history-item").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var body = btn.nextElementSibling;
+        var open = body.hidden;
+        body.hidden = !open;
+        btn.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+    });
   }
 
   function renderArchive() {
