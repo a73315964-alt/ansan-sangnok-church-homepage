@@ -23,6 +23,7 @@
         { label: "주보", href: "bulletin.html" },
         { label: "성경 속으로", href: "word.html", items: [
           { label: "생명의 삶(QT)", href: "word.html#dailyReadingWrap" },
+          { label: "오늘의 말씀", href: "today-word.html" },
           { label: "1년 성경읽기", href: "word.html#yearReading" }
         ] },
         { label: "새가족 등록", href: "worship.html#newcomer" },

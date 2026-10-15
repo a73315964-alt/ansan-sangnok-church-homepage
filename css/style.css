@@ -19,11 +19,16 @@
   font-size: 16px;
 }
 
+/* 산돌상아: 글꼴 파일은 올리지 않고, 이 글자체가 설치된 PC에서만 쓴다 (없으면 아래 글꼴로 넘어감) */
+@font-face{ font-family: "SangA Local"; src: local("SD SangAL"), local("SDSangAL"), local("산돌상아L"); font-weight: 100 400; }
+@font-face{ font-family: "SangA Local"; src: local("SD SangAM"), local("SDSangAM"), local("산돌상아M"); font-weight: 500 600; }
+@font-face{ font-family: "SangA Local"; src: local("SD SangAB"), local("SDSangAB"), local("산돌상아B"); font-weight: 700 900; }
+
 *{ box-sizing: border-box; }
 html{ scroll-behavior: smooth; }
 body{
   margin: 0;
-  font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "SangA Local", "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", -apple-system, BlinkMacSystemFont, sans-serif;
   color: var(--ink);
   background: var(--paper);
   line-height: 1.65;
@@ -706,7 +711,7 @@ body.nav-open .nav-mobile{ display: flex; }
   gap: 22px 26px;
   max-width: 480px; margin: 0 auto;
 }
-/* 윗줄 3개 · 아랫줄 2개로 고정해 좌우 균형을 맞춥니다 */
+/* 윗줄 3개 · 아랫줄 3개로 고정해 좌우 균형을 맞춥니다 */
 .round-break{ flex-basis: 100%; height: 0; }
 .round-item{ display: block; text-align: center; }
 .round-circle{
@@ -736,6 +741,7 @@ body.nav-open .nav-mobile{ display: flex; }
 [data-q="bible"]     .round-circle{ background-image: linear-gradient(155deg, #4f8f68, #235139); }
 [data-q="newfamily"] .round-circle{ background-image: linear-gradient(155deg, #c4767c, #8b3f47); }
 [data-q="worship"]   .round-circle{ background-image: linear-gradient(155deg, #4a8d9e, #23545f); }
+[data-q="today"]     .round-circle{ background-image: linear-gradient(155deg, #8a77b8, #45386f); }
 
 @media (max-width: 720px){
   .quick-round{ padding: 30px 0 4px; }

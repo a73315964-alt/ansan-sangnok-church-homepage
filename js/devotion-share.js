@@ -93,7 +93,7 @@
   async function load() {
     if (!me) {
       notice("나눔방은 로그인한 성도만 볼 수 있습니다.",
-        '<a class="btn btn-primary" href="login.html?next=' + encodeURIComponent("word.html") + '">로그인하고 나누기</a>');
+        '<a class="btn btn-primary" href="login.html?next=' + encodeURIComponent("today-word.html") + '">로그인하고 나누기</a>');
       return;
     }
     if (!canWrite && !isAdmin) {

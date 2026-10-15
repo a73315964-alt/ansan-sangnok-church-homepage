@@ -16,6 +16,7 @@
   <meta name="apple-mobile-web-app-title" content="상록교회">
 </head>
 <body data-page="word">
+<script>if (location.hash === "#todayWord") location.replace("today-word.html");</script>
 
 <header class="site-header" id="site-header"></header>
 
@@ -40,27 +41,11 @@
       <div class="card devotion-card" id="dailyReadingWrap">
         <h3 style="margin-bottom:2px;font-size:1rem;color:var(--muted);font-weight:700;">DAILY QT · 매일 성경읽기</h3>
         <div id="dailyReadingCard"></div>
-        <div style="text-align:center;margin-top:16px;">
+        <div style="text-align:center;margin-top:16px;display:flex;flex-wrap:wrap;gap:10px;justify-content:center;">
           <a href="bible-reading.html" class="btn btn-primary">성경읽기로 들어가기 →</a>
+          <a href="today-word.html" class="btn btn-outline">오늘의 말씀(새벽기도 묵상) →</a>
         </div>
       </div>
-    </div>
-  </div>
-</section>
-
-<section id="todayWord">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow">Today's Word</span>
-      <h2>오늘의 말씀</h2>
-      <p>새벽의 고요함 속에서 만나는 하나님의 음성입니다.</p>
-    </div>
-    <div class="card devotion-card" id="dawnPrayerWrap">
-      <h3 style="margin-bottom:2px;font-size:1rem;color:var(--muted);font-weight:700;">DAWN PRAYER · 새벽기도 묵상</h3>
-      <div id="dawnPrayerCard"></div>
-      <div class="devotion-share" id="devotionShare"></div>
-      <button type="button" class="history-toggle" data-history-toggle="dawnPrayerHistory">지난 묵상 보기</button>
-      <div class="devotion-history" id="dawnPrayerHistory"></div>
     </div>
   </div>
 </section>
