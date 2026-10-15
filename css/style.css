@@ -709,16 +709,16 @@ body.font-gothic{ font-family: "Malgun Gothic", "맑은 고딕", "Apple SD Gothi
 .quick-round .section-head{ margin-bottom: 30px; }
 .quick-round .section-head h2{ font-size: clamp(1.35rem, 2.6vw, 1.8rem); }
 .round-grid{
-  display: flex; flex-wrap: wrap; justify-content: center;
-  gap: 22px 26px;
-  max-width: 480px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(3, auto); justify-content: center;
+  gap: 18px 22px;
+  max-width: 420px; margin: 0 auto;
 }
 /* 윗줄 3개 · 아랫줄 3개로 고정해 좌우 균형을 맞춥니다 */
-.round-break{ flex-basis: 100%; height: 0; }
+.round-break{ display: none; }
 .round-item{ display: block; text-align: center; }
 .round-circle{
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 7px;
-  width: 132px; height: 132px; border-radius: 50%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px;
+  width: 112px; height: 112px; border-radius: 50%;
   color: #fff; text-align: center;
   background-size: cover; background-position: center;
   text-shadow: 0 1px 3px rgba(0,0,0,.5);
@@ -727,10 +727,10 @@ body.font-gothic{ font-family: "Malgun Gothic", "맑은 고딕", "Apple SD Gothi
 }
 .round-item:hover .round-circle{ transform: translateY(-4px); box-shadow: 0 14px 26px rgba(31,39,36,.28); }
 .round-item:active .round-circle{ transform: translateY(-1px); }
-.round-label{ font-weight: 700; font-size: .92rem; line-height: 1.28; letter-spacing: -.01em; }
+.round-label{ font-weight: 700; font-size: .84rem; line-height: 1.28; letter-spacing: -.01em; }
 
 /* 항목마다 뜻에 맞게 그린 그림 */
-.round-art{ width: 44px; height: 44px; flex: none; }
+.round-art{ width: 36px; height: 36px; flex: none; }
 .round-art .ln{
   fill: none; stroke: #fff; stroke-width: 2.2;
   stroke-linecap: round; stroke-linejoin: round;
@@ -749,14 +749,16 @@ body.font-gothic{ font-family: "Malgun Gothic", "맑은 고딕", "Apple SD Gothi
   .quick-round{ padding: 30px 0 4px; }
   .quick-round .section-head{ margin-bottom: 20px; }
   .quick-round .section-head p{ font-size: .92rem; }
-  .round-grid{ gap: 16px 14px; }
-  .round-circle{ width: 104px; height: 104px; gap: 4px; }
-  .round-art{ width: 35px; height: 35px; }
-  .round-label{ font-size: .82rem; }
+  .round-grid{ gap: 14px 16px; }
+  .round-circle{ width: 86px; height: 86px; gap: 3px; }
+  .round-art{ width: 28px; height: 28px; }
+  .round-label{ font-size: .74rem; }
 }
 @media (max-width: 380px){
-  .round-circle{ width: 94px; height: 94px; }
-  .round-label{ font-size: .78rem; }
+  .round-grid{ gap: 12px 12px; }
+  .round-circle{ width: 78px; height: 78px; }
+  .round-art{ width: 25px; height: 25px; }
+  .round-label{ font-size: .7rem; }
 }
 
 /* ---------- 강의 자료 ---------- */
