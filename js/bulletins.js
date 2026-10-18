@@ -7,6 +7,53 @@
    ============================================================ */
 window.BULLETINS = [
   {
+    date: "2026-10-18",
+    dateLabel: "2026. 10. 18",
+    motto: "야곱의 축복을 받는 해",
+
+    // 홈 화면 "최근 주보" 칸에 쓰입니다
+    title: "주일예배 주보",
+    scripture: "요한복음 9:35-41",
+    preacher: "이재용 목사",
+
+    morning: {
+      name: "주일 낮 예배",
+      time: "오전 11시",
+      note: "10시 45분부터 경배와 찬양으로 · 찬양인도 중창단",
+      verse: "“하나님은 영이시니 영과 진리로 예배할지니라” (요 4:24)",
+      order: [
+        { part: "예배의 부름", detail: "지존하신 주님 이름 앞에", who: "인도자", stand: true },
+        { part: "감사와 자백의 기도", detail: "", who: "다 같이", stand: true },
+        { part: "신앙고백", detail: "사도신경", who: "다 같이", stand: true },
+        { part: "찬송", detail: "620장", who: "다 같이" },
+        { part: "대표기도", detail: "", who: "최미숙 권사" },
+        { part: "찬송", detail: "274장", who: "다 같이" },
+        { part: "성경봉독", detail: "요 9:35-41절", who: "다 같이" },
+        { part: "설교", detail: "주여, 내가 믿나이다", who: "이재용 목사", highlight: true },
+        { part: "합심기도", detail: "", who: "다 같이" },
+        { part: "봉헌 및 찬송", detail: "366장", who: "다 같이" },
+        { part: "광고", detail: "", who: "인도자" },
+        { part: "폐회송", detail: "54장", who: "다 함께" },
+        { part: "축도", detail: "", who: "이재용 목사", stand: true }
+      ]
+    },
+
+    services: [
+      {
+        name: "주일 오후 예배",
+        title: "왜 기독교인들은 안식일이 아닌 주일을 지키는가?",
+        scripture: "골로새서 2:16-17",
+        prayer: "김명옥 사모"
+      },
+      {
+        name: "수요 예배",
+        title: "하나님이 받으시는 합당한 예배",
+        scripture: "말라기 1:11-14",
+        prayer: "이송희 집사"
+      }
+    ]
+  },
+  {
     date: "2026-10-04",
     dateLabel: "2026. 10. 4",
     motto: "야곱의 축복을 받는 해",
