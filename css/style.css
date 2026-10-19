@@ -1152,3 +1152,8 @@ body.lb-open{ overflow: hidden; }
   .lb-figure img{ max-height: calc(100vh - 210px); }
 }
 
+
+/* 새벽기도 묵상(오늘의 말씀) — 양쪽 맞춤은 유지하되 단어 사이가 벌어지지 않도록 글자 단위로 줄바꿈 */
+#dawnPrayerWrap .scripture-text pre,
+#dawnPrayerWrap .meditation p,
+#dawnPrayerWrap .reflection{ word-break: normal; overflow-wrap: break-word; text-align: justify; }
