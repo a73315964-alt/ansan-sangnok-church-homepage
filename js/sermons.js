@@ -12,7 +12,7 @@ window.SERMONS = [
     book: "요한복음",
     preacher: "이재용 목사",
     series: "주일예배",
-    youtube: "",
+    youtube: "3dpbrrzHa6U",
     summary:
       "날 때부터 맹인이었던 사람이 압박과 출교 속에서도 예수님을 증언하다가, 찾아오신 주님 앞에서 “주여, 내가 믿나이다” 하고 고백하기까지의 과정을 통해 믿음이 자라 가는 길을 함께 살핍니다.",
     manuscript:
