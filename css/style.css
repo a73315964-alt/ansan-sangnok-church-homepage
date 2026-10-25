@@ -1162,3 +1162,8 @@ body.lb-open{ overflow: hidden; }
 #thisWeekBox .lec-goal p,
 #thisWeekBox p:not(.lec-kicker):not(.lec-meta),
 .manuscript-inner{ word-break: normal; overflow-wrap: break-word; text-align: justify; }
+
+/* 새벽 묵상 글 · 나눔 글 — 줄 간격을 좁게 */
+.devotion-card .meditation p{ line-height: 1.6; margin: 0 0 8px; }
+.devotion-card .scripture-text pre{ line-height: 1.5; }
+.share-item p{ line-height: 1.5; word-break: normal; overflow-wrap: break-word; }
