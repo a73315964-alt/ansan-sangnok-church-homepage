@@ -1157,3 +1157,8 @@ body.lb-open{ overflow: hidden; }
 #dawnPrayerWrap .scripture-text pre,
 #dawnPrayerWrap .meditation p,
 #dawnPrayerWrap .reflection{ word-break: normal; overflow-wrap: break-word; text-align: justify; }
+
+/* 금주의 말씀(설교문) — 양쪽 맞춤, 단어 간격 벌어짐 방지 */
+#thisWeekBox .lec-goal p,
+#thisWeekBox p:not(.lec-kicker):not(.lec-meta),
+.manuscript-inner{ word-break: normal; overflow-wrap: break-word; text-align: justify; }
