@@ -1205,3 +1205,19 @@ em.b{ background: #1f6fdc; } em.d{ background: #7a5bd6; } em.s{ background: #2a9
 .tal-dots{ display: flex; justify-content: center; flex-wrap: wrap; gap: 1px; font-style: normal; }
 .tal-dots em{ margin: 0; min-width: 14px; font-size: .6rem; padding: 0 3px; }
 @media (max-width: 420px){ .tal-body{ gap: 12px; padding: 12px; } .tal-left{ flex-basis: 84px; } .coin{ width: 56px; } }
+
+/* 오늘의 말씀(새벽만나) 화면 — 본문 글자 2pt 키움 */
+#todayWord .devotion-card .meditation p,
+#todayWord .devotion-card .range{ font-size: calc(.95rem + 2pt); }
+#todayWord .devotion-card .scripture-text pre{ font-size: calc(.92rem + 2pt); }
+#todayWord .devotion-card .reflection{ font-size: calc(.93rem + 2pt); }
+#todayWord .devotion-card h3{ font-size: calc(1.15rem + 2pt); }
+#todayWord .devotion-card .meditation-label{ font-size: calc(1.2rem + 2pt); }
+#todayWord .devotion-card .meditation-title{ font-size: calc(1.08rem + 2pt); }
+#todayWord .devotion-card .meditation h5{ font-size: calc(1rem + 2pt); }
+#todayWord .share-item p{ font-size: calc(.93rem + 2pt); }
+#todayWord .share-form textarea{ font-size: calc(.95rem + 2pt); }
+#todayWord .share-head p{ font-size: calc(.9rem + 2pt); }
+#todayWord .tal-head p,
+#todayWord .tal-sum,
+#todayWord .tal-today{ font-size: calc(.9rem + 2pt); }
