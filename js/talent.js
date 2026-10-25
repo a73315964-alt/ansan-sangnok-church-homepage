@@ -113,6 +113,34 @@
     renderDevo();
   }
 
+  /* 본문 해설을 손(마우스)으로 밀어 읽은 시간 — 30초가 차야 버튼이 켜집니다.
+     묵상 글이 화면에 보이는 동안 손가락 드래그·스크롤·마우스 이동이 2초 안에 있었던 초만 셉니다. */
+  var NEED = 30, lastMove = 0;
+  function secKey() { return "devoSec:" + todayKst; }
+  function getSec() { try { return Math.min(NEED, parseInt(localStorage.getItem(secKey()), 10) || 0); } catch (e) { return memSec; } }
+  var memSec = 0;
+  function putSec(n) { memSec = n; try { localStorage.setItem(secKey(), String(n)); } catch (e) {} }
+  function mark() { lastMove = Date.now(); }
+  ["touchmove", "wheel", "scroll"].forEach(function (ev) { window.addEventListener(ev, mark, { passive: true, capture: true }); });
+  window.addEventListener("pointermove", function (e) { if (e.buttons || e.pointerType === "touch") mark(); }, { passive: true });
+  function meditationVisible() {
+    var el = document.querySelector("#dawnPrayerCard .meditation");
+    if (!el) return false;
+    var r = el.getBoundingClientRect(), h = window.innerHeight || 700;
+    return r.bottom > 0 && r.top < h;
+  }
+  function paintBtn() {
+    var btn = document.getElementById("devoReadBtn");
+    if (!btn || btn.dataset.busy) return;
+    var sec = getSec();
+    if (sec >= NEED) { btn.disabled = false; btn.textContent = "묵상을 읽었어요 (+1달란트)"; }
+    else { btn.disabled = true; btn.textContent = "묵상을 읽는 중… " + sec + " / " + NEED + "초 (글을 손으로 밀어 읽어 주세요)"; }
+  }
+  setInterval(function () {
+    if (document.visibilityState !== "visible" || devoToday || !approved) return;
+    if (Date.now() - lastMove <= 2000 && meditationVisible() && getSec() < NEED) { putSec(getSec() + 1); paintBtn(); }
+  }, 1000);
+
   // 묵상을 다 읽고 누르는 버튼 (나눔방 바로 위)
   function renderDevo() {
     var box = document.getElementById("devoReadBox");
@@ -124,12 +152,15 @@
     if (isNow()) devoToday = !!(t && t.devo);
     box.innerHTML = devoToday
       ? '<div class="devo-done">🙏 오늘 묵상을 읽었어요 · 달란트가 쌓였습니다</div>'
-      : '<button type="button" class="btn btn-primary devo-read" id="devoReadBtn">묵상을 읽었어요 (+1달란트)</button>';
+      : '<button type="button" class="btn btn-primary devo-read" id="devoReadBtn"></button>';
+    paintBtn();
     var btn = document.getElementById("devoReadBtn");
     if (btn) btn.addEventListener("click", async function () {
+      if (getSec() < NEED) return;
+      btn.dataset.busy = "1";
       btn.disabled = true;
       var res = await window.SB.rpc("record_devotion_read");
-      if (res.error) { btn.disabled = false; alert("저장하지 못했습니다. 잠시 후 다시 시도해 주세요."); return; }
+      if (res.error) { delete btn.dataset.busy; btn.disabled = false; alert("저장하지 못했습니다. 잠시 후 다시 시도해 주세요."); return; }
       devoToday = true;
       await load();
       if (window.talentCheck) window.talentCheck("devo");
