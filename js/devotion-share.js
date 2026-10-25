@@ -138,6 +138,7 @@
         alert("나눔을 저장하지 못했습니다. 잠시 후 다시 시도해 주세요.");
         return;
       }
+      window.dispatchEvent(new Event("talent-refresh"));
       load();
     });
   }

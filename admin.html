@@ -143,6 +143,23 @@
         </div>
       </div>
     </section>
+    <!-- 달란트 통계 -->
+    <section class="panel" id="talentAdmin">
+      <div class="panel-head">
+        <div>
+          <h2>달란트 월간 통계</h2>
+          <p class="desc" style="margin:4px 0 0;">성경 1장 읽기 · 새벽 묵상 읽기 · 나눔 글 쓰기, 각각 하루 1달란트 (파란 5개 = 노란 1개)</p>
+        </div>
+        <input type="month" id="talentMonth" style="padding:8px 10px;border:1px solid var(--border);border-radius:9px;font-family:inherit;">
+      </div>
+      <p class="muted" id="talentSum" style="margin:0 0 10px;"></p>
+      <div class="table-scroll">
+        <table class="grid">
+          <thead><tr><th>순위</th><th>성명</th><th>성경 읽은 날</th><th>묵상 읽은 날</th><th>나눔 쓴 날</th><th>달란트</th></tr></thead>
+          <tbody id="talentRows"></tbody>
+        </table>
+      </div>
+    </section>
     <div class="viz-tip" id="vizTip" role="tooltip" hidden></div>
   </div>
 </div>
@@ -154,5 +171,6 @@
 <script src="js/bible-common.js"></script>
 <script src="js/admin-charts.js"></script>
 <script src="js/admin.js"></script>
+<script src="js/talent-admin.js"></script>
 </body>
 </html>
