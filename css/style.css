@@ -1238,3 +1238,9 @@ em.b{ background: #1f6fdc; } em.d{ background: #7a5bd6; } em.s{ background: #2a9
 .tal-toast.out{ opacity: 0; transition: opacity .5s; }
 .tal-toast-coin{ width: 30px; height: 11px; margin: 0; animation: talDrop .7s cubic-bezier(.3,1.4,.5,1) both; }
 @keyframes talToastIn{ from{ opacity: 0; transform: translate(-50%, 16px); } to{ opacity: 1; transform: translate(-50%, 0); } }
+
+/* 묵상 읽었어요 버튼 */
+.devo-read-box{ margin-top: 22px; text-align: center; }
+.devo-read-box:empty{ display: none; }
+.devo-read{ width: 100%; padding: 14px 18px; font-size: calc(1rem + 1pt); }
+.devo-done{ background: #eef5ff; border: 1px solid #cfe0f7; color: #1f4f9c; border-radius: 12px; padding: 12px 14px; font-weight: 700; font-size: .95rem; }

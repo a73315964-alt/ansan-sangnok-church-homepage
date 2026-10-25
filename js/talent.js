@@ -6,7 +6,7 @@
   var month = new Date(Date.now() + 9 * 3600 * 1000); // 한국시간 기준 이번 달
   var cur = { y: month.getUTCFullYear(), m: month.getUTCMonth() };
   var todayKst = month.toISOString().slice(0, 10);
-  var rows = [], approved = false, loggedIn = false;
+  var rows = [], approved = false, loggedIn = false, devoToday = false;
 
   function pad(n) { return String(n).padStart(2, "0"); }
   function monthStr() { return cur.y + "-" + pad(cur.m + 1) + "-01"; }
@@ -98,7 +98,7 @@
     var session = await sbCurrentSession();
     loggedIn = !!session;
     var count = document.getElementById("talCount");
-    if (!session) { if (count) count.textContent = ""; render(); return; }
+    if (!session) { if (count) count.textContent = ""; render(); renderDevo(); return; }
     var p = await sbMyProfile();
     approved = !!(p && p.approved && !p.suspended);
     var res = await window.SB.rpc("my_talents", { p_month: monthStr() });
@@ -110,21 +110,30 @@
     rows = (res.data || []).map(function (r) { return { day: String(r.day).slice(0, 10), bible: r.bible, devo: r.devo, share: r.share }; });
     if (count && isNow()) count.textContent = total() + "달란트";
     render();
+    renderDevo();
   }
 
-  // 오늘 묵상 화면을 20초 동안 보고 있으면 "묵상 읽음" 달란트가 자동으로 쌓임
-  function autoDevo() {
-    setTimeout(async function () {
-      try {
-        if (document.visibilityState !== "visible" || !approved) return;
-        var t = rows.filter(function (r) { return r.day === todayKst; })[0];
-        if (t && t.devo) return;
-        var res = await window.SB.rpc("record_devotion_read");
-        if (res.error) return;
-        await load();
-        if (window.talentCheck) window.talentCheck("devo");
-      } catch (e) {}
-    }, 20000);
+  // 묵상을 다 읽고 누르는 버튼 (나눔방 바로 위)
+  function renderDevo() {
+    var box = document.getElementById("devoReadBox");
+    if (!box) return;
+    if (!loggedIn || !approved) { box.innerHTML = ""; return; }
+    var t = rows.filter(function (r) { return r.day === todayKst; })[0];
+    // 지난달을 보고 있을 때는 오늘 기록을 알 수 없으므로 이번 달 기록이 있을 때만 판단
+    if (!isNow() && !devoToday) { box.innerHTML = ""; return; }
+    if (isNow()) devoToday = !!(t && t.devo);
+    box.innerHTML = devoToday
+      ? '<div class="devo-done">🙏 오늘 묵상을 읽었어요 · 달란트가 쌓였습니다</div>'
+      : '<button type="button" class="btn btn-primary devo-read" id="devoReadBtn">묵상을 읽었어요 (+1달란트)</button>';
+    var btn = document.getElementById("devoReadBtn");
+    if (btn) btn.addEventListener("click", async function () {
+      btn.disabled = true;
+      var res = await window.SB.rpc("record_devotion_read");
+      if (res.error) { btn.disabled = false; alert("저장하지 못했습니다. 잠시 후 다시 시도해 주세요."); return; }
+      devoToday = true;
+      await load();
+      if (window.talentCheck) window.talentCheck("devo");
+    });
   }
 
   window.addEventListener("talent-refresh", async function () {
@@ -132,5 +141,5 @@
     if (window.talentCheck) window.talentCheck("share");
   });
   window.addEventListener("pageshow", function (e) { if (e.persisted) load(); });
-  if (window.SB_READY) { shell(); load().then(autoDevo); }
+  if (window.SB_READY) { shell(); load(); }
 })();
