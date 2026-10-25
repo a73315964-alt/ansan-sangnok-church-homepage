@@ -1221,3 +1221,20 @@ em.b{ background: #1f6fdc; } em.d{ background: #7a5bd6; } em.s{ background: #2a9
 #todayWord .tal-head p,
 #todayWord .tal-sum,
 #todayWord .tal-today{ font-size: calc(.9rem + 2pt); }
+
+/* 달란트 접이식 + 알림 */
+.talent-box{ margin-top: 18px; padding-top: 0; border-top: 0; }
+.tal-toggle{ width: 100%; display: flex; align-items: center; gap: 10px; background: var(--bg-soft); border: 1px solid var(--border); border-radius: 12px; padding: 13px 16px; cursor: pointer; font: inherit; color: var(--ink); text-align: left; }
+.tal-toggle-title{ font-weight: 800; font-size: 1.05rem; }
+.tal-toggle-count{ margin-left: auto; font-size: .9rem; font-weight: 700; color: #1f6fdc; }
+.tal-arrow{ transition: transform .2s; color: var(--muted); }
+.tal-toggle.open .tal-arrow{ transform: rotate(180deg); }
+.tal-panel{ margin-top: 10px; }
+.tal-panel[hidden]{ display: none; }
+.tal-head p{ margin: 0 0 12px; }
+.tal-toast{ position: fixed; left: 50%; bottom: 84px; transform: translateX(-50%); z-index: 9999; display: flex; align-items: center; gap: 10px;
+  background: #1c2a40; color: #fff; padding: 11px 18px; border-radius: 999px; box-shadow: 0 6px 20px rgba(0,0,0,.28); font-size: .95rem; white-space: nowrap; text-decoration: none; animation: talToastIn .45s ease both; }
+.tal-toast b{ color: #ffe270; }
+.tal-toast.out{ opacity: 0; transition: opacity .5s; }
+.tal-toast-coin{ width: 30px; height: 11px; margin: 0; animation: talDrop .7s cubic-bezier(.3,1.4,.5,1) both; }
+@keyframes talToastIn{ from{ opacity: 0; transform: translate(-50%, 16px); } to{ opacity: 1; transform: translate(-50%, 0); } }

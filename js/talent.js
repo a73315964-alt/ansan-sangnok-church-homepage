@@ -6,7 +6,7 @@
   var month = new Date(Date.now() + 9 * 3600 * 1000); // 한국시간 기준 이번 달
   var cur = { y: month.getUTCFullYear(), m: month.getUTCMonth() };
   var todayKst = month.toISOString().slice(0, 10);
-  var rows = [], approved = false, last = -1;
+  var rows = [], approved = false, loggedIn = false;
 
   function pad(n) { return String(n).padStart(2, "0"); }
   function monthStr() { return cur.y + "-" + pad(cur.m + 1) + "-01"; }
@@ -53,49 +53,84 @@
     return '<div class="tal-cal">' + ["일", "월", "화", "수", "목", "금", "토"].map(function (d) { return '<span class="tal-dow">' + d + "</span>"; }).join("") + cells.join("") + "</div>";
   }
 
-  function render() {
-    var n = total(), s = sums(), today = rows.filter(function (r) { return r.day === todayKst; })[0] || {};
+  function shell() {
     host.innerHTML =
-      '<div class="tal-head"><h4>나의 달란트</h4><p>성경 1장 읽기 · 새벽 묵상 읽기 · 나눔 글 쓰기, 각각 하루 1달란트씩 쌓여요.</p></div>' +
+      '<button type="button" class="tal-toggle" id="talToggle" aria-expanded="false">' +
+        '<span class="tal-toggle-title">나의 달란트 (' + (realMonth() + 1) + '월)</span>' +
+        '<span class="tal-toggle-count" id="talCount"></span><span class="tal-arrow">▾</span></button>' +
+      '<div class="tal-panel" id="talPanel" hidden></div>';
+    document.getElementById("talToggle").addEventListener("click", function () {
+      var panel = document.getElementById("talPanel"), open = panel.hidden;
+      panel.hidden = !open;
+      this.setAttribute("aria-expanded", open ? "true" : "false");
+      this.classList.toggle("open", open);
+      if (open) render();
+    });
+    if (location.hash === "#talent") document.getElementById("talToggle").click();
+  }
+  function realMonth() { return parseInt(todayKst.slice(5, 7), 10) - 1; }
+  function panelOpen() { var p = document.getElementById("talPanel"); return p && !p.hidden; }
+
+  function render() {
+    var panel = document.getElementById("talPanel");
+    if (!panel || panel.hidden) return;
+    if (!loggedIn) {
+      panel.innerHTML = '<div class="tal-head"><p>로그인하면 읽고 나눈 만큼 달란트가 쌓여요.</p></div>' +
+        '<div class="share-notice"><a class="btn btn-primary" href="login.html?next=' + encodeURIComponent("today-word.html#talent") + '">로그인하기</a></div>';
+      return;
+    }
+    var n = total(), s = sums(), today = rows.filter(function (r) { return r.day === todayKst; })[0] || {};
+    panel.innerHTML =
+      '<div class="tal-head"><p>성경 1장 읽기 · 새벽 묵상 읽기 · 나눔 글 쓰기, 각각 하루 1달란트씩 쌓여요.</p></div>' +
       '<div class="tal-body">' +
         '<div class="tal-left">' + pillar(n) + '<div class="tal-legend"><span><i class="coin blue sm"></i> 1달란트</span><span><i class="coin gold sm"></i> 5달란트</span></div></div>' +
         '<div class="tal-right">' +
           '<div class="tal-total"><b>' + n + '</b> 달란트<small>' + (cur.m + 1) + '월 · 노란 ' + Math.floor(n / 5) + ' · 파란 ' + (n % 5) + "</small></div>" +
           '<ul class="tal-sum"><li><em class="b">읽</em> 성경 읽은 날 <b>' + s.bible + '</b>일</li><li><em class="d">묵</em> 묵상 읽은 날 <b>' + s.devo + '</b>일</li><li><em class="s">나</em> 나눔 쓴 날 <b>' + s.share + "</b>일</li></ul>" +
           (isNow() ? '<div class="tal-today">오늘: ' + (today.bible ? "📖 성경 ✔ " : "📖 성경 ✕ ") + (today.devo ? "🙏 묵상 ✔ " : "🙏 묵상 ✕ ") + (today.share ? "✍ 나눔 ✔" : "✍ 나눔 ✕") + "</div>" : "") +
-          (isNow() && approved && !today.devo ? '<button type="button" class="btn btn-primary tal-read" id="talRead">오늘 묵상 읽었어요 (+1달란트)</button>' : "") +
         "</div></div>" +
       '<div class="tal-nav"><button type="button" id="talPrev" aria-label="이전 달">‹</button><span>' + cur.y + "년 " + (cur.m + 1) + '월</span><button type="button" id="talNext" aria-label="다음 달"' + (isNow() ? " disabled" : "") + ">›</button></div>" + calendar();
-    var rd = document.getElementById("talRead");
-    if (rd) rd.addEventListener("click", async function () {
-      rd.disabled = true;
-      var res = await window.SB.rpc("record_devotion_read");
-      if (res.error) { rd.disabled = false; alert("저장하지 못했습니다. 잠시 후 다시 시도해 주세요."); return; }
-      load();
-    });
     document.getElementById("talPrev").addEventListener("click", function () { cur.m--; if (cur.m < 0) { cur.m = 11; cur.y--; } load(); });
     document.getElementById("talNext").addEventListener("click", function () { cur.m++; if (cur.m > 11) { cur.m = 0; cur.y++; } load(); });
   }
 
   async function load() {
     var session = await sbCurrentSession();
-    if (!session) {
-      host.innerHTML = '<div class="tal-head"><h4>나의 달란트</h4><p>로그인하면 읽고 나눈 만큼 달란트가 쌓여요.</p></div>' +
-        '<div class="share-notice"><a class="btn btn-primary" href="login.html?next=' + encodeURIComponent("today-word.html") + '">로그인하기</a></div>';
-      return;
-    }
+    loggedIn = !!session;
+    var count = document.getElementById("talCount");
+    if (!session) { if (count) count.textContent = ""; render(); return; }
     var p = await sbMyProfile();
     approved = !!(p && p.approved && !p.suspended);
     var res = await window.SB.rpc("my_talents", { p_month: monthStr() });
     if (res.error) {
-      host.innerHTML = '<div class="tal-head"><h4>나의 달란트</h4><p>달란트를 준비하고 있습니다.</p></div>';
+      var panel = document.getElementById("talPanel");
+      if (panel) panel.innerHTML = '<div class="tal-head"><p>달란트를 준비하고 있습니다.</p></div>';
       return;
     }
     rows = (res.data || []).map(function (r) { return { day: String(r.day).slice(0, 10), bible: r.bible, devo: r.devo, share: r.share }; });
+    if (count && isNow()) count.textContent = total() + "달란트";
     render();
   }
 
-  window.addEventListener("talent-refresh", load);
+  // 오늘 묵상 화면을 20초 동안 보고 있으면 "묵상 읽음" 달란트가 자동으로 쌓임
+  function autoDevo() {
+    setTimeout(async function () {
+      try {
+        if (document.visibilityState !== "visible" || !approved) return;
+        var t = rows.filter(function (r) { return r.day === todayKst; })[0];
+        if (t && t.devo) return;
+        var res = await window.SB.rpc("record_devotion_read");
+        if (res.error) return;
+        await load();
+        if (window.talentCheck) window.talentCheck("devo");
+      } catch (e) {}
+    }, 20000);
+  }
+
+  window.addEventListener("talent-refresh", async function () {
+    await load();
+    if (window.talentCheck) window.talentCheck("share");
+  });
   window.addEventListener("pageshow", function (e) { if (e.persisted) load(); });
-  if (window.SB_READY) load();
+  if (window.SB_READY) { shell(); load().then(autoDevo); }
 })();

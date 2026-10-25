@@ -49,6 +49,7 @@
         if (res.error) throw res.error;
         todo.forEach(function (x) { state.read.add(BR.key(x.book, x.chapter)); });
         state.lastReadAt = new Date().toISOString();
+        if (window.talentCheck) window.talentCheck("bible");
       } else {
         var byBook = {};
         todo.forEach(function (x) { (byBook[x.book] = byBook[x.book] || []).push(x.chapter); });
