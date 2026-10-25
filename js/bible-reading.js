@@ -248,9 +248,13 @@
     if (!cur) return;
     var done = isRead(cur.book, cur.chapter);
     var btn = $("rdDoneBtn");
-    btn.textContent = done ? "✓ 읽음 완료됨" : "읽음 완료";
+    var nxt = nextChapterAfter(cur);
+    var last = reader.pos >= reader.queue.length - 1;
+    if (!done) btn.textContent = "읽음 완료";
+    else if (!last) btn.textContent = "✓ 읽음 완료됨 · 다음 장으로 ▶";
+    else btn.textContent = nxt ? "✓ 읽음 완료됨 · 다음 장 이어 읽기 ▶" : "✓ 마지막 장까지 읽었습니다";
     btn.className = "btn " + (done ? "btn-outline" : "btn-primary");
-    btn.disabled = !state.approved;
+    btn.disabled = !state.approved || (done && last && !nxt);
     $("rdUndoBtn").hidden = !done || !state.approved;
     $("rdPrevBtn").disabled = reader.pos === 0;
     $("rdNextBtn").disabled = reader.pos >= reader.queue.length - 1;
@@ -286,10 +290,29 @@
     }
   }
 
+  // 한 권 안에서 다음 장 (마지막 장이면 다음 권 1장), 성경 끝이면 null
+  function nextChapterAfter(cur) {
+    if (!cur) return null;
+    if (cur.chapter < BR.BOOKS[cur.book - 1].chapters) return { book: cur.book, chapter: cur.chapter + 1 };
+    if (cur.book < 66) return { book: cur.book + 1, chapter: 1 };
+    return null;
+  }
+
+  // 이미 읽은 장에서 버튼을 누르면 다음 장으로 이동 (읽을 장이 더 없으면 이어서 다음 장을 붙임)
+  function goNext() {
+    if (reader.pos < reader.queue.length - 1) { reader.pos++; showReader(); return; }
+    var n = nextChapterAfter(reader.queue[reader.pos]);
+    if (!n) return;
+    reader.queue.push(n);
+    reader.pos++;
+    showReader();
+  }
+
   async function readerDone() {
     var cur = reader.queue[reader.pos];
     if (!cur || !state.approved) return;
-    if (!isRead(cur.book, cur.chapter)) await setRead([cur], true);
+    if (isRead(cur.book, cur.chapter)) { goNext(); return; }
+    await setRead([cur], true);
     renderReaderButtons();
     // 다음 안 읽은 장으로 이어서
     var next = reader.queue.findIndex(function (x, i) { return i > reader.pos && !isRead(x.book, x.chapter); });
