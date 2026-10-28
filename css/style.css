@@ -1293,3 +1293,27 @@ em.b{ background: #1f6fdc; } em.d{ background: #7a5bd6; } em.s{ background: #2a9
   .vs-nav{ margin-top: 8px; }
 }
 @media (prefers-reduced-motion: reduce){ .vs-slide{ transition: none; } }
+
+/* 홈: 환영 사진 바로 아래, 배경이 있는 말씀 슬라이드 구역 */
+.verse-section{
+  position: relative; overflow: hidden; color: #fff; padding: 54px 0 46px;
+  background:
+    radial-gradient(70% 90% at 12% 0%, rgba(255,233,168,.20) 0, transparent 60%),
+    radial-gradient(60% 80% at 92% 100%, rgba(120,190,160,.22) 0, transparent 60%),
+    linear-gradient(135deg, #17294a 0%, #24457a 52%, #2f6a58 100%);
+}
+.verse-section::before{
+  content: ""; position: absolute; inset: 0; opacity: .08; pointer-events: none;
+  background-image: repeating-linear-gradient(135deg, #fff 0 1px, transparent 1px 22px);
+}
+.verse-section .wrap{ position: relative; }
+.verse-section .verse-slider{ margin: 0 auto; max-width: 780px; padding: 0; background: none; border: 0; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; }
+.verse-section .verse-slider::before{ content: "“"; top: -34px; left: 50%; right: auto; bottom: auto; transform: translateX(-50%); font-size: 7rem; color: rgba(255,233,168,.18); }
+.verse-section .vs-head{ justify-content: center; gap: 14px; margin-bottom: 16px; }
+.verse-section .vs-gist{ font-size: clamp(1.4rem, 4vw, 2.1rem); }
+.verse-section .vs-ref{ font-size: 1.05rem; margin-top: 16px; }
+@media (max-width: 720px){
+  .verse-section{ padding: 40px 0 32px; }
+  .verse-section .vs-gist{ font-size: 1.3rem; }
+  .verse-section .verse-slider::before{ top: -26px; font-size: 5.5rem; }
+}
