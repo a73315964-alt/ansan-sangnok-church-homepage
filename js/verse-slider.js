@@ -22,13 +22,12 @@
   }
 
   host.innerHTML =
-    '<div class="vs-head"><span class="vs-title">오늘의 말씀 3구절</span><span class="vs-count" id="vsCount"></span></div>' +
+    '<div class="vs-head"><span class="vs-title">오늘의 암송 구절</span><span class="vs-count" id="vsCount"></span></div>' +
     '<div class="vs-stage" id="vsStage" aria-live="polite">' +
     items.map(function (v, i) {
       return '<figure class="vs-slide' + (i === 0 ? " on" : "") + '" data-i="' + i + '">' +
         '<span class="vs-part">' + esc(v[3]) + '</span>' +
-        '<blockquote class="vs-gist">' + esc(v[2]) + '</blockquote>' +
-        '<div class="vs-body" id="vsBody' + i + '"></div>' +
+        '<blockquote class="vs-body" id="vsBody' + i + '">' + esc(v[2]) + '</blockquote>' +
         '<figcaption class="vs-ref">' + esc(v[1]) + "</figcaption></figure>";
     }).join("") + "</div>" +
     '<div class="vs-nav"><button type="button" class="vs-arrow" id="vsPrev" aria-label="이전 구절">‹</button>' +

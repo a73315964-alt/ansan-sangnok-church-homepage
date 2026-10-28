@@ -1317,3 +1317,7 @@ em.b{ background: #1f6fdc; } em.d{ background: #7a5bd6; } em.s{ background: #2a9
   .verse-section .vs-gist{ font-size: 1.3rem; }
   .verse-section .verse-slider::before{ top: -26px; font-size: 5.5rem; }
 }
+
+/* 암송 구절: 성경 본문 전체를 크게 */
+.verse-section .vs-body{ font-size: clamp(1.15rem, 3.2vw, 1.55rem); line-height: 1.75; font-weight: 700; opacity: 1; max-width: 680px; margin: 14px auto 0; word-break: keep-all; }
+@media (max-width: 720px){ .verse-section .vs-body{ font-size: 1.12rem; line-height: 1.7; } }
