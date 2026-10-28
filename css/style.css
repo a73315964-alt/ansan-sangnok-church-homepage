@@ -1329,3 +1329,12 @@ em.b{ background: #1f6fdc; } em.d{ background: #7a5bd6; } em.s{ background: #2a9
 
 .verse-section .vs-title{ font-size: clamp(1.45rem, 4.6vw, 2.1rem); }
 .verse-section .vs-sub{ color: #fff; font-weight: 700; }
+
+/* 간격 줄이기: 제목-번호-본문 */
+.verse-section{ padding: 38px 0 32px; }
+.verse-section .vs-head{ gap: 2px; margin-bottom: 8px; }
+.verse-section .vs-count{ font-size: .8rem; line-height: 1.2; }
+.verse-section .vs-slide{ padding: 0; }
+.verse-section .vs-body{ font-size: clamp(1.02rem, 2.8vw, 1.3rem); line-height: 1.55; margin: 6px auto 0; }
+.verse-section .vs-ref{ margin-top: 8px; font-size: .95rem; }
+@media (max-width: 720px){ .verse-section{ padding: 30px 0 24px; } .verse-section .vs-body{ font-size: 1rem; line-height: 1.55; } }
