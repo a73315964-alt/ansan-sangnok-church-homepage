@@ -1326,3 +1326,6 @@ em.b{ background: #1f6fdc; } em.d{ background: #7a5bd6; } em.s{ background: #2a9
 .verse-section .vs-head{ flex-direction: column; align-items: center; gap: 6px; margin-bottom: 20px; }
 .verse-section .vs-title{ font-size: clamp(1.9rem, 6vw, 2.8rem); font-weight: 900; letter-spacing: -.02em; color: #ffe9a8; line-height: 1.25; }
 .verse-section .vs-count{ font-size: .95rem; opacity: .8; }
+
+.verse-section .vs-title{ font-size: clamp(1.45rem, 4.6vw, 2.1rem); }
+.verse-section .vs-sub{ color: #fff; font-weight: 700; }

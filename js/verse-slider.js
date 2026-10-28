@@ -22,11 +22,10 @@
   }
 
   host.innerHTML =
-    '<div class="vs-head"><span class="vs-title">오늘의 암송 성구</span><span class="vs-count" id="vsCount"></span></div>' +
+    '<div class="vs-head"><span class="vs-title">오늘의 암송 성구<span class="vs-sub" id="vsSub"></span></span><span class="vs-count" id="vsCount"></span></div>' +
     '<div class="vs-stage" id="vsStage" aria-live="polite">' +
     items.map(function (v, i) {
       return '<figure class="vs-slide' + (i === 0 ? " on" : "") + '" data-i="' + i + '">' +
-        '<span class="vs-part">' + esc(v[3]) + '</span>' +
         '<blockquote class="vs-body" id="vsBody' + i + '">' + esc(v[2]) + '</blockquote>' +
         '<figcaption class="vs-ref">' + esc(v[1]) + "</figcaption></figure>";
     }).join("") + "</div>" +
@@ -39,6 +38,7 @@
     cur = (i + items.length) % items.length;
     host.querySelectorAll(".vs-slide").forEach(function (s, k) { s.classList.toggle("on", k === cur); });
     host.querySelectorAll(".vs-dot").forEach(function (d, k) { d.classList.toggle("on", k === cur); });
+    document.getElementById("vsSub").textContent = " - " + items[cur][3];
     document.getElementById("vsCount").textContent = (cur + 1) + " / " + items.length;
   }
   function play() {
