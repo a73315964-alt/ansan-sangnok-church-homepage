@@ -22,7 +22,7 @@
   }
 
   host.innerHTML =
-    '<div class="vs-head"><span class="vs-title">오늘의 암송 구절</span><span class="vs-count" id="vsCount"></span></div>' +
+    '<div class="vs-head"><span class="vs-title">오늘의 암송 성구</span><span class="vs-count" id="vsCount"></span></div>' +
     '<div class="vs-stage" id="vsStage" aria-live="polite">' +
     items.map(function (v, i) {
       return '<figure class="vs-slide' + (i === 0 ? " on" : "") + '" data-i="' + i + '">' +
