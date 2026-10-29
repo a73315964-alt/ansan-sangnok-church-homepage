@@ -75,6 +75,16 @@
     );
   }
 
+  var hearts = {}, heartsOk = true;
+  function heartHtml(r, mine) {
+    if (!heartsOk) return "";
+    var h = hearts[r.id] || { n: 0, me: false };
+    if (mine) return h.n ? '<div class="share-heart-row"><span class="share-heart static">♥ ' + h.n + "</span></div>" : "";
+    return '<div class="share-heart-row"><button type="button" class="share-heart' + (h.me ? " on" : "") +
+      '" data-id="' + r.id + '" aria-pressed="' + (h.me ? "true" : "false") + '" aria-label="하트">' +
+      (h.me ? "♥" : "♡") + (h.n ? " " + h.n : "") + "</button></div>";
+  }
+
   function listHtml(rows) {
     if (!rows.length) return '<div class="share-empty">아직 나눔이 없습니다. 첫 은혜를 나눠 주세요.</div>';
     return '<ul class="share-list">' + rows.map(function (r) {
@@ -84,7 +94,7 @@
         '<div class="share-meta"><strong>' + esc(r.author_name || "성도") + "</strong><span>" + when(r.created_at) + "</span>" +
         (mine || isAdmin ? '<button type="button" class="share-del" data-id="' + r.id + '">삭제</button>' : "") +
         "</div>" +
-        "<p>" + esc(r.content) + "</p>" +
+        "<p>" + esc(r.content) + "</p>" + heartHtml(r, mine) +
         "</li>"
       );
     }).join("") + "</ul>";
@@ -114,7 +124,22 @@
       list.innerHTML = '<div class="share-empty">나눔방을 준비하고 있습니다.</div>';
       return;
     }
-    list.innerHTML = listHtml(res.data || []);
+    var rows = res.data || [];
+    hearts = {}; heartsOk = true;
+    if (rows.length) {
+      var hr = await window.SB.from("devotion_share_hearts").select("share_id, user_id")
+        .in("share_id", rows.map(function (r) { return r.id; }));
+      if (current !== room) return;
+      if (hr.error) heartsOk = false;
+      else (hr.data || []).forEach(function (x) {
+        var h = hearts[x.share_id] || (hearts[x.share_id] = { n: 0, me: false });
+        h.n++; if (me && x.user_id === me.id) h.me = true;
+      });
+    }
+    list.innerHTML = listHtml(rows);
+    list.querySelectorAll(".share-heart[data-id]").forEach(function (b) {
+      b.addEventListener("click", function () { toggleHeart(b); });
+    });
     list.querySelectorAll(".share-del").forEach(function (b) {
       b.addEventListener("click", function () { remove(b.getAttribute("data-id")); });
     });
@@ -141,6 +166,22 @@
       window.dispatchEvent(new Event("talent-refresh"));
       load();
     });
+  }
+
+  async function toggleHeart(b) {
+    if (!canWrite || b.disabled) return;
+    var id = +b.getAttribute("data-id");
+    var h = hearts[id] || (hearts[id] = { n: 0, me: false });
+    b.disabled = true;
+    var res = h.me
+      ? await window.SB.from("devotion_share_hearts").delete().eq("share_id", id).eq("user_id", me.id)
+      : await window.SB.from("devotion_share_hearts").insert({ share_id: id });
+    b.disabled = false;
+    if (res.error) { alert("하트를 남기지 못했습니다. 잠시 후 다시 시도해 주세요."); return; }
+    h.me = !h.me; h.n += h.me ? 1 : -1;
+    b.classList.toggle("on", h.me);
+    b.setAttribute("aria-pressed", h.me ? "true" : "false");
+    b.textContent = (h.me ? "♥" : "♡") + (h.n ? " " + h.n : "");
   }
 
   async function remove(id) {

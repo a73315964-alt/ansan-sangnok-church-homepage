@@ -1338,3 +1338,10 @@ em.b{ background: #1f6fdc; } em.d{ background: #7a5bd6; } em.s{ background: #2a9
 .verse-section .vs-body{ font-size: clamp(1.02rem, 2.8vw, 1.3rem); line-height: 1.55; margin: 6px auto 0; }
 .verse-section .vs-ref{ margin-top: 8px; font-size: .95rem; }
 @media (max-width: 720px){ .verse-section{ padding: 30px 0 24px; } .verse-section .vs-body{ font-size: 1rem; line-height: 1.55; } }
+
+/* 나눔 글 하트 */
+.share-heart-row{ margin-top: 8px; display: flex; justify-content: flex-end; }
+.share-heart{ background: #fff; border: 1px solid #e6c9cf; color: #c0394f; border-radius: 999px; padding: 4px 14px; font: inherit; font-size: .95rem; cursor: pointer; line-height: 1.4; }
+.share-heart.on{ background: #fdeaee; border-color: #e58a9a; }
+.share-heart.static{ cursor: default; background: none; border-color: transparent; padding: 4px 6px; }
+.share-heart:disabled{ opacity: .6; }
