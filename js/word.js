@@ -146,7 +146,7 @@
     host.innerHTML = list.map(function (item) {
       var d = dparts(item.date);
       return (
-        '<div class="history-entry">' +
+        '<div class="history-entry" data-date="' + esc(item.date || "") + '">' +
         '<button type="button" class="list-item history-item" aria-expanded="false">' +
         '<span class="date"><span class="d">' + d.day + '</span><span class="m">' + d.month + "</span></span>" +
         "<span><h4>" + esc(item.title || (item.meditation && item.meditation.title) || item.series || "") + "</h4><p>" + esc(item.range) + "</p></span>" +

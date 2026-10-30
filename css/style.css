@@ -1345,3 +1345,8 @@ em.b{ background: #1f6fdc; } em.d{ background: #7a5bd6; } em.s{ background: #2a9
 .share-heart.on{ background: #fdeaee; border-color: #e58a9a; }
 .share-heart.static{ cursor: default; background: none; border-color: transparent; padding: 4px 6px; }
 .share-heart:disabled{ opacity: .6; }
+
+/* 지난 묵상의 나눔 */
+.share-past{ margin-top: 20px; padding-top: 16px; border-top: 1px dashed var(--border); }
+.share-past .share-head h4{ margin: 0 0 8px; font-size: 1rem; }
+.share-past-list{ margin-top: 10px; }

@@ -85,6 +85,20 @@
       (h.me ? "♥" : "♡") + (h.n ? " " + h.n : "") + "</button></div>";
   }
 
+  async function loadHearts(rows) {
+    rows.forEach(function (r) { hearts[r.id] = { n: 0, me: false }; });
+    if (!rows.length) return;
+    var hr = await window.SB.from("devotion_share_hearts").select("share_id, user_id")
+      .in("share_id", rows.map(function (r) { return r.id; }));
+    if (hr.error) { heartsOk = false; return; }
+    heartsOk = true;
+    (hr.data || []).forEach(function (x) {
+      var h = hearts[x.share_id];
+      if (!h) return;
+      h.n++; if (me && x.user_id === me.id) h.me = true;
+    });
+  }
+
   function listHtml(rows) {
     if (!rows.length) return '<div class="share-empty">아직 나눔이 없습니다. 첫 은혜를 나눠 주세요.</div>';
     return '<ul class="share-list">' + rows.map(function (r) {
@@ -125,17 +139,8 @@
       return;
     }
     var rows = res.data || [];
-    hearts = {}; heartsOk = true;
-    if (rows.length) {
-      var hr = await window.SB.from("devotion_share_hearts").select("share_id, user_id")
-        .in("share_id", rows.map(function (r) { return r.id; }));
-      if (current !== room) return;
-      if (hr.error) heartsOk = false;
-      else (hr.data || []).forEach(function (x) {
-        var h = hearts[x.share_id] || (hearts[x.share_id] = { n: 0, me: false });
-        h.n++; if (me && x.user_id === me.id) h.me = true;
-      });
-    }
+    await loadHearts(rows);
+    if (current !== room) return;
     list.innerHTML = listHtml(rows);
     list.querySelectorAll(".share-heart[data-id]").forEach(function (b) {
       b.addEventListener("click", function () { toggleHeart(b); });
@@ -209,7 +214,56 @@
     canWrite = !!(profile && profile.approved && !profile.suspended);
   }
 
+  /* ---- 지난 묵상: 그날의 나눔 글 보기 (읽기 + 하트) ---- */
+  function mountPast(entry) {
+    var body = entry.querySelector(".history-body");
+    var date = entry.getAttribute("data-date");
+    if (!body || !date || body.querySelector(".share-past")) return;
+    var box = document.createElement("div");
+    box.className = "share-past";
+    box.innerHTML =
+      '<div class="share-head"><h4>그날의 은혜 나눔</h4></div>' +
+      '<div class="share-tabs">' + ROOMS.map(function (r, i) {
+        return '<button type="button" class="share-tab' + (i === 0 ? " active" : "") + '" data-room="' + r.key + '">' + r.label + "</button>";
+      }).join("") + '</div><div class="share-past-list"></div>';
+    body.appendChild(box);
+    var listEl = box.querySelector(".share-past-list");
+    async function loadPast(rm) {
+      if (!me) {
+        listEl.innerHTML = '<div class="share-empty">로그인한 성도만 볼 수 있습니다. <a href="login.html?next=' + encodeURIComponent("today-word.html") + '">로그인</a></div>';
+        return;
+      }
+      if (!canWrite && !isAdmin) { listEl.innerHTML = '<div class="share-empty">정회원 인증이 끝나면 볼 수 있습니다.</div>'; return; }
+      listEl.innerHTML = '<div class="share-empty">불러오는 중…</div>';
+      var res = await window.SB.from("devotion_shares")
+        .select("id, user_id, author_name, content, created_at")
+        .eq("devotion_date", date).eq("room", rm).order("created_at", { ascending: true });
+      if (res.error) { listEl.innerHTML = '<div class="share-empty">나눔을 불러오지 못했습니다.</div>'; return; }
+      var rows = res.data || [];
+      await loadHearts(rows);
+      listEl.innerHTML = listHtml(rows);
+      listEl.querySelectorAll(".share-del").forEach(function (b) { b.remove(); });
+      listEl.querySelectorAll(".share-heart[data-id]").forEach(function (b) {
+        b.addEventListener("click", function () { toggleHeart(b); });
+      });
+    }
+    box.querySelectorAll(".share-tab").forEach(function (b) {
+      b.addEventListener("click", async function () {
+        box.querySelectorAll(".share-tab").forEach(function (x) { x.classList.toggle("active", x === b); });
+        await refreshUser();
+        loadPast(b.getAttribute("data-room"));
+      });
+    });
+    refreshUser().then(function () { loadPast("adult"); });
+  }
+
   async function init() {
+    document.addEventListener("click", function (e) {
+      var btn = e.target.closest && e.target.closest(".history-item");
+      if (!btn) return;
+      var entry = btn.closest(".history-entry");
+      if (entry && window.SB_READY) mountPast(entry);
+    });
     host = document.getElementById("devotionShare");
     var today = (window.DAWN_PRAYER || [])[0];
     if (!host || !today || !window.SB_READY) return;
