@@ -1,6 +1,6 @@
 /* 홈 화면 "오늘의 3구절" 슬라이드
    · 하루에 3구절씩 (2026-10-28 = 1~3번) 한국시간 0시에 바뀌고, 300구절이 끝나면 처음부터 다시 돕니다.
-   · 한 구절씩 5초마다 자동으로 넘어가고, 손가락으로 밀거나 ‹ › 점을 눌러도 됩니다.
+   · 한 구절씩 10초마다 자동으로 넘어가고, 손가락으로 밀거나 ‹ › 점을 눌러도 됩니다.
    · 로그인한 정회원이 보면 구절 본문(개역개정)도 함께 보입니다. 데이터: js/verses300.js */
 (function () {
   var host = document.getElementById("verseSlider");
@@ -44,7 +44,7 @@
   function play() {
     stop();
     if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    timer = setInterval(function () { show(cur + 1); }, 5000);
+    timer = setInterval(function () { show(cur + 1); }, 10000);
   }
   function stop() { if (timer) { clearInterval(timer); timer = null; } }
 
