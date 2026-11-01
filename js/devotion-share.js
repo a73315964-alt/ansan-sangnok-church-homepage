@@ -6,7 +6,7 @@
     { key: "youth", label: "청년부 나눔방" },
   ];
   var MAX = 500;
-  var host, day, room, me = null, isAdmin = false, canWrite = false;
+  var host, day, room, me = null, isAdmin = false, canWrite = false, isYouth = false;
 
   function esc(s) {
     return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
@@ -124,6 +124,7 @@
       notice("정회원 인증이 끝나면 나눔방에 참여할 수 있습니다.", '<a class="btn btn-outline" href="mypage.html">내 정보 보기</a>');
       return;
     }
+    if (youthLocked(room)) { notice(YOUTH_MSG); return; }
     var current = room;
     var adminOnly = '<div class="share-notice"><p>정회원 인증이 끝나면 나눔을 쓸 수 있습니다.</p></div>';
     panel((canWrite ? formHtml() : adminOnly) +'<div id="shareList"><div class="share-empty">불러오는 중…</div></div>');
@@ -212,7 +213,18 @@
     me = session.user;
     isAdmin = results[1];
     canWrite = !!(profile && profile.approved && !profile.suspended);
+    isYouth = false;
+    if (canWrite) {
+      var yr = await window.SB.rpc("is_youth_member");
+      isYouth = yr.error ? true : !!yr.data;
+      if (isAdmin) isYouth = true; // 설정 전(함수 없음)에는 예전처럼 열어 둠
+    }
   }
+
+  function youthLocked(rm) {
+    return rm === "youth" && !isAdmin && !isYouth;
+  }
+  var YOUTH_MSG = "청년부 나눔방은 청년부에 소속된 성도만 보고 글을 쓸 수 있습니다. 소속이 맞는데 열리지 않으면 교회 사무실에 문의해 주세요.";
 
   /* ---- 지난 묵상: 그날의 나눔 글 보기 (읽기 + 하트) ---- */
   function mountPast(entry) {
@@ -234,6 +246,7 @@
         return;
       }
       if (!canWrite && !isAdmin) { listEl.innerHTML = '<div class="share-empty">정회원 인증이 끝나면 볼 수 있습니다.</div>'; return; }
+      if (youthLocked(rm)) { listEl.innerHTML = '<div class="share-empty">' + YOUTH_MSG + "</div>"; return; }
       listEl.innerHTML = '<div class="share-empty">불러오는 중…</div>';
       var res = await window.SB.from("devotion_shares")
         .select("id, user_id, author_name, content, created_at")
