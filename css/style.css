@@ -1350,3 +1350,6 @@ em.b{ background: #1f6fdc; } em.d{ background: #7a5bd6; } em.s{ background: #2a9
 .share-past{ margin-top: 20px; padding-top: 16px; border-top: 1px dashed var(--border); }
 .share-past .share-head h4{ margin: 0 0 8px; font-size: 1rem; }
 .share-past-list{ margin-top: 10px; }
+
+/* 설교문 소제목 굵게 */
+.manuscript-inner .ms-head{ font-weight: 800; color: var(--ink); }

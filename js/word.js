@@ -11,6 +11,15 @@
     });
   }
 
+  // 설교문: 소제목 줄(서론·결론·1. ·첫째,)은 굵은 글씨로
+  var MS_HEAD = /^(서\s*론|도\s*입|결\s*론|\d+\.\s.*|(첫|둘|셋|넷|다섯|여섯|일곱)째[,，].*)$/;
+  function msHtml(text) {
+    return String(text).split("\n").map(function (line) {
+      var t = line.trim();
+      return t && MS_HEAD.test(t) ? '<strong class="ms-head">' + esc(line) + "</strong>" : esc(line);
+    }).join("\n");
+  }
+
   function dparts(dateStr) {
     var d = new Date(dateStr);
     var months = ["1월","2월","3월","4월","5월","6월","7월","8월","9월","10월","11월","12월"];
@@ -43,7 +52,7 @@
       : '<div class="video-frame"><div class="video-empty">🎥 설교 영상은 준비 중입니다<br>(js/sermons.js 의 youtube 항목에 영상 ID를 넣으면 표시됩니다)</div></div>';
 
     var manuscriptHtml = s.manuscript
-      ? '<div class="manuscript-inner">' + esc(s.manuscript) + "</div>"
+      ? '<div class="manuscript-inner">' + msHtml(s.manuscript) + "</div>"
       : '<div class="manuscript-inner">설교문이 아직 등록되지 않았습니다.</div>';
 
     host.innerHTML =

@@ -10,6 +10,15 @@
     });
   }
 
+  // 설교문: 소제목 줄(서론·결론·1. ·첫째,)은 굵은 글씨로
+  var MS_HEAD = /^(서\s*론|도\s*입|결\s*론|\d+\.\s.*|(첫|둘|셋|넷|다섯|여섯|일곱)째[,，].*)$/;
+  function msHtml(text) {
+    return String(text).split("\n").map(function (line) {
+      var t = line.trim();
+      return t && MS_HEAD.test(t) ? '<strong class="ms-head">' + esc(line) + "</strong>" : esc(line);
+    }).join("\n");
+  }
+
   /* 금주의 말씀 — 맨 앞(최신) 설교를 제목·본문과 함께 전문으로 보여줍니다 */
   function renderThisWeek() {
     var host = document.getElementById("thisWeekBox");
@@ -26,7 +35,7 @@
         var t = line.trim();
         if (!t) return "";
         // 서론(도입) / 결론 / "1." 로 시작하는 줄은 소제목으로 봅니다
-        if (/^(서\s*론|도\s*입|결\s*론)$/.test(t) || /^\d+\.\s/.test(t)) {
+        if (/^(서\s*론|도\s*입|결\s*론)$/.test(t) || /^\d+\.\s/.test(t) || /^(첫|둘|셋|넷|다섯|여섯|일곱)째[,，]/.test(t)) {
           return '<h3 class="tw-head">' + esc(t) + "</h3>";
         }
         return "<p>" + esc(t) + "</p>";
@@ -112,7 +121,7 @@
     host.innerHTML = filtered.map(function (s, i) {
       var mid = "ms-" + i;
       var manuscriptHtml = s.manuscript
-        ? '<div class="manuscript-inner">' + esc(s.manuscript) + "</div>"
+        ? '<div class="manuscript-inner">' + msHtml(s.manuscript) + "</div>"
         : '<div class="manuscript-inner">설교문이 아직 등록되지 않았습니다.</div>';
       return (
         '<div class="card sermon-archive-item">' +
