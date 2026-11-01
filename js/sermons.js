@@ -12,7 +12,7 @@ window.SERMONS = [
     book: "빌립보서",
     preacher: "이재용 목사",
     series: "주일예배",
-    youtube: "",
+    youtube: "ymaiz_JE1mI",
     summary:
       "추수감사주일에, 빌립보서 4:6-7절을 통해 감사가 우리의 시선을 바꾸고, 마음을 지켜 내며, 당연하게 여겼던 은혜를 다시 발견하게 하고, 하나님을 향한 신뢰를 깊게 한다는 네 가지 변화를 함께 살핍니다.",
     manuscript:
