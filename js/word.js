@@ -119,7 +119,7 @@
 
   function paragraphs(text) {
     return String(text || "").split(/\n\s*\n/).map(function (p) {
-      return "<p>" + esc(p) + "</p>";
+      return "<p>" + esc(p).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>") + "</p>";
     }).join("");
   }
 
