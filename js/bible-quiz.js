@@ -176,6 +176,7 @@
     var box = el("div", "kh-box");
     var top = el("div", "kh-top");
     top.appendChild(el("span", "kh-no", "문제 " + (st.i + 1) + " / " + st.qs.length + " · " + q.cat));
+    var clock = el("span", "kh-clock", "⏱ " + CFG.seconds + "초"); top.appendChild(clock);
     top.appendChild(el("span", "kh-score", "⭐ " + st.score + "점" + (st.streak > 1 ? " · 🔥 " + st.streak + "연속" : "")));
     box.appendChild(top);
     var bar = el("div", "kh-bar"), fill = el("i"); bar.appendChild(fill); box.appendChild(bar);
@@ -200,6 +201,7 @@
     timer = setInterval(function () {
       var left = CFG.seconds - (Date.now() - st.t0) / 1000;
       fill.style.width = Math.max(0, left / CFG.seconds * 100) + "%";
+      clock.textContent = "⏱ " + Math.max(0, Math.ceil(left)) + "초";
       if (left <= 0) { clearInterval(timer); answer(null, null, btns, opts, q); }
     }, 100);
   }
