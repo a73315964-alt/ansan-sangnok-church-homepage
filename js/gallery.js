@@ -9,6 +9,15 @@
   var BASE = ((window.CHURCH && window.CHURCH.filesBase) || "") + "/photos/gallery/";
 
   var PHOTOS = [
+    { local: "2026-harvest-1", caption: "2026 추수감사주일 · 강단 꾸미기" },
+    { local: "2026-harvest-2", caption: "2026 추수감사주일 · 감사의 예물" },
+    { local: "2026-friends-3", caption: "승주와 두 자매" },
+    { local: "2026-praise", caption: "승주와 예린 자매의 찬양" },
+    { local: "2026-quiz-1", caption: "2026 성경퀴즈대회 · 사회 청년부 병현·현준 형제" },
+    { local: "2026-quiz-2", caption: "2026 성경퀴즈대회 · 성도들" },
+    { local: "2026-quiz-3", caption: "2026 성경퀴즈대회 · 함께한 성도들" },
+    { local: "2026-quiz-4", caption: "2026 성경퀴즈대회 · 즐거운 교제" },
+    { local: "2026-80th", caption: "김타관 집사님 팔순 축하" },
     { file: "01.jpg", caption: "제43차 안산시 복음화대성회" },
     { file: "02.jpg", caption: "복음화대성회 성가대 찬양" },
     { file: "03.jpg", caption: "복음화대성회 단체 기념사진" },
@@ -33,10 +42,14 @@
     return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
   }
 
+  // local: 홈페이지 자체(images/gallery/)에 올린 사진, file: 자료실 사진
+  function thumbSrc(p) { return p.local ? "images/gallery/thumb/" + p.local + ".jpg" : BASE + "thumb/" + p.file; }
+  function fullSrc(p) { return p.local ? "images/gallery/" + p.local + ".jpg" : BASE + p.file; }
+
   grid.innerHTML = PHOTOS.map(function (p, i) {
     return (
       '<button type="button" class="gallery-item" data-i="' + i + '">' +
-      '<img src="' + BASE + "thumb/" + p.file + '" alt="' + esc(p.caption) + '" loading="lazy" decoding="async">' +
+      '<img src="' + thumbSrc(p) + '" alt="' + esc(p.caption) + '" loading="lazy" decoding="async">' +
       '<span class="gallery-caption">' + esc(p.caption) + "</span>" +
       "</button>"
     );
@@ -68,7 +81,7 @@
   function show(i) {
     current = (i + PHOTOS.length) % PHOTOS.length;
     var p = PHOTOS[current];
-    lbImg.src = BASE + p.file;
+    lbImg.src = fullSrc(p);
     lbImg.alt = p.caption;
     lbCap.textContent = p.caption + " (" + (current + 1) + "/" + PHOTOS.length + ")";
   }
