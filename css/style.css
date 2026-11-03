@@ -1510,7 +1510,7 @@ em.b{ background: #1f6fdc; } em.d{ background: #7a5bd6; } em.s{ background: #2a9
 
 /* 예배 및 모임 안내 — 광고 */
 .ad-board{position:relative;max-width:860px;margin:0 auto;border-radius:20px;padding:26px 22px 20px;background:linear-gradient(135deg,#fff7e0,#ffe7ba);border:3px solid #f08a00;box-shadow:0 10px 28px rgba(240,138,0,.28)}
-.ad-badge{position:absolute;top:-20px;left:50%;transform:translateX(-50%);display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#ff6a00,#e8112d);color:#fff;font-weight:900;font-size:1.35rem;letter-spacing:.3em;padding:8px 26px 8px 30px;border-radius:999px;box-shadow:0 6px 16px rgba(232,17,45,.4);animation:adPulse 2.2s ease-in-out infinite;white-space:nowrap}
+.ad-badge{position:absolute;top:-20px;left:50%;transform:translateX(-50%);display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#1e88e5,#0d3b8c);color:#fff;font-weight:900;font-size:1.35rem;letter-spacing:.3em;padding:8px 26px 8px 30px;border-radius:999px;box-shadow:0 6px 16px rgba(13,59,140,.4);animation:adPulse 2.2s ease-in-out infinite;white-space:nowrap}
 @keyframes adPulse{0%,100%{transform:translateX(-50%) scale(1)}50%{transform:translateX(-50%) scale(1.06)}}
 @media (prefers-reduced-motion:reduce){.ad-badge{animation:none}}
 .ad-date{text-align:center;margin:12px 0 4px;color:#a35a00;font-weight:800}
