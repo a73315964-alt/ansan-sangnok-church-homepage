@@ -136,10 +136,7 @@
           { label: "기관 소개", href: "community.html#youth" },
           { label: "갤러리", href: "community.html#gallery" }
         ] },
-        { label: "내가 만난 하나님(간증)", href: "community.html#testimony", items: [
-          { label: "장로님", href: "community.html#testimony" },
-          { label: "권사님", href: "community.html#testimony" }
-        ] },
+        { label: "내가 만난 하나님(간증)", href: "community.html#testimony" },
         { label: "갤러리", href: "community.html#gallery" }
       ]
     },
