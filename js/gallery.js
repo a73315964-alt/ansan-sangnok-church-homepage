@@ -38,6 +38,28 @@
 
   var grid = document.getElementById("galleryGrid");
   if (!grid) return;
+  var tabsEl = document.getElementById("galleryTabs");
+
+  // 로그인한 승인 성도(청년 포함)만 사진을 볼 수 있습니다. 확인되기 전에는 사진을 불러오지 않습니다.
+  function lock(msg, withLogin) {
+    if (tabsEl) tabsEl.hidden = true;
+    grid.innerHTML = '<div class="gallery-lock"><p>🔒 ' + msg + "</p>" +
+      (withLogin ? '<a class="btn btn-primary" href="login.html?next=' + encodeURIComponent("community.html#gallery") + '">로그인하기</a>' : "") + "</div>";
+  }
+  lock("사진방은 로그인한 성도만 볼 수 있습니다.", false);
+  (async function () {
+    try {
+      if (!window.SB_READY || typeof sbCurrentSession !== "function") return;
+      var s = await sbCurrentSession();
+      if (!s) { lock("사진방은 로그인한 성도만 볼 수 있습니다.", true); return; }
+      var pr = await sbMyProfile();
+      if (!(pr && pr.approved && !pr.suspended)) { lock("가입 승인이 끝난 성도만 사진방을 볼 수 있습니다. 승인되면 열립니다.", false); return; }
+      if (tabsEl) tabsEl.hidden = false;
+      start();
+    } catch (e) { /* 확인하지 못하면 잠긴 상태 유지 */ }
+  })();
+
+  function start() {
 
   function esc(s) {
     return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
@@ -132,4 +154,5 @@
     else if (e.key === "ArrowRight") show(current + 1);
     else if (e.key === "ArrowLeft") show(current - 1);
   });
+  }
 })();

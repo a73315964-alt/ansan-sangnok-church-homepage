@@ -1522,3 +1522,6 @@ em.b{ background: #1f6fdc; } em.d{ background: #7a5bd6; } em.s{ background: #2a9
 .gallery-tabs button{border:2px solid #2f5d8a;background:#fff;color:#2f5d8a;border-radius:999px;padding:9px 16px;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit}
 .gallery-tabs button.on{background:#2f5d8a;color:#fff}
 .gallery-empty{grid-column:1/-1;text-align:center;color:var(--muted)}
+
+.gallery-lock{grid-column:1/-1;text-align:center;padding:28px 12px;background:#fff;border-radius:14px;border:2px dashed #2f5d8a;color:#2b3a4a;font-weight:700}
+.gallery-lock p{margin:0 0 12px}
