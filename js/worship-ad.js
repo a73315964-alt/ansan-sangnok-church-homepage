@@ -1,4 +1,4 @@
-/* 예배 및 모임 안내 — 가장 최근 광고(js/news.js 맨 앞)를 부서별 예배 위에 보여줍니다. */
+/* 예배 및 모임 안내 — 가장 최근 광고(js/news.js 맨 앞)를 부서별 모임 위에 보여줍니다. */
 (function () {
   var box = document.getElementById("adText");
   var n = (window.NEWS || [])[0];
