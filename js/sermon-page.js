@@ -4,6 +4,16 @@
 (function () {
   var activeBook = "전체";
 
+  // 주소에 ?date=2026-10-18 이 있으면 그 주 설교를, 없으면 가장 최근 설교를 보여 줍니다.
+  function pickSermon() {
+    var list = window.SERMONS || [];
+    var m = /[?&]date=(\d{4}-\d{2}-\d{2})/.exec(location.search);
+    if (m) {
+      for (var i = 0; i < list.length; i++) if (list[i].date === m[1]) return { s: list[i], past: i > 0 };
+    }
+    return { s: list[0], past: false };
+  }
+
   function esc(s) {
     return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) {
       return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
@@ -23,7 +33,11 @@
   function renderThisWeek() {
     var host = document.getElementById("thisWeekBox");
     if (!host) return;
-    var s = (window.SERMONS || [])[0];
+    var pk = pickSermon(), s = pk.s;
+    if (pk.past) {
+      var head = host.previousElementSibling && host.previousElementSibling.querySelector("h2");
+      if (head) head.textContent = "지난 말씀";
+    }
     if (!s) {
       host.innerHTML = '<div class="empty-state">등록된 설교가 없습니다.</div>';
       return;
@@ -53,6 +67,7 @@
       "</header>" +
       (s.summary ? '<div class="lec-goal"><p>' + esc(s.summary) + "</p></div>" : "") +
       '<div class="faith-intro">' + body + "</div>" +
+      (pk.past ? '<p style="text-align:center;margin-top:22px;"><a class="btn btn-outline" href="sermon.html">← 금주의 말씀으로</a></p>' : "") +
       "</article>";
   }
 
@@ -60,7 +75,7 @@
     var host = document.getElementById("ytFeature");
     if (!host) return;
     var list = window.SERMONS || [];
-    var latest = list.length ? list[0] : null;
+    var latest = pickSermon().s || null;
     var C = window.CHURCH || {};
     var channelUrl = (C.sns && C.sns.youtube) ||
       "https://www.youtube.com/results?search_query=" + encodeURIComponent(C.name || "안산상록교회");

@@ -190,7 +190,7 @@
         '<div class="date"><span class="d">' + d.day + '</span><span class="m">' + d.month + "</span></div>" +
         "<div><span class=\"tag-pill\">" + esc(s.series || "설교") + "</span><h4>" + esc(s.title) + "</h4>" +
         "<p>" + esc(s.scripture) + " · " + esc(s.preacher) + "</p></div>" +
-        '<a class="btn btn-outline" href="sermon.html">설교 보기</a>' +
+        '<a class="btn btn-outline" href="sermon.html?date=' + encodeURIComponent(s.date) + '#thisWeekBox">설교 보기</a>' +
         "</div>"
       );
     }).join("");
