@@ -3,29 +3,30 @@
    사진을 추가하려면 아래 PHOTOS 에 한 줄만 넣으면 됩니다.
      file    : 파일 이름 (자료실 photos/gallery/ 에 올린 이름)
      caption : 사진 아래에 보일 설명
+     group   : "youth"(청년부 사진방) 또는 "adult"(장년 사진방) — 없으면 전체에만 보입니다. 전체에는 항상 모두 보입니다.
    사진은 바탕화면 "교회자료업로드" 폴더로 올린 뒤 이름을 적어주세요.
    ============================================================ */
 (function () {
   var BASE = ((window.CHURCH && window.CHURCH.filesBase) || "") + "/photos/gallery/";
 
   var PHOTOS = [
-    { local: "2026-harvest-1", caption: "2026 추수감사주일 · 강단 꾸미기" },
-    { local: "2026-harvest-2", caption: "2026 추수감사주일 · 감사의 예물" },
-    { local: "2026-friends-3", caption: "승주와 두 자매" },
-    { local: "2026-praise", caption: "승주와 예린 자매의 찬양" },
-    { local: "2026-quiz-1", caption: "2026 성경퀴즈대회 · 사회 청년부 병현·현준 형제" },
-    { local: "2026-quiz-2", caption: "2026 성경퀴즈대회 · 성도들" },
-    { local: "2026-quiz-3", caption: "2026 성경퀴즈대회 · 함께한 성도들" },
-    { local: "2026-quiz-4", caption: "2026 성경퀴즈대회 · 즐거운 교제" },
-    { local: "2026-80th", caption: "김타관 집사님 팔순 축하" },
+    { local: "2026-harvest-1", group: "adult", caption: "2026 추수감사주일 · 강단 꾸미기" },
+    { local: "2026-harvest-2", group: "adult", caption: "2026 추수감사주일 · 감사의 예물" },
+    { local: "2026-friends-3", group: "youth", caption: "승주와 두 자매" },
+    { local: "2026-praise", group: "youth", caption: "승주와 예린 자매의 찬양" },
+    { local: "2026-quiz-1", group: "youth", caption: "2026 성경퀴즈대회 · 사회 청년부 병현·현준 형제" },
+    { local: "2026-quiz-2", group: "adult", caption: "2026 성경퀴즈대회 · 성도들" },
+    { local: "2026-quiz-3", group: "adult", caption: "2026 성경퀴즈대회 · 함께한 성도들" },
+    { local: "2026-quiz-4", group: "adult", caption: "2026 성경퀴즈대회 · 즐거운 교제" },
+    { local: "2026-80th", group: "adult", caption: "김타관 집사님 팔순 축하" },
     { file: "01.jpg", caption: "제43차 안산시 복음화대성회" },
     { file: "02.jpg", caption: "복음화대성회 성가대 찬양" },
     { file: "03.jpg", caption: "복음화대성회 단체 기념사진" },
     { file: "04.jpg", caption: "복음화대성회 말씀 · 안산대학교" },
     { file: "05.jpg", caption: "성가대 찬양 — 말씀 앞에서" },
-    { file: "06.jpg", caption: "성도 나들이 · 꽃길에서" },
-    { file: "07.jpg", caption: "성도 나들이 · 단체 기념사진" },
-    { file: "08.jpg", caption: "청년부 봄나들이" },
+    { file: "06.jpg", group: "adult", caption: "성도 나들이 · 꽃길에서" },
+    { file: "07.jpg", group: "adult", caption: "성도 나들이 · 단체 기념사진" },
+    { file: "08.jpg", group: "youth", caption: "청년부 봄나들이" },
     { file: "09.jpg", caption: "강단에서 드리는 찬양과 기도" },
     { file: "10.jpg", caption: "예배 후 성도의 교제" },
     { file: "11.jpg", caption: "추수감사주일 이웃 나눔" },
@@ -46,14 +47,30 @@
   function thumbSrc(p) { return p.local ? "images/gallery/thumb/" + p.local + ".jpg" : BASE + "thumb/" + p.file; }
   function fullSrc(p) { return p.local ? "images/gallery/" + p.local + ".jpg" : BASE + p.file; }
 
-  grid.innerHTML = PHOTOS.map(function (p, i) {
-    return (
-      '<button type="button" class="gallery-item" data-i="' + i + '">' +
-      '<img src="' + thumbSrc(p) + '" alt="' + esc(p.caption) + '" loading="lazy" decoding="async">' +
-      '<span class="gallery-caption">' + esc(p.caption) + "</span>" +
-      "</button>"
-    );
-  }).join("");
+  var view = PHOTOS, tabsHost = document.getElementById("galleryTabs");
+  function render() {
+    grid.innerHTML = view.map(function (p, i) {
+      return (
+        '<button type="button" class="gallery-item" data-i="' + i + '">' +
+        '<img src="' + thumbSrc(p) + '" alt="' + esc(p.caption) + '" loading="lazy" decoding="async">' +
+        '<span class="gallery-caption">' + esc(p.caption) + "</span>" +
+        "</button>"
+      );
+    }).join("") || '<p class="gallery-empty">아직 올라온 사진이 없습니다.</p>';
+  }
+  render();
+  if (tabsHost) {
+    tabsHost.addEventListener("click", function (e) {
+      var b = e.target.closest("button[data-g]");
+      if (!b) return;
+      var g = b.getAttribute("data-g");
+      view = g === "all" ? PHOTOS : PHOTOS.filter(function (p) { return p.group === g; });
+      [].forEach.call(tabsHost.querySelectorAll("button"), function (x) {
+        var on = x === b; x.classList.toggle("on", on); x.setAttribute("aria-pressed", on ? "true" : "false");
+      });
+      render();
+    });
+  }
 
   var box = document.createElement("div");
   box.className = "lightbox";
@@ -79,11 +96,11 @@
   var current = 0;
 
   function show(i) {
-    current = (i + PHOTOS.length) % PHOTOS.length;
-    var p = PHOTOS[current];
+    current = (i + view.length) % view.length;
+    var p = view[current];
     lbImg.src = fullSrc(p);
     lbImg.alt = p.caption;
-    lbCap.textContent = p.caption + " (" + (current + 1) + "/" + PHOTOS.length + ")";
+    lbCap.textContent = p.caption + " (" + (current + 1) + "/" + view.length + ")";
   }
 
   function open(i) {

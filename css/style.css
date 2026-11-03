@@ -1516,3 +1516,9 @@ em.b{ background: #1f6fdc; } em.d{ background: #7a5bd6; } em.s{ background: #2a9
 .ad-date{text-align:center;margin:12px 0 4px;color:#a35a00;font-weight:800}
 .ad-text p{margin:0 0 .7em;line-height:1.75;color:#3a2a10;word-break:keep-all}
 .ad-more{display:block;text-align:center;margin-top:12px;font-weight:800;color:#b34700}
+
+/* 갤러리 사진방 탭 */
+.gallery-tabs{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:0 0 18px}
+.gallery-tabs button{border:2px solid #2f5d8a;background:#fff;color:#2f5d8a;border-radius:999px;padding:9px 16px;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit}
+.gallery-tabs button.on{background:#2f5d8a;color:#fff}
+.gallery-empty{grid-column:1/-1;text-align:center;color:var(--muted)}
