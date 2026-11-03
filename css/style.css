@@ -1114,6 +1114,7 @@ body.lb-open{ overflow: hidden; }
   display: flex; align-items: center; justify-content: center; gap: 8px;
   padding: 88px 24px 24px; background: rgba(12, 16, 15, .985);
 }
+.lightbox[hidden]{ display: none; }
 
 /* 사진 위 상단 막대 — 홈으로 / 닫기 */
 .lb-bar{
@@ -1353,3 +1354,44 @@ em.b{ background: #1f6fdc; } em.d{ background: #7a5bd6; } em.s{ background: #2a9
 
 /* 설교문 소제목 굵게 */
 .manuscript-inner .ms-head{ font-weight: 800; color: var(--ink); }
+
+/* ---------- 주제별 빙고 (bingo- 접두사) ---------- */
+.bingo-app{ max-width: 560px; margin: 0 auto; }
+.bingo-setup{ display: grid; grid-template-columns: minmax(0,2fr) minmax(0,1fr); gap: 12px; }
+.bingo-field{ display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.bingo-field label{ font-size: .88rem; font-weight: 700; color: var(--ink-soft); }
+.bingo-field select, .bingo-field textarea{
+  width: 100%; box-sizing: border-box; font: inherit; font-size: 1rem; padding: 10px 12px;
+  border: 1px solid var(--border); border-radius: 10px; background: #fff; color: var(--ink);
+}
+.bingo-custom{ margin-top: 12px; }
+.bingo-custom[hidden]{ display: none; }
+.bingo-actions{ display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.bingo-msg{ margin: 10px 0 0; font-size: .92rem; color: var(--ink-soft); min-height: 1.2em; }
+.bingo-msg.is-bad{ color: #c0392b; font-weight: 700; }
+.bingo-game{ margin-top: 18px; }
+.bingo-tabs{ display: grid; grid-template-columns: repeat(6, minmax(0,1fr)); gap: 6px; }
+.bingo-tab{ font: inherit; font-size: .92rem; font-weight: 700; padding: 9px 0; border: 1px solid var(--border); border-radius: 10px; background: #fff; color: var(--ink-soft); cursor: pointer; }
+.bingo-tab.is-on{ background: var(--primary, #1f3a68); border-color: var(--primary, #1f3a68); color: #fff; }
+.bingo-tab.is-win:not(.is-on){ border-color: #e0a800; box-shadow: inset 0 0 0 1px #e0a800; }
+.bingo-status{ margin: 12px 0 6px; font-weight: 800; text-align: center; }
+.bingo-win{ margin: 0 0 8px; padding: 10px; text-align: center; font-weight: 800; font-size: 1.1rem; background: #fff6d6; border: 1px solid #e0a800; border-radius: 10px; color: #7a5a00; }
+.bingo-win[hidden]{ display: none; }
+.bingo-board{ display: grid; grid-template-columns: repeat(5, minmax(0,1fr)); gap: 5px; }
+.bingo-cell, .bingo-cell-input{
+  box-sizing: border-box; min-width: 0; aspect-ratio: 1 / 1; width: 100%; padding: 3px; font: inherit;
+  font-size: clamp(.78rem, 3vw, .95rem); line-height: 1.25; text-align: center;
+  border: 1px solid var(--border); border-radius: 8px; background: #fff; color: var(--ink);
+  overflow-wrap: anywhere; word-break: keep-all; hyphens: auto;
+}
+.bingo-cell{ cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.bingo-cell.is-on{ background: #2f6bd1; border-color: #2f6bd1; color: #fff; font-weight: 800; }
+.bingo-cell-input.is-bad{ border-color: #c0392b; background: #fff1ef; }
+.bingo-tab:focus-visible, .bingo-cell:focus-visible, .bingo-cell-input:focus-visible,
+.bingo-field select:focus-visible, .bingo-field textarea:focus-visible{ outline: 3px solid #f0a500; outline-offset: 2px; }
+.bingo-tools{ justify-content: center; }
+.bingo-tools button[hidden]{ display: none; }
+.bingo-tools button:disabled{ opacity: .5; cursor: not-allowed; }
+.bingo-note{ margin: 14px 0 0; font-size: .82rem; color: var(--muted); text-align: center; }
+@media (max-width: 420px){ .bingo-setup{ grid-template-columns: minmax(0,1fr); } }
+@media (prefers-reduced-motion: no-preference){ .bingo-cell{ transition: background .12s ease; } }
