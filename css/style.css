@@ -1395,3 +1395,21 @@ em.b{ background: #1f6fdc; } em.d{ background: #7a5bd6; } em.s{ background: #2a9
 .bingo-note{ margin: 14px 0 0; font-size: .82rem; color: var(--muted); text-align: center; }
 @media (max-width: 420px){ .bingo-setup{ grid-template-columns: minmax(0,1fr); } }
 @media (prefers-reduced-motion: no-preference){ .bingo-cell{ transition: background .12s ease; } }
+
+/* 빙고: 성경 퀴즈 */
+.bingo-quiz{ margin: 14px 0 4px; padding: 14px 16px; background: #f3f7ff; border: 1px solid #cfdcf5; border-radius: 12px; text-align: center; }
+.bingo-quiz-no{ margin: 0 0 6px; font-size: .85rem; font-weight: 700; color: #2f6bd1; }
+.bingo-quiz-q{ margin: 0; font-size: 1.1rem; font-weight: 800; line-height: 1.5; word-break: keep-all; overflow-wrap: anywhere; }
+.bingo-quiz-a{ margin: 8px 0 0; font-weight: 800; color: #b3391f; }
+.bingo-quiz-a[hidden], .bingo-quiz[hidden]{ display: none; }
+.bingo-quiz-actions{ justify-content: center; margin-top: 12px; }
+.bingo-quiz-actions button:disabled{ opacity: .5; cursor: not-allowed; }
+
+.bingo-quiz-choices{ display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 8px; margin-top: 12px; }
+.bingo-choice{ font: inherit; font-size: 1rem; font-weight: 700; padding: 12px 6px; min-height: 48px; border: 1px solid #b9c9ea; border-radius: 10px; background: #fff; color: var(--ink); cursor: pointer; overflow-wrap: anywhere; word-break: keep-all; }
+.bingo-choice:disabled{ opacity: .55; cursor: not-allowed; }
+.bingo-choice.is-right{ opacity: 1; background: #2e9b57; border-color: #2e9b57; color: #fff; }
+.bingo-choice:focus-visible{ outline: 3px solid #f0a500; outline-offset: 2px; }
+.bingo-quiz-score{ margin: 12px 0 0; font-size: .82rem; color: var(--ink-soft); }
+.bingo-cell:disabled{ cursor: default; }
+.bingo-cell.is-on:disabled{ opacity: 1; }
