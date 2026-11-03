@@ -1413,3 +1413,58 @@ em.b{ background: #1f6fdc; } em.d{ background: #7a5bd6; } em.s{ background: #2a9
 .bingo-quiz-score{ margin: 12px 0 0; font-size: .82rem; color: var(--ink-soft); }
 .bingo-cell:disabled{ cursor: default; }
 .bingo-cell.is-on:disabled{ opacity: 1; }
+
+/* ---------- 빙고 꾸미기: 썸네일 같은 배경 · 굵은 글씨 · 귤색 승리 ---------- */
+.bingo-stage{
+  position: relative; overflow: hidden; padding: 54px 0 60px;
+  background:
+    radial-gradient(circle at 12% 18%, rgba(255,214,102,.55) 0 7px, transparent 8px),
+    radial-gradient(circle at 86% 12%, rgba(255,140,170,.55) 0 9px, transparent 10px),
+    radial-gradient(circle at 70% 82%, rgba(120,230,200,.55) 0 8px, transparent 9px),
+    radial-gradient(circle at 20% 80%, rgba(255,255,255,.45) 0 6px, transparent 7px),
+    radial-gradient(120% 80% at 0% 0%, #4a7dff 0%, transparent 55%),
+    radial-gradient(100% 80% at 100% 100%, #ff7a59 0%, transparent 55%),
+    linear-gradient(135deg, #5b3fd6 0%, #2f6bd1 48%, #17a2b8 100%);
+  background-size: 140px 140px, 180px 180px, 160px 160px, 120px 120px, auto, auto, auto;
+}
+.bingo-stage::before{
+  content: "🍊 🎲 ⭐ 🎉 🍊 🎲 ⭐ 🎉"; position: absolute; top: 14px; left: 0; right: 0; text-align: center;
+  font-size: 1.1rem; letter-spacing: .6em; opacity: .55; pointer-events: none; white-space: nowrap; overflow: hidden;
+}
+.bingo-head .eyebrow{ color: #ffe9a8; font-weight: 900; letter-spacing: .12em; }
+.bingo-head h2{ color: #fff; font-size: clamp(2rem, 7vw, 2.8rem); font-weight: 900; letter-spacing: -.02em; text-shadow: 0 3px 0 rgba(0,0,0,.25); }
+.bingo-head p{ color: #fff; font-weight: 700; opacity: .95; }
+.bingo-stage .bingo-app{
+  background: rgba(255,255,255,.96); border: 3px dashed #b79cff; border-radius: 26px; padding: 22px 18px 20px;
+  box-shadow: 0 14px 34px rgba(20,10,80,.35), 0 0 0 6px rgba(255,255,255,.22);
+}
+.bingo-field label{ font-weight: 900; color: #2b2f77; }
+.bingo-field select{ border: 2px solid #c9d6f7; border-radius: 14px; font-weight: 800; color: #1d2a6b; }
+.bingo-actions .btn-primary{ background: linear-gradient(180deg, #4d8cff, #2f5fd1); border: 0; font-weight: 900; font-size: 1.05rem; padding: 13px 22px; border-radius: 16px; box-shadow: 0 5px 0 #1f3f94; }
+.bingo-actions .btn-primary:active{ transform: translateY(3px); box-shadow: 0 2px 0 #1f3f94; }
+.bingo-actions .btn-outline{ border: 2px solid #c9d6f7; border-radius: 16px; font-weight: 800; color: #263a82; background: #f4f7ff; }
+.bingo-tab{ border: 2px solid #cdd8f6; border-radius: 14px; font-weight: 900; font-size: 1rem; padding: 12px 0; background: #fff; color: #2b3a8c; }
+.bingo-tab.is-on{ background: linear-gradient(180deg, #2a3a9c, #1b2670); border-color: #1b2670; color: #fff; box-shadow: 0 4px 0 #101a50; }
+.bingo-tab.is-win{ background: linear-gradient(180deg, #ffa733, #f07800); border-color: #d96a00; color: #fff; }
+.bingo-status{ font-size: 1.15rem; font-weight: 900; color: #2b2f77; }
+.bingo-win{ background: linear-gradient(90deg, #ffb347, #ff8a00); border: 0; color: #fff; font-size: 1.2rem; font-weight: 900; border-radius: 14px; box-shadow: 0 5px 0 #c96100; }
+.bingo-board{ gap: 7px; padding: 10px; border-radius: 20px; background: linear-gradient(135deg, #e7eeff, #fdeeff); border: 2px solid #d6defa; transition: background .3s ease, border-color .3s ease, box-shadow .3s ease; }
+.bingo-cell, .bingo-cell-input{ border: 2px solid rgba(0,0,0,.08); border-radius: 12px; font-weight: 900; font-size: clamp(.74rem, 2.9vw, .98rem); letter-spacing: -.04em; color: #1c2260; box-shadow: 0 3px 0 rgba(0,0,0,.1); }
+.bingo-board > :nth-child(5n+1){ background: #fff1c9; }
+.bingo-board > :nth-child(5n+2){ background: #ffe0e6; }
+.bingo-board > :nth-child(5n+3){ background: #d9f4ff; }
+.bingo-board > :nth-child(5n+4){ background: #e2f8dc; }
+.bingo-board > :nth-child(5n+5){ background: #ece2ff; }
+.bingo-cell.is-on{ background: linear-gradient(180deg, #3d7cf0, #2457c9); border-color: #1d46a3; color: #fff; text-shadow: 0 1px 0 rgba(0,0,0,.25); }
+.bingo-cell.is-line{ background: linear-gradient(180deg, #ffd24a, #ffae00); border-color: #e09500; color: #5a3600; text-shadow: none; }
+/* 목표(5줄·5정답)를 채우면 판 전체가 귤색으로 */
+.bingo-board.is-win{ background: linear-gradient(135deg, #ffc36b, #ff8a00); border-color: #e57400; box-shadow: 0 0 0 4px rgba(255,138,0,.35), 0 10px 26px rgba(255,138,0,.45); }
+.bingo-board.is-win .bingo-cell{ background: linear-gradient(180deg, #ffa733, #f07800) !important; border-color: #d96a00; color: #fff; text-shadow: 0 1px 0 rgba(120,50,0,.45); }
+.bingo-board.is-win .bingo-cell.is-on, .bingo-board.is-win .bingo-cell.is-line{ background: linear-gradient(180deg, #ff9d1a, #e56a00) !important; }
+.bingo-quiz{ background: #fff8e6; border: 2px solid #ffd27a; border-radius: 18px; }
+.bingo-quiz-no{ color: #d96a00; font-weight: 900; }
+.bingo-quiz-q{ color: #1d2a6b; font-size: 1.18rem; font-weight: 900; }
+.bingo-choice{ border: 2px solid #c9d6f7; border-radius: 14px; font-weight: 900; color: #1d2a6b; background: #fff; box-shadow: 0 3px 0 #c9d6f7; }
+.bingo-choice.is-right{ background: linear-gradient(180deg, #3cc47a, #1f9a57); border-color: #1f9a57; box-shadow: 0 3px 0 #13703c; }
+.bingo-note{ color: #6a6f9a; }
+@media (max-width: 480px){ .bingo-stage{ padding: 44px 0 46px; } .bingo-stage .bingo-app{ padding: 16px 10px 16px; border-radius: 22px; } }

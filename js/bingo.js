@@ -214,6 +214,21 @@
     if (started()) return "표시를 모두 지운 뒤에 수정할 수 있습니다";
     return "";
   }
+  function lineCellSet(marks) {      // 완성된 줄에 들어 있는 칸 번호들
+    var set = {}, i, j, ok;
+    function mark(arr) { arr.forEach(function (k) { set[k] = true; }); }
+    for (i = 0; i < N; i++) {
+      var r = [], c = [];
+      for (j = 0; j < N; j++) { r.push(i * N + j); c.push(j * N + i); }
+      if (r.every(function (k) { return marks[k]; })) mark(r);
+      if (c.every(function (k) { return marks[k]; })) mark(c);
+    }
+    var d1 = [], d2 = [];
+    for (i = 0; i < N; i++) { d1.push(i * N + i); d2.push(i * N + (N - 1 - i)); }
+    if (d1.every(function (k) { return marks[k]; })) mark(d1);
+    if (d2.every(function (k) { return marks[k]; })) mark(d2);
+    return set;
+  }
   function started() {
     return !!state && !!state.marks && state.marks.some(function (m) { return m.some(Boolean); });
   }
@@ -476,6 +491,9 @@
       for (t = 0; t < tabs.length; t++) tabs[t].classList.toggle("is-win", countLines(state.marks[t]) >= state.goal);
     }
     els.win.hidden = !won;
+    els.board.classList.toggle("is-win", !!won);          // 목표(5줄/5정답)를 채우면 귤색으로
+    var ls = quiz ? {} : lineCellSet(state.marks[state.active]), cells = els.board.children;
+    for (var k = 0; k < cells.length; k++) cells[k].classList.toggle("is-line", !editing && !!ls[k]);
     els.edit.disabled = !!editLocked();
     els.edit.title = editLocked();
   }
