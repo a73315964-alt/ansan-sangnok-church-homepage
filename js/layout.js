@@ -134,7 +134,8 @@
         ] },
         { label: "내가 만난 하나님(간증)", href: "community.html#testimony" },
         { label: "갤러리", href: "community.html#gallery" },
-        { label: "주제별 빙고", href: "community.html#bingo" }
+        { label: "주제별 빙고", href: "community.html#bingo" },
+        { label: "성경퀴즈 방", href: "community.html#bible-quiz" }
       ]
     },
     {

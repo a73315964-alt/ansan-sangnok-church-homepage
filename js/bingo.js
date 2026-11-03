@@ -1,7 +1,7 @@
 /* 주제별 빙고 — 우리들의 이야기(community.html) 맨 아래
    · 외부 서버·로그인 없이 브라우저에서만 작동합니다. 저장은 이 기기(localStorage)에만 됩니다.
    · 모든 방문자에게 보일 기본 단어 목록은 아래 BINGO_CONFIG 에서 고치세요 (주제마다 25개 이상). */
-(function () {
+function initBingo(rootId, quizOnly) {
   "use strict";
 
   var BINGO_CONFIG = {
@@ -104,8 +104,12 @@
     ]
   };
 
-  var root = document.getElementById("bingoApp");
+  var root = document.getElementById(rootId);
   if (!root) return;
+  // 일반 빙고에서는 성경 퀴즈를 빼고, 성경퀴즈 방에서는 퀴즈만 씁니다.
+  BINGO_CONFIG.topics = BINGO_CONFIG.topics.filter(function (t) { return quizOnly ? !!t.quiz : !t.quiz; });
+  if (quizOnly) BINGO_CONFIG.storageKey = "bingo:quiz:v1";
+  var uid = quizOnly ? "Quiz" : "";
 
   var N = BINGO_CONFIG.size, CELLS = N * N;
   var state = null;        // {topic, goal, words, boards, marks, active, quiz}
@@ -244,18 +248,19 @@
     var setup = el("div", "bingo-setup");
 
     var f1 = el("div", "bingo-field");
-    var l1 = el("label", null, "빙고 종류"); l1.setAttribute("for", "bingoTopic");
-    els.topic = el("select"); els.topic.id = "bingoTopic";
+    var l1 = el("label", null, "빙고 종류"); l1.setAttribute("for", "bingoTopic" + uid);
+    els.topic = el("select"); els.topic.id = "bingoTopic" + uid;
     BINGO_CONFIG.topics.forEach(function (t) {
       var o = el("option", null, t.label); o.value = t.id; els.topic.appendChild(o);
     });
     f1.appendChild(l1); f1.appendChild(els.topic);
+    if (quizOnly) f1.hidden = true;
 
     var f2 = el("div", "bingo-field");
-    var l2 = el("label", null, "목표 (줄 수 · 퀴즈는 정답 수)"); l2.setAttribute("for", "bingoGoal");
-    els.goal = el("select"); els.goal.id = "bingoGoal";
+    var l2 = el("label", null, (quizOnly ? "목표 (먼저 맞힐 정답 수)" : "목표 (줄 수)")); l2.setAttribute("for", "bingoGoal" + uid);
+    els.goal = el("select"); els.goal.id = "bingoGoal" + uid;
     for (var g = 1; g <= BINGO_CONFIG.maxGoal; g++) {
-      var og = el("option", null, g + "줄"); og.value = String(g); els.goal.appendChild(og);
+      var og = el("option", null, g + (quizOnly ? "개" : "줄")); og.value = String(g); els.goal.appendChild(og);
     }
     f2.appendChild(l2); f2.appendChild(els.goal);
 
@@ -551,4 +556,6 @@
     els.topic.value = saved.topic; els.goal.value = String(saved.goal);
   }
   render();
-})();
+}
+initBingo("bingoApp", false);
+initBingo("quizApp", true);
