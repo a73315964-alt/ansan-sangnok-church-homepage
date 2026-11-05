@@ -9,6 +9,7 @@
   var BASE = ((window.CHURCH && window.CHURCH.filesBase) || "") + "/photos/gallery/";
 
   var PHOTOS = [
+    { local: "2026-rice-chocho", caption: "초지주민센터에 쌀 10포 전달" },
     { local: "2026-harvest-1", group: "adult", caption: "2026 추수감사주일 · 강단 꾸미기" },
     { local: "2026-harvest-2", group: "adult", caption: "2026 추수감사주일 · 감사의 예물" },
     { local: "2026-friends-3", group: "youth", caption: "승주와 두 자매" },
