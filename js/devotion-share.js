@@ -105,10 +105,11 @@
       var mine = me && r.user_id === me.id;
       return (
         '<li class="share-item">' +
-        '<div class="share-meta"><strong>' + esc(r.author_name || "성도") + "</strong><span>" + when(r.created_at) + "</span>" +
-        (mine || isAdmin ? '<button type="button" class="share-del" data-id="' + r.id + '">삭제</button>' : "") +
+        '<div class="share-meta"><strong>' + esc(r.author_name || "성도") + "</strong><span>" + when(r.created_at) + (r.edited_at ? " · 수정됨" : "") + "</span>" +
+        (mine ? '<button type="button" class="share-edit" data-id="' + r.id + '">수정</button>' : "") +
+        (mine || isAdmin ? '<button type="button" class="share-del' + (mine ? "" : " first") + '" data-id="' + r.id + '">삭제</button>' : "") +
         "</div>" +
-        "<p>" + esc(r.content) + "</p>" + heartHtml(r, mine) +
+        '<p class="share-text">' + esc(r.content) + "</p>" + heartHtml(r, mine) +
         "</li>"
       );
     }).join("") + "</ul>";
@@ -130,9 +131,15 @@
     panel((canWrite ? formHtml() : adminOnly) +'<div id="shareList"><div class="share-empty">불러오는 중…</div></div>');
     bindForm();
     var res = await window.SB.from("devotion_shares")
-      .select("id, user_id, author_name, content, created_at")
+      .select("id, user_id, author_name, content, created_at, edited_at")
       .eq("devotion_date", day).eq("room", current)
       .order("created_at", { ascending: false });
+    if (res.error) {   // 수정 기능용 칸이 아직 없으면 예전 방식으로 불러옴
+      res = await window.SB.from("devotion_shares")
+        .select("id, user_id, author_name, content, created_at")
+        .eq("devotion_date", day).eq("room", current)
+        .order("created_at", { ascending: false });
+    }
     if (current !== room) return;
     var list = document.getElementById("shareList");
     if (res.error) {
@@ -148,6 +155,34 @@
     });
     list.querySelectorAll(".share-del").forEach(function (b) {
       b.addEventListener("click", function () { remove(b.getAttribute("data-id")); });
+    });
+    list.querySelectorAll(".share-edit").forEach(function (b) {
+      b.addEventListener("click", function () { startEdit(b); });
+    });
+  }
+
+  // 내 글 고치기: 글 자리가 입력칸으로 바뀌고 [저장][취소]
+  function startEdit(b) {
+    var li = b.closest(".share-item"), p = li.querySelector(".share-text"), id = b.getAttribute("data-id");
+    if (!p || li.querySelector(".share-editbox")) return;
+    var box = document.createElement("div");
+    box.className = "share-editbox";
+    box.innerHTML = '<textarea rows="4" maxlength="' + MAX + '" aria-label="나눔 글 수정"></textarea>' +
+      '<div class="share-editbtns"><button type="button" class="btn btn-primary" data-act="save">저장</button>' +
+      '<button type="button" class="btn btn-outline" data-act="cancel">취소</button></div>';
+    var ta = box.querySelector("textarea");
+    ta.value = p.textContent;
+    p.hidden = true; p.after(box); ta.focus();
+    box.addEventListener("click", async function (e) {
+      var act = e.target.getAttribute && e.target.getAttribute("data-act");
+      if (act === "cancel") { box.remove(); p.hidden = false; }
+      if (act !== "save") return;
+      var v = ta.value.trim();
+      if (!v) { alert("내용을 입력해 주세요."); return; }
+      e.target.disabled = true;
+      var res = await window.SB.from("devotion_shares").update({ content: v }).eq("id", id);
+      if (res.error) { e.target.disabled = false; alert("수정하지 못했습니다. 잠시 후 다시 시도해 주세요."); return; }
+      load();
     });
   }
 
@@ -255,7 +290,7 @@
       var rows = res.data || [];
       await loadHearts(rows);
       listEl.innerHTML = listHtml(rows);
-      listEl.querySelectorAll(".share-del").forEach(function (b) { b.remove(); });
+      listEl.querySelectorAll(".share-del, .share-edit").forEach(function (b) { b.remove(); });
       listEl.querySelectorAll(".share-heart[data-id]").forEach(function (b) {
         b.addEventListener("click", function () { toggleHeart(b); });
       });

@@ -1544,3 +1544,8 @@ em.b{ background: #1f6fdc; } em.d{ background: #7a5bd6; } em.s{ background: #2a9
 .board-icon.bi-bul{ background:linear-gradient(155deg,#4f8f68,#235139); }
 .board-head h3{ font-size:1.12rem; }
 @media (max-width:720px){ .board-head .board-icon{ width:46px; height:46px; margin-right:10px } .board-icon svg{ width:27px; height:27px } }
+
+.share-edit{ margin-left: auto; background: none; border: 0; color: var(--accent); font: inherit; font-size: .8rem; font-weight: 700; cursor: pointer; text-decoration: underline; }
+.share-edit + .share-del{ margin-left: 0; }
+.share-editbox textarea{ width: 100%; box-sizing: border-box; font: inherit; padding: 8px; border: 1px solid var(--border); border-radius: 8px; }
+.share-editbtns{ display: flex; gap: 8px; margin-top: 6px; }
