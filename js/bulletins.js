@@ -7,6 +7,53 @@
    ============================================================ */
 window.BULLETINS = [
   {
+    date: "2026-11-15",
+    dateLabel: "2026. 11. 15",
+    motto: "야곱의 축복을 받는 해",
+
+    // 홈 화면 "최근 주보" 칸에 쓰입니다
+    title: "주일예배 주보",
+    scripture: "로마서 3:20-26",
+    preacher: "이재용 목사",
+
+    morning: {
+      name: "주일 낮 예배",
+      time: "오전 11시",
+      note: "10시 45분부터 경배와 찬양으로 · 찬양인도 중창단",
+      verse: "“하나님은 영이시니 영과 진리로 예배할지니라” (요 4:24)",
+      order: [
+        { part: "예배의 부름", detail: "지존하신 주님 이름 앞에", who: "인도자", stand: true },
+        { part: "감사와 자백의 기도", detail: "", who: "다 같이", stand: true },
+        { part: "신앙고백", detail: "사도신경", who: "다 같이", stand: true },
+        { part: "찬송", detail: "15장", who: "다 같이" },
+        { part: "대표기도", detail: "", who: "권교순 권사" },
+        { part: "찬송", detail: "289장", who: "다 같이" },
+        { part: "성경봉독", detail: "롬 3:20-26절", who: "다 같이" },
+        { part: "설교", detail: "성경이 말하는 복음이 필요한 이유", who: "이재용 목사", highlight: true },
+        { part: "합심기도", detail: "", who: "다 같이" },
+        { part: "봉헌 및 찬송", detail: "260장", who: "다 같이" },
+        { part: "광고", detail: "", who: "인도자" },
+        { part: "폐회송", detail: "54장", who: "다 함께" },
+        { part: "축도", detail: "", who: "이재용 목사", stand: true }
+      ]
+    },
+
+    services: [
+      {
+        name: "주일 오후 예배",
+        title: "교회와 성도의 교회생활",
+        scripture: "베드로전서 2:9",
+        prayer: "서소희 집사"
+      },
+      {
+        name: "수요 예배",
+        title: "하나님의 것은 하나님께",
+        scripture: "말라기 3:7-12",
+        prayer: "남경희 장로"
+      }
+    ]
+  },
+  {
     date: "2026-11-01",
     dateLabel: "2026. 11. 1",
     motto: "야곱의 축복을 받는 해",
