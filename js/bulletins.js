@@ -54,6 +54,53 @@ window.BULLETINS = [
     ]
   },
   {
+    date: "2026-11-08",
+    dateLabel: "2026. 11. 8",
+    motto: "야곱의 축복을 받는 해",
+
+    // 홈 화면 "최근 주보" 칸에 쓰입니다
+    title: "주일예배 주보",
+    scripture: "누가복음 15:1-7",
+    preacher: "이재용 목사",
+
+    morning: {
+      name: "주일 낮 예배",
+      time: "오전 11시",
+      note: "10시 45분부터 경배와 찬양으로 · 찬양인도 중창단",
+      verse: "“하나님은 영이시니 영과 진리로 예배할지니라” (요 4:24)",
+      order: [
+        { part: "예배의 부름", detail: "지존하신 주님 이름 앞에", who: "인도자", stand: true },
+        { part: "감사와 자백의 기도", detail: "", who: "다 같이", stand: true },
+        { part: "신앙고백", detail: "사도신경", who: "다 같이", stand: true },
+        { part: "찬송", detail: "40장", who: "다 같이" },
+        { part: "대표기도", detail: "", who: "황윤찬 집사" },
+        { part: "찬송", detail: "369장", who: "다 같이" },
+        { part: "성경봉독", detail: "누가복음 15:1-7절", who: "다 같이" },
+        { part: "설교", detail: "수군거림을 넘어 잔치로", who: "이재용 목사", highlight: true },
+        { part: "합심기도", detail: "", who: "다 같이" },
+        { part: "봉헌 및 찬송", detail: "305장", who: "다 같이" },
+        { part: "광고", detail: "", who: "인도자" },
+        { part: "폐회송", detail: "54장", who: "다 함께" },
+        { part: "축도", detail: "", who: "이재용 목사", stand: true }
+      ]
+    },
+
+    services: [
+      {
+        name: "주일 오후 예배",
+        title: "교회와 성도의 교회생활",
+        scripture: "베드로전서 2:9 (세례교육 3차)",
+        prayer: "이송희 집사"
+      },
+      {
+        name: "수요 예배",
+        title: "백성들의 질문에 대한 하나님의 답변",
+        scripture: "말라기 2:17-3:7",
+        prayer: "김용순 집사"
+      }
+    ]
+  },
+  {
     date: "2026-11-01",
     dateLabel: "2026. 11. 1",
     motto: "야곱의 축복을 받는 해",
